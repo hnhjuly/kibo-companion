@@ -15,7 +15,7 @@ export interface UserProgress {
 }
 
 const HEARTS_MAX = 3;
-const HEARTS_COOLDOWN_MS = 4 * 60 * 60 * 1000; // 4 hours
+const HEARTS_COOLDOWN_MS = 2 * 60 * 1000; // 2 minutes
 const XP_PER_LEVEL = 300;
 
 function getToday(): string {
