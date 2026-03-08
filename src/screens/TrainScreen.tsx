@@ -33,10 +33,18 @@ const TrainScreen = () => {
           {/* Streak */}
           <div className="rounded-[18px] p-[18px] flex items-center gap-4"
             style={{ background: "linear-gradient(135deg, #fff8e0, #ffe8d6)", border: "1.5px solid #ffb800" }}>
-            <span className="text-[50px]">🔥</span>
+            <img src={
+              progress.streak >= 30 ? KIBO.streak30 :
+              progress.streak >= 7 ? KIBO.streak7 :
+              progress.streak >= 3 ? KIBO.streak3 :
+              progress.streak > 0 ? KIBO.streakAtRisk :
+              KIBO.neutral
+            } alt="Kibo streak" className="w-[50px] h-[50px] object-contain" />
             <div className="flex-1">
               <div className="text-[28px] font-black text-foreground">{progress.streak} Day Streak</div>
-              <div className="text-[13px] text-muted-foreground font-bold">Don't break it!</div>
+              <div className="text-[13px] text-muted-foreground font-bold">
+                {progress.streak >= 30 ? "Legendary! 👑" : progress.streak >= 7 ? "Amazing! ⭐" : progress.streak >= 3 ? "On fire! 🔥" : "Don't break it!"}
+              </div>
             </div>
             <button className="bg-card border-2 border-kibo-gold rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-kibo-orange">❄️ Freeze</button>
           </div>
