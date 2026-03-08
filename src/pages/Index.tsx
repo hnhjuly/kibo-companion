@@ -1,4 +1,5 @@
 import { AppProvider, useApp } from "@/context/AppContext";
+import { AnimatePresence, motion } from "framer-motion";
 import OnboardingScreen from "@/screens/OnboardingScreen";
 import HomeScreen from "@/screens/HomeScreen";
 import LessonsScreen from "@/screens/LessonsScreen";
@@ -12,9 +13,24 @@ import FeedbackScreen from "@/screens/FeedbackScreen";
 import AllCompleteScreen from "@/screens/AllCompleteScreen";
 import BottomNav from "@/components/BottomNav";
 
+const screens: Record<string, React.FC> = {
+  onboarding: OnboardingScreen,
+  home: HomeScreen,
+  lessons: LessonsScreen,
+  quiz: QuizScreen,
+  complete: CompleteScreen,
+  train: TrainScreen,
+  achievements: AchievementsScreen,
+  more: MoreScreen,
+  "hearts-depleted": HeartsDepletedScreen,
+  feedback: FeedbackScreen,
+  "all-complete": AllCompleteScreen,
+};
+
 const AppContent = () => {
   const { screen } = useApp();
   const showNav = ["home", "train", "achievements", "lessons", "more", "all-complete"].includes(screen);
+  const Screen = screens[screen];
 
   return (
     <div className="w-[390px] h-[844px] bg-background rounded-[46px] overflow-hidden relative flex flex-col"
@@ -27,20 +43,19 @@ const AppContent = () => {
         </div>
       </div>
 
-      {/* Screen content */}
-      <div className="flex flex-col flex-1 overflow-hidden animate-in fade-in duration-200">
-        {screen === "onboarding" && <OnboardingScreen />}
-        {screen === "home" && <HomeScreen />}
-        {screen === "lessons" && <LessonsScreen />}
-        {screen === "quiz" && <QuizScreen />}
-        {screen === "complete" && <CompleteScreen />}
-        {screen === "train" && <TrainScreen />}
-        {screen === "achievements" && <AchievementsScreen />}
-        {screen === "more" && <MoreScreen />}
-        {screen === "hearts-depleted" && <HeartsDepletedScreen />}
-        {screen === "feedback" && <FeedbackScreen />}
-        {screen === "all-complete" && <AllCompleteScreen />}
-      </div>
+      {/* Screen content with animation */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={screen}
+          initial={{ opacity: 0, y: 12, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -8, scale: 0.98 }}
+          transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="flex flex-col flex-1 overflow-hidden"
+        >
+          {Screen && <Screen />}
+        </motion.div>
+      </AnimatePresence>
 
       {showNav && <BottomNav />}
     </div>
