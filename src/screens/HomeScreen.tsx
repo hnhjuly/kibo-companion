@@ -6,6 +6,7 @@ import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import type { Lesson } from "@/data/curriculum";
 import kiboBg from "@/assets/kibo-bg.png";
 import Icon from "@/components/Icon";
+import NotoEmoji from "@/components/NotoEmoji";
 import ICONS from "@/assets/icons";
 
 const HomeScreen = () => {
@@ -33,7 +34,7 @@ const HomeScreen = () => {
       <div className="bg-card px-5 pt-4 pb-3.5 border-b border-border shrink-0">
         <div className="flex justify-between items-start mb-2.5">
           <div>
-            <div className="text-[22px] font-black text-foreground">Hello! 👋</div>
+            <div className="text-[22px] font-black text-foreground flex items-center gap-1.5">Hello! <NotoEmoji name="wave" size={24} /></div>
             <div className="text-[13px] text-muted-foreground font-semibold mt-0.5">Learn AI with Kibo</div>
           </div>
           <div className="flex gap-2">
@@ -70,14 +71,14 @@ const HomeScreen = () => {
             style={{ backgroundImage: `url(${kiboBg})`, backgroundSize: "cover", backgroundPosition: "center", border: "1.5px solid rgba(74,158,255,0.15)" }}>
             <div className="absolute inset-0 bg-white/20" />
             <div className="flex-1 pt-5 pl-5 pb-5 relative z-10">
-              <div className="text-base font-black text-foreground mb-1">Hi, I'm Kibo! ✨</div>
+              <div className="text-base font-black text-foreground mb-1 flex items-center gap-1">Hi, I'm Kibo! <NotoEmoji name="sparkles" size={16} /></div>
               <div className="text-[13px] text-muted-foreground leading-relaxed mb-3 max-w-[160px]">
-                {!canPlay ? "Your hearts are refilling... Take a break! 😴" :
-                  progress.streak >= 30 ? <span>Legendary {progress.streak} day streak! You're unstoppable! 👑</span> :
+                {!canPlay ? <span>Your hearts are refilling... Take a break! <NotoEmoji name="sleeping" size={14} /></span> :
+                  progress.streak >= 30 ? <span>Legendary {progress.streak} day streak! You're unstoppable! <NotoEmoji name="crown" size={14} /></span> :
                   progress.streak >= 7 ? <span>Amazing {progress.streak} day streak! Keep it up! <Icon name="star" size={14} /></span> :
                   progress.streak >= 3 ? <span>{progress.streak} day streak! You're on fire! <Icon name="fire" size={14} /></span> :
                   progress.streak > 0 ? <span>Let's train your AI skills! You're on a {progress.streak} day streak <Icon name="fire" size={14} /></span> :
-                  "Let's start training your AI skills! 💪"}
+                  <span>Let's start training your AI skills! <NotoEmoji name="flexed" size={14} /></span>}
               </div>
               <button onClick={() => setScreen("lessons")}
                 className="bg-kibo-green text-primary-foreground rounded-xl px-[22px] py-2.5 font-black text-sm inline-flex items-center gap-2 kibo-shadow active:translate-y-[2px] active:shadow-none transition-all">

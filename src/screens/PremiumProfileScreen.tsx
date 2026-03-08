@@ -2,13 +2,14 @@ import { KIBO } from "@/data/curriculum";
 import { User, Bell, Clock, HelpCircle, MessageCircle, ChevronRight } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import Icon from "@/components/Icon";
+import NotoEmoji from "@/components/NotoEmoji";
 
 const MoreScreen = () => {
   const { progress, setScreen } = useApp();
   return (
     <>
       <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center justify-center gap-3.5">
-        <span className="text-lg font-black text-foreground">⚙️ More</span>
+        <span className="text-lg font-black text-foreground flex items-center gap-1.5"><NotoEmoji name="gear" size={20} /> More</span>
       </div>
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="p-[18px] pb-[100px] flex flex-col gap-3.5">
@@ -40,7 +41,7 @@ const MoreScreen = () => {
           <div className="rounded-[18px] p-[18px] flex items-center gap-3.5 cursor-pointer"
             style={{ background: "linear-gradient(135deg, #7c3aed, #c084fc)" }}>
             <div className="flex-1">
-              <div className="text-base font-black text-primary-foreground mb-0.5">✨ Go Premium</div>
+              <div className="text-base font-black text-primary-foreground mb-0.5 flex items-center gap-1"><NotoEmoji name="sparkles" size={16} /> Go Premium</div>
               <div className="text-xs text-primary-foreground/80 font-bold">All levels · Unlimited · No ads</div>
             </div>
             <button className="bg-card text-[#7c3aed] rounded-[10px] px-4 py-2 text-[13px] font-black">Upgrade</button>

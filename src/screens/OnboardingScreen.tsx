@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
 import Icon from "@/components/Icon";
+import NotoEmoji from "@/components/NotoEmoji";
 
 const slides = [
   {
@@ -30,10 +31,10 @@ const slides = [
     title: <>What's your <b className="text-kibo-green">goal?</b></>,
     desc: "We'll personalise your path with Kibo",
     goals: [
-      { emoji: "💼", label: "Work smarter" },
-      { emoji: "🎓", label: "Study / School" },
-      { emoji: "🚀", label: "Build a product" },
-      { emoji: "🤔", label: "Just curious" },
+      { emoji: <NotoEmoji name="briefcase" size={28} />, label: "Work smarter" },
+      { emoji: <NotoEmoji name="graduationCap" size={28} />, label: "Study / School" },
+      { emoji: <NotoEmoji name="rocket" size={28} />, label: "Build a product" },
+      { emoji: <NotoEmoji name="thinking" size={28} />, label: "Just curious" },
     ],
   },
 ];

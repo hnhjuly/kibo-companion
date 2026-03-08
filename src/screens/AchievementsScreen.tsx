@@ -1,6 +1,7 @@
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
 import Icon from "@/components/Icon";
+import NotoEmoji from "@/components/NotoEmoji";
 import ICONS from "@/assets/icons";
 
 type IconName = keyof typeof ICONS;
@@ -71,9 +72,9 @@ const AchievementsScreen = () => {
             } alt="Kibo" className="w-14 h-14 object-contain" />
             <div className="text-[13px] text-muted-foreground leading-relaxed">
               {unlocked === 0
-                ? "Complete lessons to unlock badges! You got this! 💪"
+                ? <span>Complete lessons to unlock badges! You got this! <NotoEmoji name="flexed" size={14} /></span>
                 : unlocked < 5
-                  ? `${unlocked} badge${unlocked > 1 ? "s" : ""} earned! Keep going! ✨`
+                  ? <span>{unlocked} badge{unlocked > 1 ? "s" : ""} earned! Keep going! <NotoEmoji name="sparkles" size={14} /></span>
                   : <span>You're an AI learning machine! <Icon name="rocket" size={14} /></span>}
             </div>
           </div>

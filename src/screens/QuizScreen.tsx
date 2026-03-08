@@ -3,11 +3,12 @@ import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
 import { X } from "lucide-react";
 import Icon from "@/components/Icon";
+import NotoEmoji from "@/components/NotoEmoji";
 
 const KEYS = ["A", "B", "C", "D"];
 const PRAISES = [
-  <>Brilliant! 🎉</>,
-  <>Correct! ✨</>,
+  <span key="p1">Brilliant! <NotoEmoji name="party" size={18} /></span>,
+  <span key="p2">Correct! <NotoEmoji name="sparkles" size={18} /></span>,
   <>Nailed it! <Icon name="fire" size={18} /></>,
   <>Spot on! <Icon name="lightning" size={18} /></>,
 ];
