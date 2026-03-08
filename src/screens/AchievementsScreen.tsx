@@ -9,14 +9,14 @@ interface Achievement {
 }
 
 const ACHIEVEMENTS: Achievement[] = [
-  { emoji: "🎯", title: "First Steps", desc: "Complete your first lesson", check: p => p.lessonsCompleted.length >= 1 },
+  { emoji: "🎯", title: "First Steps", desc: "Complete your first lesson", check: p => p.completedLessons.length >= 1 },
   { emoji: "🔥", title: "On Fire", desc: "Reach a 3-day streak", check: p => p.streak >= 3 },
   { emoji: "⚡", title: "XP Hunter", desc: "Earn 100 XP", check: p => p.xp >= 100 },
-  { emoji: "📚", title: "Bookworm", desc: "Complete 5 lessons", check: p => p.lessonsCompleted.length >= 5 },
+  { emoji: "📚", title: "Bookworm", desc: "Complete 5 lessons", check: p => p.completedLessons.length >= 5 },
   { emoji: "🔥", title: "Blazing", desc: "Reach a 7-day streak", check: p => p.streak >= 7 },
   { emoji: "💎", title: "XP Master", desc: "Earn 500 XP", check: p => p.xp >= 500 },
   { emoji: "🏆", title: "Level Up!", desc: "Reach Level 2", check: p => p.level >= 2 },
-  { emoji: "🎓", title: "Scholar", desc: "Complete 10 lessons", check: p => p.lessonsCompleted.length >= 10 },
+  { emoji: "🎓", title: "Scholar", desc: "Complete 10 lessons", check: p => p.completedLessons.length >= 10 },
   { emoji: "🌟", title: "Superstar", desc: "Earn 1000 XP", check: p => p.xp >= 1000 },
   { emoji: "🔥", title: "Unstoppable", desc: "Reach a 30-day streak", check: p => p.streak >= 30 },
 ];
