@@ -37,7 +37,7 @@ const AppContent = () => {
         {screen === "achievements" && <AchievementsScreen />}
         {screen === "more" && <MoreScreen />}
         {screen === "hearts-depleted" && <HeartsDepletedScreen />}
-        {screen === "feedback" && <FeedbackScreen />}
+        {screen === "about" && <AboutScreen />}
       </div>
 
       {showNav && <BottomNav />}

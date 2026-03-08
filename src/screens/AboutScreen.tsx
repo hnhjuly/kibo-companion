@@ -50,7 +50,7 @@ const AboutScreen = () => {
             <h3 className="text-[13px] font-black text-muted-foreground uppercase tracking-wider mb-3">Created by</h3>
             <a href="https://www.hanahjuly.com" target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-3 group">
-              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-kibo-green to-emerald-400 flex items-center justify-center text-primary-foreground font-black text-lg">
+              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-kibo-green to-kibo-green/70 flex items-center justify-center text-primary-foreground font-black text-lg">
                 H
               </div>
               <div className="flex-1">
