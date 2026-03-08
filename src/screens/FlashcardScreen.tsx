@@ -15,6 +15,7 @@ const FlashcardScreen = () => {
   const [done, setDone] = useState(false);
   const [showDYK, setShowDYK] = useState(false);
   const [rated, setRated] = useState(0);
+  const [showExit, setShowExit] = useState(false);
 
   const card = queue[idx] as Flashcard | undefined;
 
