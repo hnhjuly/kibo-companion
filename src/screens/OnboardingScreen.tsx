@@ -58,7 +58,7 @@ const OnboardingScreen = () => {
       <div className="flex-1 flex flex-col items-center justify-center text-center gap-4">
         {s.img && (
           <div className="w-40 h-40 flex items-center justify-center">
-            <img src={s.img} alt="Kibo" className="w-40 h-40 object-contain animate-float" />
+            <img src={s.img} alt="Kibo" className="w-40 h-40 object-contain" />
           </div>
         )}
         <h1 className="text-[29px] font-black text-foreground leading-tight">{s.title}</h1>

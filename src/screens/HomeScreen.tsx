@@ -45,7 +45,7 @@ const HomeScreen = () => {
           <div className="rounded-[18px] p-0 px-5 pb-5 relative overflow-hidden flex items-end"
             style={{ background: "linear-gradient(130deg, #e8f6ff, #f5fffc 55%, #f0ffe8)", border: "1.5px solid rgba(74,158,255,0.15)" }}>
             <div className="absolute top-4 right-5 text-[13px] opacity-45 text-kibo-gold">✦</div>
-            <img src={KIBO.happy} alt="Kibo" className="w-[115px] h-[115px] object-contain shrink-0 -mt-2 animate-float drop-shadow-lg" />
+            <img src={KIBO.happy} alt="Kibo" className="w-[115px] h-[115px] object-contain shrink-0 -mt-2 drop-shadow-lg" />
             <div className="flex-1 pt-5 pl-1.5">
               <div className="text-base font-black text-foreground mb-1">Hi, I'm Kibo! ✨</div>
               <div className="text-[13px] text-muted-foreground leading-relaxed mb-3">
