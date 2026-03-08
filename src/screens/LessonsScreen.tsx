@@ -13,11 +13,9 @@ const LessonsScreen = () => {
   const completedSet = new Set(progress.completedLessons);
   const allDone = allLessons.every(l => completedSet.has(l.id));
 
-  // If all lessons complete, show the completion screen
-  if (allDone) {
-    setScreen("all-complete");
-    return null;
-  }
+  useEffect(() => {
+    if (allDone) setScreen("all-complete");
+  }, [allDone, setScreen]);
   
   let foundActive = false;
   const lessonStates = new Map<string, "done" | "active" | "locked">();
