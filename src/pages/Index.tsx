@@ -5,14 +5,14 @@ import LessonsScreen from "@/screens/LessonsScreen";
 import QuizScreen from "@/screens/QuizScreen";
 import CompleteScreen from "@/screens/CompleteScreen";
 import TrainScreen from "@/screens/TrainScreen";
-import RankScreen from "@/screens/RankScreen";
+import AchievementsScreen from "@/screens/AchievementsScreen";
 import MoreScreen from "@/screens/MoreScreen";
 import HeartsDepletedScreen from "@/screens/HeartsDepletedScreen";
 import BottomNav from "@/components/BottomNav";
 
 const AppContent = () => {
   const { screen } = useApp();
-  const showNav = ["home", "train", "rank", "more"].includes(screen);
+  const showNav = ["home", "train", "achievements", "more"].includes(screen);
 
   return (
     <div className="w-[390px] h-[844px] bg-background rounded-[46px] overflow-hidden relative flex flex-col"
@@ -33,7 +33,7 @@ const AppContent = () => {
         {screen === "quiz" && <QuizScreen />}
         {screen === "complete" && <CompleteScreen />}
         {screen === "train" && <TrainScreen />}
-        {screen === "rank" && <RankScreen />}
+        {screen === "achievements" && <AchievementsScreen />}
         {screen === "more" && <MoreScreen />}
         {screen === "hearts-depleted" && <HeartsDepletedScreen />}
       </div>

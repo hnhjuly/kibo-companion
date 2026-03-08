@@ -1,12 +1,12 @@
 import { useApp } from "@/context/AppContext";
-import { Home, Flame, Trophy, MoreHorizontal } from "lucide-react";
+import { Home, Flame, Award, MoreHorizontal } from "lucide-react";
 
-type Tab = "home" | "train" | "rank" | "more";
+type Tab = "home" | "train" | "achievements" | "more";
 
 const tabs: { id: Tab; icon: typeof Home; label: string; badge?: number }[] = [
   { id: "home", icon: Home, label: "Learn" },
   { id: "train", icon: Flame, label: "Train", badge: 3 },
-  { id: "rank", icon: Trophy, label: "Rank" },
+  { id: "achievements", icon: Award, label: "Badges" },
   { id: "more", icon: MoreHorizontal, label: "More" },
 ];
 

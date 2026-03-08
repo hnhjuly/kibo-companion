@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, ReactNode 
 import { Lesson } from "@/data/curriculum";
 import { UserProgress, loadProgress, saveProgress, loseHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX } from "@/lib/progress";
 
-type Screen = "onboarding" | "home" | "lessons" | "quiz" | "complete" | "train" | "rank" | "more" | "hearts-depleted";
+type Screen = "onboarding" | "home" | "lessons" | "quiz" | "complete" | "train" | "achievements" | "more" | "hearts-depleted";
 
 interface AppState {
   screen: Screen;
