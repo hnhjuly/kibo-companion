@@ -18,6 +18,7 @@ const STREAK_BGS = [streakBg1, streakBg2, streakBg3, streakBg4];
 interface ModeCardProps {
   emojiName: string;
   color: string;
+  backgroundColor: string;
   title: string;
   subtitle: string;
   stat: React.ReactNode;
@@ -26,9 +27,10 @@ interface ModeCardProps {
   onClick: () => void;
 }
 
-const ModeCard = ({ emojiName, color, title, subtitle, stat, statColor, badge, onClick }: ModeCardProps) => (
+const ModeCard = ({ emojiName, color, backgroundColor, title, subtitle, stat, statColor, badge, onClick }: ModeCardProps) => (
   <button onClick={onClick}
-    className="w-full bg-card rounded-[16px] border-[1.5px] border-border p-3.5 flex items-center gap-3.5 text-left transition-all hover:border-muted-foreground/30 active:scale-[0.98]">
+    className="w-full rounded-[16px] border-[1.5px] border-border p-3.5 flex items-center gap-3.5 text-left transition-all hover:border-muted-foreground/30 active:scale-[0.98]"
+    style={{ backgroundColor }}>
     <div className="w-12 h-12 rounded-[13px] flex items-center justify-center shrink-0" style={{ background: color + "20" }}>
       <NotoEmoji name={emojiName as any} size={28} />
     </div>
