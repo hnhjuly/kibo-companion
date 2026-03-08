@@ -92,6 +92,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setProgress(p => restoreHeart(p));
   }, []);
 
+  const onSetGoal = useCallback((goal: UserGoal) => {
+    setProgress(p => ({ ...p, goal }));
+  }, []);
+
   // Override setScreen to check hearts
   const safeSetScreen = useCallback((s: Screen) => {
     if ((s === "quiz") && !canPlay) {
