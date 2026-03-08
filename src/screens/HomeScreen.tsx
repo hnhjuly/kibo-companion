@@ -22,16 +22,19 @@ const HomeScreen = () => {
             <div className="text-[13px] text-muted-foreground font-semibold mt-0.5">Learn AI with Kibo</div>
           </div>
           <div className="flex gap-2">
-            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-orange">🔥 3</div>
-            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-gold">💎 230</div>
+            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-orange">🔥 {progress.streak}</div>
+            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-gold">💎 {progress.xp}</div>
+            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold">
+              {"❤️".repeat(progress.hearts)}{"🖤".repeat(3 - progress.hearts)}
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-black text-muted-foreground tracking-wide whitespace-nowrap">LEVEL 1</span>
+          <span className="text-[11px] font-black text-muted-foreground tracking-wide whitespace-nowrap">LEVEL {progress.level}</span>
           <div className="flex-1 h-[9px] bg-background rounded-full overflow-hidden">
-            <div className="h-full rounded-full" style={{ width: "87%", background: "linear-gradient(90deg, #3db74a, #72e07a)" }} />
+            <div className="h-full rounded-full" style={{ width: `${(progress.xp / getXPForLevel(progress.level)) * 100}%`, background: "linear-gradient(90deg, #3db74a, #72e07a)" }} />
           </div>
-          <span className="text-[11px] font-black text-kibo-green whitespace-nowrap">260/300 XP</span>
+          <span className="text-[11px] font-black text-kibo-green whitespace-nowrap">{progress.xp}/{getXPForLevel(progress.level)} XP</span>
         </div>
       </div>
 
