@@ -34,7 +34,7 @@ const AboutScreen = () => {
             </p>
             <div className="flex gap-2 justify-center flex-wrap">
               <span className="bg-background rounded-full px-3 py-1.5 text-[11px] font-bold text-muted-foreground flex items-center gap-1">
-                <Icon name="brain" size={14} /> AI Learning
+                <Icon name="lightbulb" size={14} /> AI Learning
               </span>
               <span className="bg-background rounded-full px-3 py-1.5 text-[11px] font-bold text-muted-foreground flex items-center gap-1">
                 <Icon name="lightning" size={14} /> Gamified
