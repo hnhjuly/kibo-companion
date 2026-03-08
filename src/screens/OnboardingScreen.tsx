@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
+import { UserGoal } from "@/lib/progress";
 
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
+
+const GOAL_MAP: UserGoal[] = ["work", "study", "build", "curious"];
 
 const slides = [
   {
@@ -41,12 +44,16 @@ const slides = [
 ];
 
 const OnboardingScreen = () => {
-  const { setScreen } = useApp();
+  const { setScreen, onSetGoal } = useApp();
   const [slide, setSlide] = useState(0);
   const [selectedGoal, setSelectedGoal] = useState<number | null>(null);
 
   const next = () => {
-    if (slide >= 3) { setScreen("home"); return; }
+    if (slide >= 3) {
+      if (selectedGoal !== null) onSetGoal(GOAL_MAP[selectedGoal]);
+      setScreen("home");
+      return;
+    }
     setSlide(s => s + 1);
   };
 

@@ -1,5 +1,7 @@
 const STORAGE_KEY = "kibo_progress";
 
+export type UserGoal = "work" | "study" | "build" | "curious" | null;
+
 export interface UserProgress {
   xp: number;
   level: number;
@@ -12,6 +14,7 @@ export interface UserProgress {
   totalAnswered: number;
   dailyTasksDone: number;
   freezesAvailable: number;
+  goal: UserGoal;
 }
 
 const HEARTS_MAX = 3;
@@ -38,6 +41,7 @@ function defaultProgress(): UserProgress {
     heartsDepletedAt: null,
     completedLessons: [],
     totalCorrect: 0,
+    goal: null,
     totalAnswered: 0,
     dailyTasksDone: 0,
     freezesAvailable: 1,

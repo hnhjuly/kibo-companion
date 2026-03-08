@@ -11,8 +11,13 @@ import PreloadedImg from "@/components/PreloadedImg";
 const HomeScreen = () => {
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
 
-  const training = getTodaysTraining(progress.completedLessons);
+  const training = getTodaysTraining(progress.completedLessons, progress.goal);
   const { topic, exercises: quizExercises, tierLabel } = training;
+
+  const goalGreeting = progress.goal === "work" ? "Ready to work smarter with AI?" 
+    : progress.goal === "study" ? "Let's ace your studies with AI!"
+    : progress.goal === "build" ? "Let's build something amazing!"
+    : null;
 
   const startDailyTraining = () => {
     const dailyLesson: Lesson = {
@@ -33,7 +38,9 @@ const HomeScreen = () => {
       <div className="bg-card px-5 pt-4 pb-3.5 border-b border-border shrink-0">
         <div className="flex justify-between items-start mb-2.5">
           <div>
-            <div className="text-[22px] font-black text-foreground flex items-center gap-1.5">Hello! <NotoEmoji name="wave" size={24} /></div>
+            <div className="text-[22px] font-black text-foreground flex items-center gap-1.5">
+              {goalGreeting ? goalGreeting : <>Hello! <NotoEmoji name="wave" size={24} /></>}
+            </div>
             <div className="text-[13px] text-muted-foreground font-semibold mt-0.5">Learn AI with Kibo</div>
           </div>
           <div className="flex gap-2">
