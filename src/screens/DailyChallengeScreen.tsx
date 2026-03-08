@@ -5,6 +5,7 @@ import { KIBO } from "@/data/curriculum";
 import { ArrowLeft } from "lucide-react";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
+import ExitGameDialog from "@/components/ExitGameDialog";
 
 const KEYS = ["A", "B", "C", "D"];
 
