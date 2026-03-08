@@ -1,5 +1,5 @@
 import { KIBO } from "@/data/curriculum";
-import { User, Bell, Clock, HelpCircle, ChevronRight } from "lucide-react";
+import { User, Bell, Clock, HelpCircle, MessageCircle, ChevronRight } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import Icon from "@/components/Icon";
 
