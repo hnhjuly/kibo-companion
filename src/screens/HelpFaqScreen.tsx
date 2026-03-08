@@ -3,6 +3,7 @@ import { useApp } from "@/context/AppContext";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
 import { KIBO } from "@/data/curriculum";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
 const FAQ_ITEMS = [
   {
