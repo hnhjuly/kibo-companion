@@ -9,18 +9,18 @@ const slides = [
     desc: "Join thousands mastering AI for work, school and life — starting right now.",
   },
   {
-    img: KIBO.celebrate,
+    img: KIBO.focused,
     title: <>Practice <b className="text-kibo-green">real tasks</b>,<br />not just theory</>,
     desc: "Fix prompts. Summarize emails. Choose AI tools. Skills you'll use tomorrow.",
   },
   {
-    img: KIBO.thinking,
+    img: KIBO.trophy,
     title: <>Earn XP,<br /><b className="text-kibo-green">build streaks</b></>,
     desc: null,
     pills: ["🔥 Streaks", "⚡ XP & Levels", "💎 Badges", "🏆 Leaderboard"],
   },
   {
-    img: KIBO.thinking,
+    img: KIBO.thumbsup,
     title: <>What's your <b className="text-kibo-green">goal?</b></>,
     desc: "We'll personalise your path with Kibo",
     goals: [
