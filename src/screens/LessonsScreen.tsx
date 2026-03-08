@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { CURRICULUM, KIBO } from "@/data/curriculum";
 import { Check, Lock, ChevronLeft, RotateCcw } from "lucide-react";
