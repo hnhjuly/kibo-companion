@@ -5,6 +5,7 @@ import { KIBO } from "@/data/curriculum";
 import { ArrowLeft } from "lucide-react";
 import PreloadedImg from "@/components/PreloadedImg";
 import DidYouKnowCard from "@/components/DidYouKnowCard";
+import ExitGameDialog from "@/components/ExitGameDialog";
 
 const FlashcardScreen = () => {
   const { setScreen } = useApp();
