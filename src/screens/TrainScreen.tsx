@@ -3,7 +3,7 @@ import { CURRICULUM } from "@/data/curriculum";
 import { ArrowRight } from "lucide-react";
 
 const TrainScreen = () => {
-  const { setScreen, setCurrentLesson } = useApp();
+  const { setScreen, setCurrentLesson, progress } = useApp();
 
   const startQuiz = () => {
     setCurrentLesson(CURRICULUM.levels[0].lessons[2]);
