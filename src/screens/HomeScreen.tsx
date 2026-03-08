@@ -2,15 +2,15 @@ import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
 import { ChevronRight, ArrowRight, Check, Lock, Star } from "lucide-react";
 import { getXPForLevel } from "@/lib/progress";
-import { getTodaysTopic, getTodaysQuizExercises, exerciseToQuestion } from "@/data/dailyTraining";
+import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import type { Lesson } from "@/data/curriculum";
 import kiboBg from "@/assets/kibo-bg.png";
 
 const HomeScreen = () => {
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
 
-  const topic = getTodaysTopic();
-  const quizExercises = getTodaysQuizExercises();
+  const training = getTodaysTraining(progress.completedLessons);
+  const { topic, exercises: quizExercises, tierLabel } = training;
 
   const startDailyTraining = () => {
     const dailyLesson: Lesson = {
