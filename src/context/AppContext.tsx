@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 import { Lesson } from "@/data/curriculum";
-import { UserProgress, loadProgress, saveProgress, resetProgress, loseHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX } from "@/lib/progress";
+import { UserProgress, loadProgress, saveProgress, resetProgress, loseHeart, restoreHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX } from "@/lib/progress";
 
 type Screen = "onboarding" | "home" | "lessons" | "quiz" | "complete" | "train" | "achievements" | "more" | "hearts-depleted" | "feedback";
 
