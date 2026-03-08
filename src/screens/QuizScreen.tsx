@@ -2,9 +2,15 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
 import { X } from "lucide-react";
+import Icon from "@/components/Icon";
 
 const KEYS = ["A", "B", "C", "D"];
-const PRAISES = ["Brilliant! 🎉", "Correct! ✨", "Nailed it! 🔥", "Spot on! ⚡"];
+const PRAISES = [
+  <>Brilliant! 🎉</>,
+  <>Correct! ✨</>,
+  <>Nailed it! <Icon name="fire" size={18} /></>,
+  <>Spot on! <Icon name="lightning" size={18} /></>,
+];
 
 // Fisher-Yates shuffle
 function shuffleArray<T>(arr: T[]): T[] {
@@ -18,7 +24,6 @@ function shuffleArray<T>(arr: T[]): T[] {
 
 function shuffleQuestions(questions: typeof CURRICULUM.levels[0]["lessons"][0]["questions"]) {
   return shuffleArray(questions).map(q => {
-    // Shuffle choices and update correct index
     const indices = q.choices.map((_, i) => i);
     const shuffledIndices = shuffleArray(indices);
     const newChoices = shuffledIndices.map(i => q.choices[i]);
@@ -79,7 +84,6 @@ const QuizScreen = () => {
       const hasHearts = onLoseHeart();
       setLocalHearts(h => Math.max(0, h - 1));
       if (!hasHearts) {
-        // Hearts depleted - show feedback then redirect
         setTimeout(() => {
           setScreen("hearts-depleted");
         }, 2000);
@@ -130,8 +134,13 @@ const QuizScreen = () => {
               background: "linear-gradient(90deg, #3db74a, #72e07a)"
             }} />
           </div>
-          <div className="flex gap-1 text-lg">
-            {"❤️".repeat(localHearts)}{"🖤".repeat(3 - localHearts)}
+          <div className="flex gap-1">
+            {Array.from({ length: localHearts }).map((_, i) => (
+              <Icon key={`h${i}`} name="heart" size={20} />
+            ))}
+            {Array.from({ length: 3 - localHearts }).map((_, i) => (
+              <Icon key={`e${i}`} name="heartEmpty" size={20} />
+            ))}
           </div>
         </div>
       </div>
@@ -143,7 +152,7 @@ const QuizScreen = () => {
         </div>
         <h2 className="text-[22px] font-black text-foreground leading-tight mb-1.5">{q.question}</h2>
         <p className="text-sm text-muted-foreground mb-7">
-          {q.hint ? `💡 ${q.hint}` : "Choose the best answer"}
+          {q.hint ? <span><Icon name="lightbulb" size={14} /> {q.hint}</span> : "Choose the best answer"}
         </p>
         <div className="flex flex-col gap-2.5">
           {q.choices.map((c, i) => {
@@ -178,7 +187,7 @@ const QuizScreen = () => {
             <img src={isCorrect ? [KIBO.thumbsup, KIBO.celebrate, KIBO.happy][qIdx % 3] : localHearts === 0 ? KIBO.sad : [KIBO.shocked, KIBO.surprised][qIdx % 2]} alt="Kibo" className="w-[60px] h-[60px] object-contain" />
             <div className="flex-1">
               <div className={`text-lg font-black ${isCorrect ? "text-kibo-green" : "text-destructive"}`}>
-                {isCorrect ? PRAISES[Math.floor(Math.random() * 4)] : localHearts === 0 ? "No hearts left! 💔" : "Not quite... 💔"}
+                {isCorrect ? PRAISES[Math.floor(Math.random() * 4)] : localHearts === 0 ? <span>No hearts left! <Icon name="heartBroken" size={18} /></span> : <span>Not quite... <Icon name="heartBroken" size={18} /></span>}
               </div>
               <div className="text-[13px] text-muted-foreground leading-relaxed mt-1">{q.explanation}</div>
             </div>

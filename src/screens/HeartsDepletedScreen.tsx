@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
 import { showRewardedAd, AD_CONFIG } from "@/lib/rewardedAd";
+import Icon from "@/components/Icon";
 
 function formatTime(ms: number) {
   const totalSec = Math.floor(ms / 1000);
@@ -31,7 +32,6 @@ const HeartsDepletedScreen = () => {
     if (rewarded) {
       onRestoreHeart();
       setAdWatched(true);
-      // Go back to home after a brief moment
       setTimeout(() => setScreen("home"), 1200);
     }
   };
@@ -43,14 +43,18 @@ const HeartsDepletedScreen = () => {
       {adWatched ? (
         <>
           <img src={KIBO.celebrate} alt="Kibo happy" className="w-[150px] h-[150px] object-contain mb-4 drop-shadow-lg" />
-          <h1 className="text-[28px] font-black text-foreground mb-2">Heart Restored! ❤️</h1>
+          <h1 className="text-[28px] font-black text-foreground mb-2 flex items-center justify-center gap-2">
+            Heart Restored! <Icon name="heart" size={28} />
+          </h1>
           <p className="text-muted-foreground text-[15px] mb-4">You're back in the game!</p>
         </>
       ) : (
         <>
           <img src={KIBO.lowStreak} alt="Kibo sad" className="w-[150px] h-[150px] object-contain mb-4 drop-shadow-lg" />
           
-          <h1 className="text-[28px] font-black text-foreground mb-2">Out of Hearts! 💔</h1>
+          <h1 className="text-[28px] font-black text-foreground mb-2 flex items-center justify-center gap-2">
+            Out of Hearts! <Icon name="heartBroken" size={28} />
+          </h1>
           <p className="text-muted-foreground text-[15px] mb-6 max-w-[260px]">
             You've used all 3 hearts. Take a break and come back when they refill!
           </p>
@@ -65,7 +69,9 @@ const HeartsDepletedScreen = () => {
                   {AD_CONFIG.enabled ? "Watching ad..." : "Loading..."}
                 </>
               ) : (
-                <>▶️ Watch Ad for 1 ❤️</>
+                <>
+                  <Icon name="play" size={18} /> Watch Ad for 1 <Icon name="heart" size={18} />
+                </>
               )}
             </button>
           )}
@@ -77,19 +83,21 @@ const HeartsDepletedScreen = () => {
               {formatTime(time)}
             </div>
             <div className="flex justify-center gap-2 mt-3">
-              {"🖤🖤🖤".split("").filter((_, i) => i % 2 === 0).map((_, i) => (
-                <span key={i} className="text-2xl">🖤</span>
+              {[0, 1, 2].map(i => (
+                <Icon key={i} name="heartEmpty" size={28} />
               ))}
             </div>
           </div>
 
           {/* Tips while waiting */}
           <div className="bg-card rounded-2xl p-4 w-full card-shadow mb-6">
-            <div className="text-sm font-extrabold text-foreground mb-2">💡 While you wait...</div>
+            <div className="text-sm font-extrabold text-foreground mb-2 flex items-center gap-1.5">
+              <Icon name="lightbulb" size={16} /> While you wait...
+            </div>
             <ul className="text-[13px] text-muted-foreground text-left space-y-1.5">
-              <li>📖 Review what you learned today</li>
-              <li>🔥 Your streak is at <b className="text-kibo-orange">{progress.streak} days</b></li>
-              <li>⚡ You've earned <b className="text-kibo-gold">{progress.xp} XP</b> total</li>
+              <li className="flex items-center gap-1.5"><Icon name="book" size={14} /> Review what you learned today</li>
+              <li className="flex items-center gap-1.5"><Icon name="fire" size={14} /> Your streak is at <b className="text-kibo-orange">{progress.streak} days</b></li>
+              <li className="flex items-center gap-1.5"><Icon name="lightning" size={14} /> You've earned <b className="text-kibo-gold">{progress.xp} XP</b> total</li>
             </ul>
           </div>
 

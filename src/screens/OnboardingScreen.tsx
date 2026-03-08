@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
+import Icon from "@/components/Icon";
 
 const slides = [
   {
@@ -17,7 +18,12 @@ const slides = [
     img: KIBO.studying,
     title: <>Earn XP,<br /><b className="text-kibo-green">build streaks</b></>,
     desc: null,
-    pills: ["🔥 Streaks", "⚡ XP & Levels", "💎 Badges", "🏆 Leaderboard"],
+    pills: [
+      { label: "Streaks", icon: "fire" as const },
+      { label: "XP & Levels", icon: "lightning" as const },
+      { label: "Badges", icon: "diamond" as const },
+      { label: "Leaderboard", icon: "trophy" as const },
+    ],
   },
   {
     img: KIBO.thumbsup,
@@ -66,7 +72,9 @@ const OnboardingScreen = () => {
         {s.pills && (
           <div className="flex gap-2 flex-wrap justify-center">
             {s.pills.map(p => (
-              <div key={p} className="bg-card rounded-full px-4 py-2 text-[13px] font-extrabold card-shadow">{p}</div>
+              <div key={p.label} className="bg-card rounded-full px-4 py-2 text-[13px] font-extrabold card-shadow flex items-center gap-1.5">
+                <Icon name={p.icon} size={16} /> {p.label}
+              </div>
             ))}
           </div>
         )}
