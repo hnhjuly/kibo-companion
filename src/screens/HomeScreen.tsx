@@ -14,6 +14,47 @@ import { toast } from "@/hooks/use-toast";
 
 const HomeScreen = () => {
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
+  const [notified, setNotified] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem("kibo_waitlist");
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    } catch { return new Set(); }
+  });
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [pendingModule, setPendingModule] = useState("");
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleNotifyClick = (moduleTitle: string) => {
+    if (notified.has(moduleTitle)) return;
+    setPendingModule(moduleTitle);
+    setEmail("");
+    setShowEmailModal(true);
+  };
+
+  const handleSubmitEmail = async () => {
+    const trimmed = email.trim().toLowerCase();
+    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      toast({ title: "Invalid email", description: "Please enter a valid email address.", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("waitlist").insert({ email: trimmed, module_title: pendingModule });
+    setSubmitting(false);
+    if (error && error.code === "23505") {
+      toast({ title: "Already subscribed!", description: "You're already on the list for this module." });
+    } else if (error) {
+      toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
+      return;
+    } else {
+      toast({ title: "You're on the list! 🎉", description: `We'll notify you when "${pendingModule}" launches.` });
+    }
+    const next = new Set(notified);
+    next.add(pendingModule);
+    setNotified(next);
+    localStorage.setItem("kibo_waitlist", JSON.stringify([...next]));
+    setShowEmailModal(false);
+  };
 
   const training = getTodaysTraining(progress.completedLessons, progress.goal);
   const { topic, exercises: quizExercises, tierLabel } = training;
