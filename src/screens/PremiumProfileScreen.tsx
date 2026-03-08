@@ -15,7 +15,7 @@ const PremiumProfileScreen = () => {
         <div className="p-[18px] pb-[100px] flex flex-col gap-3.5">
           {/* Profile */}
           <div className="bg-card rounded-[18px] p-[22px] text-center border-[1.5px] border-border">
-            <img src={
+            <PreloadedImg src={
               progress.streak >= 30 ? KIBO.streak30 :
               progress.streak >= 7 ? KIBO.streak7 :
               progress.streak >= 3 ? KIBO.streak3 :

@@ -62,7 +62,7 @@ const AchievementsScreen = () => {
 
           {/* Kibo encouragement */}
           <div className="flex items-center gap-3 bg-card rounded-2xl p-4 border-[1.5px] border-border mb-5">
-            <img src={
+            <PreloadedImg src={
               unlocked >= 8 ? KIBO.streak30 :
               unlocked >= 5 ? KIBO.trophy :
               unlocked >= 3 ? KIBO.celebrate :

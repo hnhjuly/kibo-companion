@@ -84,7 +84,7 @@ const HomeScreen = () => {
                 START <ArrowRight className="w-4 h-4" />
               </button>
             </div>
-            <img src={
+            <PreloadedImg src={
               progress.streak >= 30 ? KIBO.streak30 :
               progress.streak >= 7 ? KIBO.streak7 :
               progress.streak >= 3 ? KIBO.streak3 :
