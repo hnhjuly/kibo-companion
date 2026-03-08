@@ -55,9 +55,10 @@ const LessonsScreen = () => {
                 <span className="text-[15px] font-black text-foreground">{lv.title}</span>
               </div>
               {lv.lessons.map((lesson, i) => {
-                const isLocked = lesson.state === "locked";
-                const isDone = lesson.state === "done";
-                const isActive = lesson.state === "active";
+                const state = lessonStates.get(lesson.id) || "locked";
+                const isLocked = state === "locked";
+                const isDone = state === "done";
+                const isActive = state === "active";
                 return (
                   <button key={lesson.id}
                     disabled={isLocked || lesson.questions.length === 0}
