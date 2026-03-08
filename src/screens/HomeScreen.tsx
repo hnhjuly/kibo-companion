@@ -1,6 +1,7 @@
 import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
 import { ChevronRight, ArrowRight, Check, Lock } from "lucide-react";
+import { COMING_SOON_MODULES } from "@/data/comingSoon";
 import { getXPForLevel } from "@/lib/progress";
 import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import type { Lesson } from "@/data/curriculum";
