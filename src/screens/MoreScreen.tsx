@@ -47,6 +47,12 @@ const MoreScreen = () => {
               </button>
             ))}
           </div>
+
+          {/* DEBUG: Remove later */}
+          <button onClick={() => setScreen("all-complete" as any)}
+            className="w-full py-3 bg-destructive/10 text-destructive rounded-xl font-bold text-sm">
+            🐛 Preview "All Complete" Screen
+          </button>
         </div>
       </div>
     </>
