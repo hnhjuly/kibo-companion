@@ -44,7 +44,7 @@ const AchievementsScreen = () => {
             {[
               { val: `${progress.xp}`, label: "Total XP", emoji: "⚡" },
               { val: `${progress.streak}`, label: "Streak", emoji: "🔥" },
-              { val: `${progress.lessonsCompleted.length}`, label: "Lessons", emoji: "📚" },
+              { val: `${progress.completedLessons.length}`, label: "Lessons", emoji: "📚" },
             ].map(s => (
               <div key={s.label} className="flex-1 bg-card rounded-2xl p-3.5 border-[1.5px] border-border text-center">
                 <div className="text-lg mb-0.5">{s.emoji}</div>
