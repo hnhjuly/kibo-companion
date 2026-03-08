@@ -13,6 +13,10 @@ import HeartsDepletedScreen from "@/screens/HeartsDepletedScreen";
 import FeedbackScreen from "@/screens/FeedbackScreen";
 import AllCompleteScreen from "@/screens/AllCompleteScreen";
 import HelpFaqScreen from "@/screens/HelpFaqScreen";
+import DailyChallengeScreen from "@/screens/DailyChallengeScreen";
+import FlashcardScreen from "@/screens/FlashcardScreen";
+import SpeedRoundScreen from "@/screens/SpeedRoundScreen";
+import MatchPairsScreen from "@/screens/MatchPairsScreen";
 import BottomNav from "@/components/BottomNav";
 import DesktopSidebar from "@/components/DesktopSidebar";
 
@@ -30,6 +34,10 @@ const screens: Record<string, React.FC> = {
   feedback: FeedbackScreen,
   "all-complete": AllCompleteScreen,
   "help-faq": HelpFaqScreen,
+  "daily-challenge": DailyChallengeScreen,
+  "flashcards": FlashcardScreen,
+  "speed-round": SpeedRoundScreen,
+  "match-pairs": MatchPairsScreen,
 };
 
 const AppContent = () => {

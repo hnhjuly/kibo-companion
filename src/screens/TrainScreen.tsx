@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import { useApp } from "@/context/AppContext";
 import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
+import { FlashcardState } from "@/data/flashcards";
+import { DailyChallengeManager } from "@/data/gameModes";
 import { ArrowRight } from "lucide-react";
 import { KIBO, type Lesson } from "@/data/curriculum";
 import NotoEmoji from "@/components/NotoEmoji";
@@ -13,12 +15,45 @@ import streakBg4 from "@/assets/streak-bg-4.png";
 
 const STREAK_BGS = [streakBg1, streakBg2, streakBg3, streakBg4];
 
+interface ModeCardProps {
+  icon: string;
+  color: string;
+  title: string;
+  subtitle: string;
+  stat: string;
+  statColor?: string;
+  badge?: string;
+  onClick: () => void;
+}
+
+const ModeCard = ({ icon, color, title, subtitle, stat, statColor, badge, onClick }: ModeCardProps) => (
+  <button onClick={onClick}
+    className="w-full bg-card rounded-[16px] border-[1.5px] border-border p-3.5 flex items-center gap-3.5 text-left transition-all hover:border-muted-foreground/30 active:scale-[0.98]">
+    <div className="w-12 h-12 rounded-[13px] flex items-center justify-center text-2xl shrink-0" style={{ background: color + "20" }}>
+      {icon}
+    </div>
+    <div className="flex-1 min-w-0">
+      <div className="flex items-center gap-2">
+        <span className="text-[15px] font-black text-foreground">{title}</span>
+        {badge && <span className="bg-destructive/15 text-destructive px-2 py-0.5 rounded-full text-[10px] font-black">{badge}</span>}
+      </div>
+      <span className="text-xs text-muted-foreground font-semibold">{subtitle}</span>
+    </div>
+    <div className={`text-xs font-black shrink-0 ${statColor || "text-muted-foreground"}`}>{stat}</div>
+  </button>
+);
+
 const TrainScreen = () => {
   const { setScreen, setCurrentLesson, progress } = useApp();
   const randomBg = useMemo(() => STREAK_BGS[Math.floor(Math.random() * STREAK_BGS.length)], []);
 
   const training = getTodaysTraining(progress.completedLessons, progress.goal);
-  const { topic, exercises: quizExercises, tierLabel } = training;
+  const { topic, exercises: quizExercises } = training;
+
+  const dueCards = useMemo(() => FlashcardState.getDueCards().length, []);
+  const dailyDone = useMemo(() => DailyChallengeManager.hasCompletedToday(), []);
+  const speedBest = parseInt(sessionStorage.getItem("kibo_speed_best") || "0");
+  const pairsBest = sessionStorage.getItem("kibo_pairs_best");
 
   const startDailyChallenge = () => {
     const dailyLesson: Lesson = {
@@ -37,7 +72,7 @@ const TrainScreen = () => {
     <>
       <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center gap-3.5 justify-center">
         <span className="text-lg font-black text-foreground flex items-center gap-2">
-          <NotoEmoji name="fire" size={20} /> Daily Challenge
+          <NotoEmoji name="lightning" size={20} /> Train
         </span>
       </div>
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
@@ -53,15 +88,54 @@ const TrainScreen = () => {
                 progress.streak >= 3 ? KIBO.streak3 :
                 progress.streak > 0 ? KIBO.streakAtRisk :
                 KIBO.neutral
-              } alt="Kibo streak" className="w-[150px] h-[150px] object-contain drop-shadow-lg" />
+              } alt="Kibo streak" className="w-[120px] h-[120px] object-contain drop-shadow-lg" />
               <div className="flex-1">
-                <div className="text-[28px] font-black text-white drop-shadow-md">{progress.streak} Day Streak</div>
+                <div className="text-[26px] font-black text-white drop-shadow-md">{progress.streak} Day Streak</div>
                 <div className="text-[13px] text-white/80 font-bold drop-shadow-sm">
                   {progress.streak >= 30 ? <span>Legendary! <NotoEmoji name="crown" size={14} /></span> : progress.streak >= 7 ? <span>Amazing! <NotoEmoji name="star" size={14} /></span> : progress.streak >= 3 ? <span>On fire! <NotoEmoji name="fire" size={14} /></span> : "Don't break it!"}
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Game mode cards */}
+          <div className="flex flex-col gap-2.5">
+            <ModeCard
+              icon="🎯" color="#ffb800"
+              title="Daily Challenge" subtitle="One harder question — 2x XP"
+              stat={dailyDone ? "✅ Done" : `🔥 ${progress.streak}`}
+              statColor={dailyDone ? "text-kibo-green" : "text-kibo-gold"}
+              badge="2x XP"
+              onClick={() => setScreen("daily-challenge" as any)}
+            />
+            <ModeCard
+              icon="🃏" color="#4a9eff"
+              title="Flashcards" subtitle="Flip and self-rate to remember terms"
+              stat={dueCards > 0 ? `${dueCards} due today` : "All caught up ✓"}
+              statColor={dueCards > 0 ? "text-secondary" : "text-kibo-green"}
+              onClick={() => setScreen("flashcards" as any)}
+            />
+            <ModeCard
+              icon="⚡" color="#ff4f4f"
+              title="Speed Round" subtitle="60 seconds, as many Qs as possible"
+              stat={speedBest > 0 ? `Best: ${speedBest}` : "Best: --"}
+              onClick={() => setScreen("speed-round" as any)}
+            />
+            <ModeCard
+              icon="🧩" color="#9b6dff"
+              title="Match the Pairs" subtitle="Tap terms and definitions to match them"
+              stat={pairsBest ? `Best: ${Math.floor(parseInt(pairsBest) / 60)}:${String(parseInt(pairsBest) % 60).padStart(2, "0")}` : "Best: --:--"}
+              onClick={() => setScreen("match-pairs" as any)}
+            />
+          </div>
+
+          {/* Quick Fire divider */}
+          <div className="flex items-center gap-3 mt-2">
+            <div className="h-[1.5px] flex-1 bg-border" />
+            <span className="text-sm font-black text-foreground flex items-center gap-1.5"><NotoEmoji name="lightning" size={14} /> Quick Fire</span>
+            <div className="h-[1.5px] flex-1 bg-border" />
+          </div>
+          <p className="text-xs text-muted-foreground font-semibold text-center -mt-2">Endless practice questions</p>
 
           {/* Today's topic header */}
           <div className="rounded-[18px] p-4 border-[1.5px] border-border bg-card">

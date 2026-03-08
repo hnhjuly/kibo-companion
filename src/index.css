@@ -87,3 +87,9 @@
   from { transform: translateY(0) rotate(-4deg); }
   to { transform: translateY(-18px) rotate(4deg); }
 }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
