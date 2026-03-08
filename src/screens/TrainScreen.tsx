@@ -22,7 +22,7 @@ const TrainScreen = () => {
             style={{ background: "linear-gradient(135deg, #fff8e0, #ffe8d6)", border: "1.5px solid #ffb800" }}>
             <span className="text-[50px]">🔥</span>
             <div className="flex-1">
-              <div className="text-[28px] font-black text-foreground">3 Day Streak</div>
+              <div className="text-[28px] font-black text-foreground">{progress.streak} Day Streak</div>
               <div className="text-[13px] text-muted-foreground font-bold">Don't break it!</div>
             </div>
             <button className="bg-card border-2 border-kibo-gold rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-kibo-orange">❄️ Freeze</button>
