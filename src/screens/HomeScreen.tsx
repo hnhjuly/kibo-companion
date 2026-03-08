@@ -58,7 +58,7 @@ const HomeScreen = () => {
                 START <ArrowRight className="w-4 h-4" />
               </button>
             </div>
-            <img src={KIBO.happy} alt="Kibo" className="w-[150px] h-[150px] object-contain shrink-0 relative z-10 -mb-1 mr-2 drop-shadow-lg" />
+            <img src={KIBO.happy} alt="Kibo" className="w-[200px] h-[200px] object-contain shrink-0 relative z-10 -mb-1 mr-2 drop-shadow-lg" />
           </div>
 
           {/* Today's Training */}
