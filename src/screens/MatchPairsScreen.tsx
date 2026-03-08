@@ -32,6 +32,7 @@ const MatchPairsScreen = () => {
   const [timer, setTimer] = useState(0);
   const [started, setStarted] = useState(false);
   const [done, setDone] = useState(false);
+  const [showExit, setShowExit] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
