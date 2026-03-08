@@ -18,9 +18,9 @@ const MoreScreen = () => {
             <div className="text-sm text-muted-foreground font-bold mb-4">Level {progress.level} · AI {progress.level <= 1 ? "Beginner" : progress.level <= 3 ? "Learner" : "Expert"}</div>
             <div className="flex gap-2">
               {[
-                { val: "260", label: "Total XP" },
-                { val: "🔥 3", label: "Streak" },
-                { val: "3", label: "Lessons" },
+                { val: String(progress.xp), label: "Total XP" },
+                { val: `🔥 ${progress.streak}`, label: "Streak" },
+                { val: String(progress.completedLessons.length), label: "Lessons" },
               ].map(s => (
                 <div key={s.label} className="flex-1 bg-background rounded-xl p-3 text-center">
                   <div className="text-xl font-black text-foreground">{s.val}</div>
