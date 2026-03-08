@@ -41,11 +41,11 @@ const HeartsDepletedScreen = () => {
         <div className="text-[36px] font-black text-destructive tabular-nums">
           {formatTime(time)}
         </div>
-        <div className="flex justify-center gap-2 mt-3">
-          {[0, 1, 2].map(i => (
-            <NotoEmoji key={i} name="heartEmpty" size={28} />
-          ))}
-        </div>
+         <div className="flex justify-center gap-2 mt-3">
+           {[0, 1, 2, 3, 4, 5].map(i => (
+             <NotoEmoji key={i} name="heartEmpty" size={28} />
+           ))}
+         </div>
       </div>
 
       {/* Tips while waiting */}

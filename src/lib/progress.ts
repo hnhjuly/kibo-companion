@@ -17,7 +17,7 @@ export interface UserProgress {
   goal: UserGoal;
 }
 
-const HEARTS_MAX = 3;
+const HEARTS_MAX = 6;
 const HEARTS_COOLDOWN_MS = 2 * 60 * 1000; // 2 minutes
 const XP_PER_LEVEL = 300;
 
