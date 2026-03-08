@@ -239,29 +239,122 @@ export const DAILY_TOPICS: DailyTopic[] = [
       { id: "dt10-e10", type: "SCENARIO", question: "You have 48 hours to prepare for a final exam on a subject you've barely studied. How can AI help responsibly?", options: ["Ask AI to write all the essays and reports you'll need to submit", "Use AI to generate a structured study plan, explain key concepts, create practice questions, and quiz you throughout the 48 hours", "Ask AI for the exact exam questions so you only study what matters", "Use AI to write notes you can bring into the exam"], correct: "Use AI to generate a structured study plan, explain key concepts, create practice questions, and quiz you throughout the 48 hours", explanation: "AI can be an intense, efficient study partner for cramming. A structured plan, concept explanations, and practice testing are proven high-yield study strategies — and AI can deliver all three interactively.", concept: "AI as a study partner is one of its most powerful and ethical uses." },
     ],
   },
-];
+// ═══════════════════════════════════════════════════════════════════
+// MAPPING: Curriculum levels → Daily training topic IDs
+// ═══════════════════════════════════════════════════════════════════
+const LEVEL_TO_TOPICS: Record<string, string[]> = {
+  "l1": ["daily-t8", "daily-t9"],           // AI Basics → How AI Works, AI & Society
+  "l2": ["daily-t1"],                        // Prompting → Prompt Engineering
+  "l3": ["daily-t3"],                        // AI for Work → AI at Work
+  "l4": ["daily-t4", "daily-t6"],           // AI Tools → Choosing AI Tools, AI for Creativity
+  "l5": ["daily-t2", "daily-t5", "daily-t7"], // AI Safety → Misinformation, Ethics, Privacy
+};
 
-// ─────────────────────────────────────────────────────────────────
-// HELPERS
-// ─────────────────────────────────────────────────────────────────
-
-/** Get today's topic based on day of year rotation */
-export function getTodaysTopic(): DailyTopic {
-  const start = new Date(new Date().getFullYear(), 0, 0);
-  const diff = Date.now() - start.getTime();
-  const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
-  return DAILY_TOPICS[dayOfYear % DAILY_TOPICS.length];
+function getLevelPrefix(lessonId: string): string {
+  // "l1-3" → "l1", "l2-1" → "l2"
+  return lessonId.split("-")[0];
 }
 
-/** Get today's exercises filtered to only quiz-compatible types (excludes PROMPT_TYPING) */
-export function getTodaysQuizExercises(): DailyExercise[] {
-  const topic = getTodaysTopic();
-  return topic.exercises.filter((e) => e.type !== "PROMPT_TYPING");
+function getDayOfYear(): number {
+  const start = new Date(new Date().getFullYear(), 0, 0);
+  const diff = Date.now() - start.getTime();
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
+}
+
+// Seeded shuffle based on day — deterministic per day but different each day
+function seededShuffle<T>(arr: T[], seed: number): T[] {
+  const a = [...arr];
+  let s = seed;
+  for (let i = a.length - 1; i > 0; i--) {
+    s = (s * 1103515245 + 12345) & 0x7fffffff;
+    const j = s % (i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/** Pure fallback — rotate topics by day of year */
+export function getTodaysTopic(): DailyTopic {
+  return DAILY_TOPICS[getDayOfYear() % DAILY_TOPICS.length];
+}
+
+/**
+ * 3-TIER DAILY TRAINING SYSTEM
+ * Tier 1: REINFORCE — questions from topics matching recently completed lessons
+ * Tier 2: PREVIEW — teaser question from next uncompleted level's topics
+ * Tier 3: ROTATION — fallback to day-of-year topic rotation
+ */
+export function getTodaysTraining(completedLessons: string[]): {
+  topic: DailyTopic;
+  exercises: DailyExercise[];
+  tier: "reinforce" | "preview" | "rotation";
+  tierLabel: string;
+} {
+  const day = getDayOfYear();
+
+  // --- Tier 1: REINFORCE ---
+  // Find topics matching completed lesson levels
+  if (completedLessons.length > 0) {
+    const completedPrefixes = [...new Set(completedLessons.map(getLevelPrefix))];
+    const reinforceTopicIds = completedPrefixes.flatMap(p => LEVEL_TO_TOPICS[p] || []);
+    const reinforceTopics = DAILY_TOPICS.filter(t => reinforceTopicIds.includes(t.id));
+
+    if (reinforceTopics.length > 0) {
+      // Pick a reinforce topic based on day (rotates through available ones)
+      const reinforceTopic = reinforceTopics[day % reinforceTopics.length];
+      const quizExercises = reinforceTopic.exercises.filter(e => e.type !== "PROMPT_TYPING");
+      const shuffled = seededShuffle(quizExercises, day);
+
+      // Tier 2 preview: find next uncompleted level
+      let previewExercise: DailyExercise | null = null;
+      const allPrefixes = ["l1", "l2", "l3", "l4", "l5"];
+      const nextPrefix = allPrefixes.find(p => !completedPrefixes.includes(p));
+      if (nextPrefix) {
+        const previewTopicIds = LEVEL_TO_TOPICS[nextPrefix] || [];
+        const previewTopics = DAILY_TOPICS.filter(t => previewTopicIds.includes(t.id));
+        if (previewTopics.length > 0) {
+          const pt = previewTopics[day % previewTopics.length];
+          const ptExercises = pt.exercises.filter(e => e.type !== "PROMPT_TYPING");
+          previewExercise = ptExercises[day % ptExercises.length] || null;
+        }
+      }
+
+      // Blend: 2 reinforce + 1 preview (or 3 reinforce if no preview)
+      const reinforceExercises = shuffled.slice(0, previewExercise ? 2 : 3);
+      const blended = previewExercise
+        ? [...reinforceExercises, previewExercise]
+        : reinforceExercises;
+
+      return {
+        topic: reinforceTopic,
+        exercises: blended,
+        tier: "reinforce",
+        tierLabel: `📖 Reinforcing: ${reinforceTopic.title}`,
+      };
+    }
+  }
+
+  // --- Tier 3: ROTATION (also serves as Tier 2 for new users) ---
+  const fallbackTopic = DAILY_TOPICS[day % DAILY_TOPICS.length];
+  const quizExercises = fallbackTopic.exercises.filter(e => e.type !== "PROMPT_TYPING");
+  const shuffled = seededShuffle(quizExercises, day);
+
+  return {
+    topic: fallbackTopic,
+    exercises: shuffled.slice(0, 3),
+    tier: "rotation",
+    tierLabel: `${fallbackTopic.icon} ${fallbackTopic.title}`,
+  };
+}
+
+/** Get today's exercises filtered to only quiz-compatible types */
+export function getTodaysQuizExercises(completedLessons: string[] = []): DailyExercise[] {
+  const { exercises } = getTodaysTraining(completedLessons);
+  return exercises;
 }
 
 /**
  * Convert a DailyExercise to the quiz-compatible Question format.
- * Maps string-based `correct` to numeric index for QuizScreen compatibility.
  */
 export function exerciseToQuestion(exercise: DailyExercise) {
   const correctIdx = exercise.options?.findIndex((o) => o === exercise.correct) ?? 0;
@@ -274,22 +367,4 @@ export function exerciseToQuestion(exercise: DailyExercise) {
     explanation: exercise.explanation,
     xp: 10,
   };
-}
-
-/** Get 3 preview exercises for "Today's Training" cards on HomeScreen */
-export function getTodaysPreview(): { type: string; title: string; icon: string }[] {
-  const topic = getTodaysTopic();
-  const quizExercises = topic.exercises.filter((e) => e.type !== "PROMPT_TYPING");
-  return quizExercises.slice(0, 3).map((e) => {
-    const typeLabels: Record<string, string> = {
-      MULTIPLE_CHOICE: "Multiple Choice",
-      IDENTIFY: "Identify",
-      SCENARIO: "Scenario",
-    };
-    return {
-      type: `${topic.icon} ${typeLabels[e.type] || e.type}`,
-      title: e.question.length > 45 ? e.question.slice(0, 42) + "..." : e.question,
-      icon: topic.icon,
-    };
-  });
 }
