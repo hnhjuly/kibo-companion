@@ -33,7 +33,7 @@ const CompleteScreen = () => {
   }, []);
 
   const acc = quizStats.total ? Math.round((quizStats.correct / quizStats.total) * 100) : 0;
-  const kiboImg = acc === 100 ? KIBO.trophy : acc >= 70 ? KIBO.celebrate : acc >= 40 ? KIBO.thumbsup : KIBO.surprised;
+  const kiboImg = acc === 100 ? KIBO.graduate : acc >= 70 ? KIBO.celebration2 : acc >= 40 ? KIBO.thumbsup : KIBO.detective;
   const title = acc === 100
     ? <span>Perfect Score! <NotoEmoji name="trophy" size={28} /></span>
     : acc >= 70 ? <span>Lesson Complete! <NotoEmoji name="party" size={28} /></span>
