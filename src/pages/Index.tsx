@@ -7,6 +7,7 @@ import CompleteScreen from "@/screens/CompleteScreen";
 import TrainScreen from "@/screens/TrainScreen";
 import RankScreen from "@/screens/RankScreen";
 import MoreScreen from "@/screens/MoreScreen";
+import HeartsDepletedScreen from "@/screens/HeartsDepletedScreen";
 import BottomNav from "@/components/BottomNav";
 
 const AppContent = () => {
@@ -34,6 +35,7 @@ const AppContent = () => {
         {screen === "train" && <TrainScreen />}
         {screen === "rank" && <RankScreen />}
         {screen === "more" && <MoreScreen />}
+        {screen === "hearts-depleted" && <HeartsDepletedScreen />}
       </div>
 
       {showNav && <BottomNav />}
