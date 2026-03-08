@@ -14,7 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      waitlist: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          module_title: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          module_title: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          module_title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
