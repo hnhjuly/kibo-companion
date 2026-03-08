@@ -242,19 +242,65 @@ const HomeScreen = () => {
             </h3>
             <div className="flex gap-2.5 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
               {COMING_SOON_MODULES.slice(0, 3).map((mod, i) => (
-                <div key={i} className="bg-card rounded-[14px] p-3.5 border-[1.5px] border-border min-w-[140px] shrink-0">
+                <div key={i} className="bg-card rounded-[14px] p-3.5 border-[1.5px] border-border min-w-[140px] shrink-0 flex flex-col">
                   <div className="w-9 h-9 rounded-[10px] flex items-center justify-center text-lg mb-2"
                     style={{ background: mod.color + "15" }}>
                     {mod.icon}
                   </div>
                   <div className="text-[12px] font-extrabold text-foreground leading-tight mb-0.5">{mod.title}</div>
-                  <div className="text-[10px] text-muted-foreground font-semibold flex items-center gap-1">
+                  <div className="text-[10px] text-muted-foreground font-semibold flex items-center gap-1 mb-2">
                     <NotoEmoji name="lock" size={10} /> Coming soon
                   </div>
+                  <button
+                    onClick={() => handleNotifyClick(mod.title)}
+                    disabled={notified.has(mod.title)}
+                    className={`mt-auto text-[10px] font-extrabold rounded-md px-2 py-1 transition-all ${
+                      notified.has(mod.title)
+                        ? "bg-kibo-green/15 text-kibo-green"
+                        : "bg-muted text-muted-foreground hover:bg-kibo-green/10 hover:text-kibo-green"
+                    }`}>
+                    {notified.has(mod.title) ? "✓ Notified" : "🔔 Notify me"}
+                  </button>
                 </div>
               ))}
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Email Modal */}
+      {showEmailModal && (
+        <div className="absolute inset-0 z-[200] flex items-center justify-center bg-black/40 backdrop-blur-sm p-6">
+          <div className="bg-card rounded-2xl p-5 w-full max-w-[320px] border border-border shadow-xl">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-[16px] font-black text-foreground flex items-center gap-1.5">
+                <NotoEmoji name="bell" size={16} /> Get Notified
+              </h3>
+              <button onClick={() => setShowEmailModal(false)} className="text-muted-foreground p-1">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <p className="text-[12px] text-muted-foreground font-semibold mb-4">
+              Enter your email and we'll let you know when <b className="text-foreground">{pendingModule}</b> launches!
+            </p>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="you@email.com"
+              autoFocus
+              className="w-full px-4 py-3 rounded-xl border-[1.5px] border-border bg-background text-foreground text-[14px] font-semibold placeholder:text-muted-foreground/50 focus:outline-none focus:border-kibo-green transition-colors mb-3"
+              onKeyDown={e => e.key === "Enter" && handleSubmitEmail()}
+            />
+            <button
+              onClick={handleSubmitEmail}
+              disabled={submitting}
+              className="w-full py-3 bg-kibo-green text-primary-foreground rounded-xl font-black text-[14px] kibo-shadow active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-50">
+              {submitting ? "Submitting..." : "Notify Me 🔔"}
+            </button>
+          </div>
+        </div>
+      )}
         </div>
       </div>
     </>
