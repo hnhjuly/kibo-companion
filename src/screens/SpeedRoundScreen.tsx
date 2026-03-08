@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
 import DidYouKnowCard from "@/components/DidYouKnowCard";
+import ExitGameDialog from "@/components/ExitGameDialog";
 
 type Phase = "start" | "playing" | "dyk" | "results";
 
