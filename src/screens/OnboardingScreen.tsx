@@ -74,7 +74,7 @@ const OnboardingScreen = () => {
           <div className="flex gap-2 flex-wrap justify-center">
             {s.pills.map(p => (
               <div key={p.label} className="bg-card rounded-full px-4 py-2 text-[13px] font-extrabold card-shadow flex items-center gap-1.5">
-                <Icon name={p.icon} size={16} /> {p.label}
+                <NotoEmoji name={p.icon} size={16} /> {p.label}
               </div>
             ))}
           </div>

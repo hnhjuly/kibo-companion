@@ -18,7 +18,7 @@ const RankScreen = () => {
     <>
       <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center justify-center gap-3.5">
         <span className="text-lg font-black text-foreground flex items-center gap-2">
-          <Icon name="trophy" size={22} /> Leaderboard
+          <NotoEmoji name="trophy" size={22} /> Leaderboard
         </span>
       </div>
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
