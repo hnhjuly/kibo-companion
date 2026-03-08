@@ -185,7 +185,7 @@ const QuizScreen = () => {
         <div className={`absolute bottom-0 left-0 right-0 p-5 pb-9 flex flex-col gap-2.5 border-t-[2.5px] backdrop-blur-xl
           ${isCorrect ? "bg-[rgba(240,255,244,0.97)] border-kibo-green" : "bg-[rgba(255,240,240,0.97)] border-destructive"}`}>
           <div className="flex items-center gap-3">
-            <img src={isCorrect ? [KIBO.thumbsup, KIBO.celebrate, KIBO.happy][qIdx % 3] : localHearts === 0 ? KIBO.sad : [KIBO.shocked, KIBO.surprised][qIdx % 2]} alt="Kibo" className="w-[60px] h-[60px] object-contain" />
+            <PreloadedImg src={isCorrect ? [KIBO.thumbsup, KIBO.celebrate, KIBO.happy][qIdx % 3] : localHearts === 0 ? KIBO.sad : [KIBO.shocked, KIBO.surprised][qIdx % 2]} alt="Kibo" className="w-[60px] h-[60px] object-contain" />
             <div className="flex-1">
               <div className={`text-lg font-black ${isCorrect ? "text-kibo-green" : "text-destructive"}`}>
                 {isCorrect ? PRAISES[Math.floor(Math.random() * 4)] : localHearts === 0 ? <span>No hearts left! <NotoEmoji name="heartBroken" size={18} /></span> : <span>Not quite... <NotoEmoji name="heartBroken" size={18} /></span>}

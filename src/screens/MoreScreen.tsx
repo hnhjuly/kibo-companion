@@ -16,7 +16,7 @@ const MoreScreen = () => {
           {/* About */}
           <div className="rounded-[18px] p-[22px] text-center border-[1.5px] border-border/50"
             style={{ background: "linear-gradient(160deg, #e8f8ff, #f0fdf4 50%, #fef9e7)" }}>
-            <img src={kiboWave} alt="Kibo" className="w-32 h-32 object-contain mx-auto mb-3" />
+            <PreloadedImg src={kiboWave} alt="Kibo" className="w-32 h-32 object-contain mx-auto mb-3" />
             <div className="text-xl font-black text-foreground mb-1">KIBO</div>
             <p className="text-sm text-muted-foreground font-bold leading-relaxed mb-4">
               A fun, gamified way to learn about AI. One bite-sized lesson at a time. Built for curious minds who want to understand artificial intelligence through interactive quizzes and daily challenges.

@@ -49,7 +49,7 @@ const RankScreen = () => {
                 ${r.isMe ? "bg-kibo-green/8" : ""}`}>
                 <span className="w-[26px] text-[15px] font-black text-muted-foreground/50 text-center shrink-0">{r.rank}</span>
                 {r.isMe ? (
-                  <img src={KIBO.wave} alt="You" className="w-9 h-9 object-contain" />
+                  <PreloadedImg src={KIBO.wave} alt="You" className="w-9 h-9 object-contain" />
                 ) : (
                   <span className="text-[28px]">{r.avatar}</span>
                 )}

@@ -91,7 +91,7 @@ const LessonsScreen = () => {
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           <div className="relative bg-card rounded-2xl p-6 w-full max-w-[320px] border-[1.5px] border-border text-center"
             onClick={e => e.stopPropagation()}>
-            <img src={KIBO.surprised} alt="Kibo" className="w-20 h-20 object-contain mx-auto mb-3" />
+            <PreloadedImg src={KIBO.surprised} alt="Kibo" className="w-20 h-20 object-contain mx-auto mb-3" />
             <h2 className="text-xl font-black text-foreground mb-2">Reset Everything?</h2>
             <p className="text-[13px] text-muted-foreground leading-relaxed mb-5">
               This will erase all your progress: XP, streaks, hearts, and completed lessons. Questions will be reshuffled. <b>This can't be undone!</b>
