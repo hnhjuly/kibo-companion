@@ -31,7 +31,7 @@ const CompleteScreen = () => {
   }, []);
 
   const acc = quizStats.total ? Math.round((quizStats.correct / quizStats.total) * 100) : 0;
-  const kiboImg = acc === 100 ? KIBO.trophy : acc >= 70 ? KIBO.celebrate : acc >= 40 ? KIBO.thumbsup : KIBO.sad;
+  const kiboImg = acc === 100 ? KIBO.trophy : acc >= 70 ? KIBO.celebrate : acc >= 40 ? KIBO.thumbsup : KIBO.surprised;
   const title = acc === 100 ? "Perfect Score! 🏆" : acc >= 70 ? "Lesson Complete! 🎉" : acc >= 40 ? "Not bad! 👍" : "Keep Practicing! 💪";
   const subtitle = acc === 100 ? "Flawless! Kibo is amazed!" : acc >= 70 ? "Kibo is so proud of you!" : acc >= 40 ? "You're getting there!" : "Don't give up — try again!";
 
