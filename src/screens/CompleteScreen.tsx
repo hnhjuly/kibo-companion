@@ -36,9 +36,9 @@ const CompleteScreen = () => {
   const kiboImg = acc === 100 ? KIBO.trophy : acc >= 70 ? KIBO.celebrate : acc >= 40 ? KIBO.thumbsup : KIBO.surprised;
   const title = acc === 100
     ? <span>Perfect Score! <Icon name="trophy" size={28} /></span>
-    : acc >= 70 ? "Lesson Complete! 🎉"
-    : acc >= 40 ? "Not bad! 👍"
-    : "Keep Practicing! 💪";
+    : acc >= 70 ? <span>Lesson Complete! <NotoEmoji name="party" size={28} /></span>
+    : acc >= 40 ? <span>Not bad! <NotoEmoji name="thumbsUp" size={28} /></span>
+    : <span>Keep Practicing! <NotoEmoji name="flexed" size={28} /></span>;
   const subtitle = acc === 100 ? "Flawless! Kibo is amazed!" : acc >= 70 ? "Kibo is so proud of you!" : acc >= 40 ? "You're getting there!" : "Don't give up — try again!";
 
   return (

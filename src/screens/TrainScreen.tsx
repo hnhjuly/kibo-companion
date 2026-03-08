@@ -49,7 +49,7 @@ const TrainScreen = () => {
                 {progress.streak >= 30 ? <span>Legendary! <NotoEmoji name="crown" size={14} /></span> : progress.streak >= 7 ? <span>Amazing! <Icon name="star" size={14} /></span> : progress.streak >= 3 ? <span>On fire! <Icon name="fire" size={14} /></span> : "Don't break it!"}
               </div>
             </div>
-            <button className="bg-card border-2 border-kibo-gold rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-kibo-orange">❄️ Freeze</button>
+            <button className="bg-card border-2 border-kibo-gold rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-kibo-orange inline-flex items-center gap-1"><NotoEmoji name="snowflake" size={14} /> Freeze</button>
           </div>
 
           {/* Today's topic header */}

@@ -71,14 +71,14 @@ const HomeScreen = () => {
             style={{ backgroundImage: `url(${kiboBg})`, backgroundSize: "cover", backgroundPosition: "center", border: "1.5px solid rgba(74,158,255,0.15)" }}>
             <div className="absolute inset-0 bg-white/20" />
             <div className="flex-1 pt-5 pl-5 pb-5 relative z-10">
-              <div className="text-base font-black text-foreground mb-1">Hi, I'm Kibo! ✨</div>
+              <div className="text-base font-black text-foreground mb-1 flex items-center gap-1">Hi, I'm Kibo! <NotoEmoji name="sparkles" size={16} /></div>
               <div className="text-[13px] text-muted-foreground leading-relaxed mb-3 max-w-[160px]">
-                {!canPlay ? "Your hearts are refilling... Take a break! 😴" :
-                  progress.streak >= 30 ? <span>Legendary {progress.streak} day streak! You're unstoppable! 👑</span> :
+                {!canPlay ? <span>Your hearts are refilling... Take a break! <NotoEmoji name="sleeping" size={14} /></span> :
+                  progress.streak >= 30 ? <span>Legendary {progress.streak} day streak! You're unstoppable! <NotoEmoji name="crown" size={14} /></span> :
                   progress.streak >= 7 ? <span>Amazing {progress.streak} day streak! Keep it up! <Icon name="star" size={14} /></span> :
                   progress.streak >= 3 ? <span>{progress.streak} day streak! You're on fire! <Icon name="fire" size={14} /></span> :
                   progress.streak > 0 ? <span>Let's train your AI skills! You're on a {progress.streak} day streak <Icon name="fire" size={14} /></span> :
-                  "Let's start training your AI skills! 💪"}
+                  <span>Let's start training your AI skills! <NotoEmoji name="flexed" size={14} /></span>}
               </div>
               <button onClick={() => setScreen("lessons")}
                 className="bg-kibo-green text-primary-foreground rounded-xl px-[22px] py-2.5 font-black text-sm inline-flex items-center gap-2 kibo-shadow active:translate-y-[2px] active:shadow-none transition-all">
