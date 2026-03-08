@@ -89,7 +89,7 @@ export const CURRICULUM: Curriculum = {
           id: "l1-3", title: "Types of AI Tools", duration: "4 min", xp: 20, state: "active", questions: [
             { type: "mcq", question: "Which is the BEST AI prompt for writing an email?", hint: "Specificity matters!", choices: ['"Write email"', '"Professional email to manager requesting Friday off, polite and short"', '"Email please about time off"', '"Manager email Friday"'], correct: 1, explanation: "Great prompts have context, tone, format and goal. Specific = better outputs!", xp: 10 },
             { type: "mcq", question: "You want to summarize a 3-page document. Which AI is best?", choices: ["An image generator", "A text AI like Claude or ChatGPT", "A music AI", "A coding-only AI"], correct: 1, explanation: "Text AI excels at reading, understanding and summarizing long documents.", xp: 10 },
-            { type: "mcq", question: "What is 'AI hallucination'?", choices: ["When AI crashes", "When AI confidently gives false info", "When AI is slow", "When AI needs retraining"], correct: 1, explanation: "Hallucination = AI generating plausible but false info with confidence. Always verify!", xp: 10 }
+            { type: "mcq", question: "What is 'AI hallucination'?", choices: ["When AI crashes", "When AI confidently gives false info", "When AI is slow", "When AI needs retraining"], correct: 1, explanation: "Hallucination means AI generating plausible but false info with confidence. Always verify!", xp: 10 }
           ]
         },
         { id: "l1-4", title: "History of AI", duration: "3 min", xp: 20, state: "locked", questions: [] },
