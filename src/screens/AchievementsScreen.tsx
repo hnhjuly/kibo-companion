@@ -25,7 +25,7 @@ const AchievementsScreen = () => {
   const { progress } = useApp();
 
   const unlocked = ACHIEVEMENTS.filter(a =>
-    a.check({ xp: progress.xp, streak: progress.streak, lessonsCompleted: progress.lessonsCompleted, level: progress.level })
+    a.check({ xp: progress.xp, streak: progress.streak, completedLessons: progress.completedLessons, level: progress.level })
   ).length;
 
   return (
