@@ -60,9 +60,6 @@ const TrainScreen = () => {
                   {progress.streak >= 30 ? <span>Legendary! <NotoEmoji name="crown" size={14} /></span> : progress.streak >= 7 ? <span>Amazing! <NotoEmoji name="star" size={14} /></span> : progress.streak >= 3 ? <span>On fire! <NotoEmoji name="fire" size={14} /></span> : "Don't break it!"}
                 </div>
               </div>
-              {progress.freezesAvailable > 0 && progress.streak > 0 && (
-                <button onClick={() => {}} className="bg-white/20 backdrop-blur-sm border-2 border-white/40 rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-white inline-flex items-center gap-1"><NotoEmoji name="snowflake" size={14} /> Freeze</button>
-              )}
             </div>
           </div>
 
