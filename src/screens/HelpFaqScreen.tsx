@@ -65,21 +65,23 @@ const HelpFaqScreen = () => {
           </div>
 
           {/* FAQ items */}
-          {FAQ_ITEMS.map((item, i) => (
-            <div key={i} className="bg-card rounded-2xl border-[1.5px] border-border overflow-hidden">
-              <div className="px-4 py-3.5">
-                <div className="text-[14px] font-extrabold text-foreground flex items-start gap-2">
-                  <span className="w-6 h-6 rounded-lg bg-primary/10 text-primary text-[12px] font-black flex items-center justify-center shrink-0 mt-0.5">
-                    {i + 1}
-                  </span>
-                  {item.q}
-                </div>
-                <div className="text-[13px] text-muted-foreground font-medium leading-relaxed mt-2.5 pl-8">
+          <Accordion type="single" collapsible className="w-full">
+            {FAQ_ITEMS.map((item, i) => (
+              <AccordionItem key={i} value={`item-${i}`} className="bg-card rounded-2xl border-[1.5px] border-border mb-3 overflow-hidden px-4">
+                <AccordionTrigger className="text-[14px] font-extrabold text-foreground py-4 hover:no-underline">
+                  <div className="flex items-start gap-2">
+                    <span className="w-6 h-6 rounded-lg bg-primary/10 text-primary text-[12px] font-black flex items-center justify-center shrink-0">
+                      {i + 1}
+                    </span>
+                    {item.q}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-[13px] text-muted-foreground font-medium leading-relaxed pb-4 pl-8">
                   {item.a}
-                </div>
-              </div>
-            </div>
-          ))}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </div>
     </>
