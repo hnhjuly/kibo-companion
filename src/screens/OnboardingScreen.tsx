@@ -3,6 +3,7 @@ import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
 
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 const slides = [
   {
@@ -65,7 +66,7 @@ const OnboardingScreen = () => {
       <div className="flex-1 flex flex-col items-center justify-center text-center gap-4">
         {s.img && (
           <div className="w-48 h-48 flex items-center justify-center">
-            <img src={s.img} alt="Kibo" className="w-48 h-48 object-contain" />
+            <PreloadedImg src={s.img} alt="Kibo" className="w-48 h-48 object-contain" />
           </div>
         )}
         <h1 className="text-[29px] font-black text-foreground leading-tight">{s.title}</h1>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 function formatTime(ms: number) {
   const totalSec = Math.floor(ms / 1000);
@@ -25,7 +26,7 @@ const HeartsDepletedScreen = () => {
     <div className="flex flex-col flex-1 items-center justify-center p-8 text-center"
       style={{ background: "linear-gradient(160deg, #fff0f0, #ffe8ea 50%, #fef0e7)" }}>
       
-      <img src={KIBO.lowStreak} alt="Kibo sad" className="w-[150px] h-[150px] object-contain mb-4 drop-shadow-lg" />
+      <PreloadedImg src={KIBO.lowStreak} alt="Kibo sad" className="w-[150px] h-[150px] object-contain mb-4 drop-shadow-lg" />
       
       <h1 className="text-[28px] font-black text-foreground mb-2 flex items-center justify-center gap-2">
         Out of Hearts! <NotoEmoji name="heartBroken" size={28} />

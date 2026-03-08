@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 const Confetti = () => {
   const cols = ["#3db74a", "#4a9eff", "#ffb800", "#ff8c42", "#9b6dff", "#ff5a5a"];
@@ -43,7 +44,7 @@ const CompleteScreen = () => {
   return (
     <div className="flex flex-col flex-1 items-center justify-center p-10 text-center relative"
       style={{ background: "linear-gradient(160deg, #e8f8ff, #f0fdf4 40%, #fef9e7 80%, #fff0f6)" }}>
-      <img src={kiboImg} alt="Kibo" className="w-[160px] h-[160px] object-contain mb-4 drop-shadow-xl" />
+      <PreloadedImg src={kiboImg} alt="Kibo" className="w-[160px] h-[160px] object-contain mb-4 drop-shadow-xl" />
       <h1 className="text-[32px] font-black text-foreground mb-1.5">{title}</h1>
       <p className="text-muted-foreground mb-7 text-[15px]">{subtitle}</p>
       <div className="bg-kibo-gold/15 border-2 border-kibo-gold rounded-[14px] px-6 py-3.5 text-xl font-black text-kibo-gold mb-6 inline-flex items-center gap-2">

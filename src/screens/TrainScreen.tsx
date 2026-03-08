@@ -4,6 +4,7 @@ import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import { ArrowRight } from "lucide-react";
 import { KIBO, type Lesson } from "@/data/curriculum";
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 import streakBg1 from "@/assets/streak-bg-1.png";
 import streakBg2 from "@/assets/streak-bg-2.png";
@@ -43,10 +44,10 @@ const TrainScreen = () => {
         <div className="p-[18px] pb-[100px] flex flex-col gap-4">
           {/* Streak */}
           <div className="rounded-[18px] overflow-hidden relative" style={{ border: "1.5px solid #ffb800" }}>
-            <img src={randomBg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <PreloadedImg src={randomBg} alt="" className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-0 bg-black/30" />
             <div className="relative p-[18px] flex items-center gap-4">
-              <img src={
+              <PreloadedImg src={
                 progress.streak >= 30 ? KIBO.streak30 :
                 progress.streak >= 7 ? KIBO.streak7 :
                 progress.streak >= 3 ? KIBO.streak3 :

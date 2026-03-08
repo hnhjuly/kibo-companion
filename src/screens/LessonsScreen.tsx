@@ -3,6 +3,7 @@ import { useApp } from "@/context/AppContext";
 import { CURRICULUM, KIBO } from "@/data/curriculum";
 import { Check, Lock, ChevronLeft, RotateCcw } from "lucide-react";
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 const LessonsScreen = () => {
   const { setScreen, setCurrentLesson, onResetProgress, progress } = useApp();
@@ -41,7 +42,7 @@ const LessonsScreen = () => {
         <div className="p-[18px] pb-[100px] flex flex-col gap-5">
           {/* Kibo studying header */}
           <div className="flex items-center gap-3 bg-card rounded-2xl p-4 border-[1.5px] border-border">
-            <img src={KIBO.studying} alt="Kibo studying" className="w-14 h-14 object-contain" />
+            <PreloadedImg src={KIBO.studying} alt="Kibo studying" className="w-14 h-14 object-contain" />
             <div className="text-[13px] text-muted-foreground leading-relaxed font-semibold">
               Keep learning! Each lesson brings you closer to AI mastery <NotoEmoji name="book" size={14} />
             </div>
@@ -90,7 +91,7 @@ const LessonsScreen = () => {
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           <div className="relative bg-card rounded-2xl p-6 w-full max-w-[320px] border-[1.5px] border-border text-center"
             onClick={e => e.stopPropagation()}>
-            <img src={KIBO.surprised} alt="Kibo" className="w-20 h-20 object-contain mx-auto mb-3" />
+            <PreloadedImg src={KIBO.surprised} alt="Kibo" className="w-20 h-20 object-contain mx-auto mb-3" />
             <h2 className="text-xl font-black text-foreground mb-2">Reset Everything?</h2>
             <p className="text-[13px] text-muted-foreground leading-relaxed mb-5">
               This will erase all your progress: XP, streaks, hearts, and completed lessons. Questions will be reshuffled. <b>This can't be undone!</b>

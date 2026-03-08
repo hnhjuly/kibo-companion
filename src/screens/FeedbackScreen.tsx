@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
+import PreloadedImg from "@/components/PreloadedImg";
 import { Send } from "lucide-react";
 
 const FeedbackScreen = () => {
@@ -34,7 +35,7 @@ const FeedbackScreen = () => {
 
       {/* Mascot & Message */}
       <div className="flex flex-col items-center justify-center gap-4 mb-8">
-        <img src={KIBO.thinking} alt="Kibo" className="w-40 h-40 object-contain" />
+        <PreloadedImg src={KIBO.thinking} alt="Kibo" className="w-40 h-40 object-contain" />
         <div className="text-center">
           <p className="text-[15px] text-muted-foreground leading-relaxed max-w-[300px]">
             Help us improve Kibo! Share your thoughts, suggestions, or bugs you've found.
