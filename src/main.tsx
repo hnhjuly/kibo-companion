@@ -23,7 +23,7 @@ import kiboStudying from "@/assets/kibo-studying.png";
 import kiboLowStreak from "@/assets/kibo-lowstreak.png";
 import kiboStreakAtRisk from "@/assets/kibo-streakatrisk.png";
 
-[kiboHappy, kiboSmile, kiboWave, kiboSurprised, kiboThinking, kiboCelebrate, kiboBg, kiboFocused, kiboSad, kiboShocked, kiboThumbsup, kiboTrophy, kibo3DayStreak, kibo7DayStreak, kiboDay30, kiboFreezeStreak, kiboStudying, kiboLowStreak, kiboStreakAtRisk].forEach(src => {
+[kiboHappy, kiboSmile, kiboWave, kiboSurprised, kiboThinking, kiboCelebrate, kiboBg, kiboSad, kiboShocked, kiboThumbsup, kiboTrophy, kibo3DayStreak, kibo7DayStreak, kiboDay30, kiboFreezeStreak, kiboStudying, kiboLowStreak, kiboStreakAtRisk].forEach(src => {
   const img = new Image();
   img.src = src;
 });

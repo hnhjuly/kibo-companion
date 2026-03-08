@@ -24,7 +24,7 @@ export const KIBO = {
   surprised: kiboSurprised,
   thinking: kiboThinking,
   celebrate: kiboCelebrate,
-  focused: kiboFocused,
+  focused: kiboStudying,
   sad: kiboSad,
   shocked: kiboShocked,
   thumbsup: kiboThumbsup,
