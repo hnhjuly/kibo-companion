@@ -239,6 +239,8 @@ export const DAILY_TOPICS: DailyTopic[] = [
       { id: "dt10-e10", type: "SCENARIO", question: "You have 48 hours to prepare for a final exam on a subject you've barely studied. How can AI help responsibly?", options: ["Ask AI to write all the essays and reports you'll need to submit", "Use AI to generate a structured study plan, explain key concepts, create practice questions, and quiz you throughout the 48 hours", "Ask AI for the exact exam questions so you only study what matters", "Use AI to write notes you can bring into the exam"], correct: "Use AI to generate a structured study plan, explain key concepts, create practice questions, and quiz you throughout the 48 hours", explanation: "AI can be an intense, efficient study partner for cramming. A structured plan, concept explanations, and practice testing are proven high-yield study strategies — and AI can deliver all three interactively.", concept: "AI as a study partner is one of its most powerful and ethical uses." },
     ],
   },
+];
+
 // ═══════════════════════════════════════════════════════════════════
 // MAPPING: Curriculum levels → Daily training topic IDs
 // ═══════════════════════════════════════════════════════════════════
