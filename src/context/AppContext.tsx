@@ -16,6 +16,7 @@ interface AppState {
   onCompleteLesson: (lessonId: string, xpEarned: number, correct: number, total: number) => void;
   onUseFreeze: () => void;
   onResetProgress: () => void;
+  onRestoreHeart: () => void;
   heartsTimeRemaining: number;
   canPlay: boolean;
 }
