@@ -38,7 +38,7 @@ const HeartsDepletedScreen = () => {
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center p-8 text-center"
-      style={{ background: "linear-gradient(160deg, #fff0f0, #ffe8ea)" }}>
+      style={{ background: "linear-gradient(160deg, #fff0f0, #ffe8ea 50%, #fef0e7)" }}>
       
       {adWatched ? (
         <>

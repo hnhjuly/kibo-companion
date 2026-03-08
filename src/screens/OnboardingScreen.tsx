@@ -52,7 +52,7 @@ const OnboardingScreen = () => {
 
   return (
     <div className="flex flex-col flex-1 justify-between p-7 pt-12"
-      style={{ background: "linear-gradient(160deg, #dff4ff, #f0fdf4 55%, #fffde8)" }}>
+      style={{ background: "linear-gradient(160deg, #e0f2ff, #edfcf2 40%, #fef9e7 75%, #fef0f5)" }}>
       {/* Dots */}
       <div className="flex gap-2 justify-center mb-1">
         {[0, 1, 2, 3].map(i => (

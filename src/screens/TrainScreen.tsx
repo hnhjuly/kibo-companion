@@ -34,7 +34,7 @@ const TrainScreen = () => {
         <div className="p-[18px] pb-[100px] flex flex-col gap-4">
           {/* Streak */}
           <div className="rounded-[18px] p-[18px] flex items-center gap-4"
-            style={{ background: "linear-gradient(135deg, #fff8e0, #ffe8d6)", border: "1.5px solid #ffb800" }}>
+            style={{ background: "linear-gradient(135deg, #fffbeb, #fff0d6, #ffecd2)", border: "1.5px solid #ffb800" }}>
             <img src={
               progress.streak >= 30 ? KIBO.streak30 :
               progress.streak >= 7 ? KIBO.streak7 :
