@@ -23,7 +23,6 @@ const Confetti = () => {
 
 const CompleteScreen = () => {
   const { setScreen, quizStats, progress } = useApp();
-  const { setScreen, quizStats } = useApp();
   const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
