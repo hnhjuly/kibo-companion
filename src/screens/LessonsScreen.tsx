@@ -1,15 +1,22 @@
+import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { CURRICULUM, KIBO } from "@/data/curriculum";
-import { Check, Lock, ChevronLeft } from "lucide-react";
+import { Check, Lock, ChevronLeft, RotateCcw } from "lucide-react";
 
 const LessonsScreen = () => {
-  const { setScreen, setCurrentLesson } = useApp();
+  const { setScreen, setCurrentLesson, onResetProgress } = useApp();
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   return (
     <>
       <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center gap-3.5">
         <button onClick={() => setScreen("home")} className="text-foreground p-1"><ChevronLeft className="w-6 h-6" /></button>
-        <span className="text-lg font-black text-foreground">🎓 Learning Path</span>
+        <span className="text-lg font-black text-foreground flex-1">🎓 Learning Path</span>
+        <button onClick={() => setShowResetConfirm(true)}
+          className="text-muted-foreground p-1.5 rounded-lg hover:bg-background transition-colors"
+          title="Reset Progress">
+          <RotateCcw className="w-5 h-5" />
+        </button>
       </div>
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="p-[18px] pb-[100px] flex flex-col gap-5">
@@ -55,6 +62,32 @@ const LessonsScreen = () => {
           ))}
         </div>
       </div>
+
+      {/* Reset confirmation modal */}
+      {showResetConfirm && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6"
+          onClick={() => setShowResetConfirm(false)}>
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+          <div className="relative bg-card rounded-2xl p-6 w-full max-w-[320px] border-[1.5px] border-border text-center"
+            onClick={e => e.stopPropagation()}>
+            <img src={KIBO.surprised} alt="Kibo" className="w-20 h-20 object-contain mx-auto mb-3" />
+            <h2 className="text-xl font-black text-foreground mb-2">Reset Everything?</h2>
+            <p className="text-[13px] text-muted-foreground leading-relaxed mb-5">
+              This will erase all your progress — XP, streaks, hearts, and completed lessons. Questions will be reshuffled. <b>This can't be undone!</b>
+            </p>
+            <div className="flex flex-col gap-2">
+              <button onClick={() => { onResetProgress(); setShowResetConfirm(false); }}
+                className="w-full py-3.5 bg-destructive text-primary-foreground rounded-xl font-black text-[15px] transition-all active:translate-y-[2px]">
+                Reset Everything
+              </button>
+              <button onClick={() => setShowResetConfirm(false)}
+                className="w-full py-3 bg-muted text-muted-foreground rounded-xl font-bold text-[15px] transition-all">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
