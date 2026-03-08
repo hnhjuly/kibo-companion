@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
-import Icon from "@/components/Icon";
 import NotoEmoji from "@/components/NotoEmoji";
 
 const Confetti = () => {
@@ -35,7 +34,7 @@ const CompleteScreen = () => {
   const acc = quizStats.total ? Math.round((quizStats.correct / quizStats.total) * 100) : 0;
   const kiboImg = acc === 100 ? KIBO.trophy : acc >= 70 ? KIBO.celebrate : acc >= 40 ? KIBO.thumbsup : KIBO.surprised;
   const title = acc === 100
-    ? <span>Perfect Score! <Icon name="trophy" size={28} /></span>
+    ? <span>Perfect Score! <NotoEmoji name="trophy" size={28} /></span>
     : acc >= 70 ? <span>Lesson Complete! <NotoEmoji name="party" size={28} /></span>
     : acc >= 40 ? <span>Not bad! <NotoEmoji name="thumbsUp" size={28} /></span>
     : <span>Keep Practicing! <NotoEmoji name="flexed" size={28} /></span>;
@@ -48,13 +47,13 @@ const CompleteScreen = () => {
       <h1 className="text-[32px] font-black text-foreground mb-1.5">{title}</h1>
       <p className="text-muted-foreground mb-7 text-[15px]">{subtitle}</p>
       <div className="bg-kibo-gold/15 border-2 border-kibo-gold rounded-[14px] px-6 py-3.5 text-xl font-black text-kibo-gold mb-6 inline-flex items-center gap-2">
-        <Icon name="lightning" size={24} /> +{quizStats.correct * 20} XP earned
+        <NotoEmoji name="lightning" size={24} /> +{quizStats.correct * 20} XP earned
       </div>
       <div className="flex gap-3 mb-8 w-full">
         {[
           { val: `${acc}%`, label: "Accuracy" },
           { val: `${quizStats.time}s`, label: "Time" },
-          { val: <span className="inline-flex items-center gap-1"><Icon name="fire" size={22} /> {progress.streak}</span>, label: "Streak" },
+          { val: <span className="inline-flex items-center gap-1"><NotoEmoji name="fire" size={22} /> {progress.streak}</span>, label: "Streak" },
         ].map(s => (
           <div key={s.label} className="flex-1 bg-card rounded-2xl p-4 border-[1.5px] border-border">
             <div className="text-2xl font-black text-foreground">{s.val}</div>

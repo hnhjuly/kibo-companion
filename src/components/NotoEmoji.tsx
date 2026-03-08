@@ -1,7 +1,7 @@
 import { Icon as IconifyIcon } from "@iconify/react";
 
-// Map friendly names to noto-v1 icon names
 const EMOJI_MAP: Record<string, string> = {
+  // Original text emoji replacements
   wave: "noto-v1:waving-hand",
   sparkles: "noto-v1:sparkles",
   sleeping: "noto-v1:sleeping-face",
@@ -15,6 +15,26 @@ const EMOJI_MAP: Record<string, string> = {
   thinking: "noto-v1:thinking-face",
   gear: "noto-v1:gear",
   snowflake: "noto-v1:snowflake",
+  // Custom icon replacements
+  heart: "noto-v1:red-heart",
+  heartBroken: "noto-v1:broken-heart",
+  heartEmpty: "noto-v1:white-heart",
+  diamond: "noto-v1:gem-stone",
+  fire: "noto-v1:fire",
+  lightning: "noto-v1:high-voltage",
+  trophy: "noto-v1:trophy",
+  star: "noto-v1:glowing-star",
+  lightbulb: "noto-v1:light-bulb",
+  book: "noto-v1:open-book",
+  target: "noto-v1:direct-hit",
+  pencil: "noto-v1:pencil",
+  search: "noto-v1:magnifying-glass-tilted-left",
+  checkmark: "noto-v1:check-mark-button",
+  play: "noto-v1:play-button",
+  graduation: "noto-v1:graduation-cap",
+  dna: "noto-v1:dna",
+  lock: "noto-v1:locked",
+  hourglass: "noto-v1:hourglass-not-done",
 };
 
 interface NotoEmojiProps {

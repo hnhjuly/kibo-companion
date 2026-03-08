@@ -1,13 +1,11 @@
 import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
-import { ChevronRight, ArrowRight, Check, Lock, Star } from "lucide-react";
+import { ChevronRight, ArrowRight, Check, Lock } from "lucide-react";
 import { getXPForLevel } from "@/lib/progress";
 import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import type { Lesson } from "@/data/curriculum";
 import kiboBg from "@/assets/kibo-bg.png";
-import Icon from "@/components/Icon";
 import NotoEmoji from "@/components/NotoEmoji";
-import ICONS from "@/assets/icons";
 
 const HomeScreen = () => {
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
@@ -39,17 +37,17 @@ const HomeScreen = () => {
           </div>
           <div className="flex gap-2">
             <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-orange">
-              <Icon name="fire" size={16} /> {progress.streak}
+              <NotoEmoji name="fire" size={16} /> {progress.streak}
             </div>
             <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-gold">
-              <Icon name="diamond" size={16} /> {progress.xp}
+              <NotoEmoji name="diamond" size={16} /> {progress.xp}
             </div>
             <div className="flex items-center gap-1 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold">
               {Array.from({ length: progress.hearts }).map((_, i) => (
-                <Icon key={`h${i}`} name="heart" size={16} />
+                <NotoEmoji key={`h${i}`} name="heart" size={16} />
               ))}
               {Array.from({ length: 3 - progress.hearts }).map((_, i) => (
-                <Icon key={`e${i}`} name="heartEmpty" size={16} />
+                <NotoEmoji key={`e${i}`} name="heartEmpty" size={16} />
               ))}
             </div>
           </div>
@@ -75,9 +73,9 @@ const HomeScreen = () => {
               <div className="text-[13px] text-muted-foreground leading-relaxed mb-3 max-w-[160px]">
                 {!canPlay ? <span>Your hearts are refilling... Take a break! <NotoEmoji name="sleeping" size={14} /></span> :
                   progress.streak >= 30 ? <span>Legendary {progress.streak} day streak! You're unstoppable! <NotoEmoji name="crown" size={14} /></span> :
-                  progress.streak >= 7 ? <span>Amazing {progress.streak} day streak! Keep it up! <Icon name="star" size={14} /></span> :
-                  progress.streak >= 3 ? <span>{progress.streak} day streak! You're on fire! <Icon name="fire" size={14} /></span> :
-                  progress.streak > 0 ? <span>Let's train your AI skills! You're on a {progress.streak} day streak <Icon name="fire" size={14} /></span> :
+                  progress.streak >= 7 ? <span>Amazing {progress.streak} day streak! Keep it up! <NotoEmoji name="star" size={14} /></span> :
+                  progress.streak >= 3 ? <span>{progress.streak} day streak! You're on fire! <NotoEmoji name="fire" size={14} /></span> :
+                  progress.streak > 0 ? <span>Let's train your AI skills! You're on a {progress.streak} day streak <NotoEmoji name="fire" size={14} /></span> :
                   <span>Let's start training your AI skills! <NotoEmoji name="flexed" size={14} /></span>}
               </div>
               <button onClick={() => setScreen("lessons")}
@@ -97,7 +95,7 @@ const HomeScreen = () => {
           <div>
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-[17px] font-black text-foreground flex items-center gap-2">
-                <Icon name="fire" size={20} /> Today's AI Training
+                <NotoEmoji name="fire" size={20} /> Today's AI Training
               </h3>
               <span className="text-xs font-extrabold px-2.5 py-1 rounded-full" style={{ background: topic.color + "20", color: topic.color }}>{tierLabel}</span>
             </div>
@@ -113,7 +111,7 @@ const HomeScreen = () => {
                   <button key={ex.id} onClick={startDailyTraining}
                     className="w-full bg-background rounded-xl p-3.5 flex items-center gap-3.5 mb-2 last:mb-0 border-[1.5px] border-transparent hover:border-kibo-green hover:bg-kibo-green/5 hover:translate-x-0.5 transition-all text-left">
                     <div className={`w-[38px] h-[38px] rounded-[11px] flex items-center justify-center shrink-0 ${meta.bg}`}>
-                      <Icon name={meta.icon as any} size={22} />
+                      <NotoEmoji name={meta.icon as any} size={22} />
                     </div>
                     <span className="flex-1 text-[15px] font-bold text-foreground">
                       {i + 1}. {ex.question.length > 35 ? ex.question.slice(0, 32) + "..." : ex.question}
@@ -133,7 +131,7 @@ const HomeScreen = () => {
           <div>
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-[17px] font-black text-foreground flex items-center gap-2">
-                <Icon name="graduation" size={20} /> Learning Path
+                <NotoEmoji name="graduation" size={20} /> Learning Path
               </h3>
             </div>
             <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border">
@@ -151,13 +149,13 @@ const HomeScreen = () => {
                   <div className="flex flex-col gap-1.5 mb-3.5">
                     {recentDone.map((l, i) => (
                       <div key={i} className="flex items-center gap-2 text-sm font-bold text-muted-foreground">
-                        <Icon name="star" size={16} /> {l.title}
+                        <NotoEmoji name="star" size={16} /> {l.title}
                       </div>
                     ))}
                   </div>
                 ) : (
                   <div className="text-[13px] text-muted-foreground mb-3.5">
-                    Start your first lesson! <Icon name="rocket" size={14} />
+                    Start your first lesson! <NotoEmoji name="rocket" size={14} />
                   </div>
                 );
               })()}

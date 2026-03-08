@@ -2,15 +2,14 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
 import { X } from "lucide-react";
-import Icon from "@/components/Icon";
 import NotoEmoji from "@/components/NotoEmoji";
 
 const KEYS = ["A", "B", "C", "D"];
 const PRAISES = [
   <span key="p1">Brilliant! <NotoEmoji name="party" size={18} /></span>,
   <span key="p2">Correct! <NotoEmoji name="sparkles" size={18} /></span>,
-  <>Nailed it! <Icon name="fire" size={18} /></>,
-  <>Spot on! <Icon name="lightning" size={18} /></>,
+  <span key="p3">Nailed it! <NotoEmoji name="fire" size={18} /></span>,
+  <span key="p4">Spot on! <NotoEmoji name="lightning" size={18} /></span>,
 ];
 
 // Fisher-Yates shuffle
@@ -137,10 +136,10 @@ const QuizScreen = () => {
           </div>
           <div className="flex gap-1">
             {Array.from({ length: localHearts }).map((_, i) => (
-              <Icon key={`h${i}`} name="heart" size={20} />
+              <NotoEmoji key={`h${i}`} name="heart" size={20} />
             ))}
             {Array.from({ length: 3 - localHearts }).map((_, i) => (
-              <Icon key={`e${i}`} name="heartEmpty" size={20} />
+              <NotoEmoji key={`e${i}`} name="heartEmpty" size={20} />
             ))}
           </div>
         </div>
@@ -153,7 +152,7 @@ const QuizScreen = () => {
         </div>
         <h2 className="text-[22px] font-black text-foreground leading-tight mb-1.5">{q.question}</h2>
         <p className="text-sm text-muted-foreground mb-7">
-          {q.hint ? <span><Icon name="lightbulb" size={14} /> {q.hint}</span> : "Choose the best answer"}
+          {q.hint ? <span><NotoEmoji name="lightbulb" size={14} /> {q.hint}</span> : "Choose the best answer"}
         </p>
         <div className="flex flex-col gap-2.5">
           {q.choices.map((c, i) => {
@@ -188,7 +187,7 @@ const QuizScreen = () => {
             <img src={isCorrect ? [KIBO.thumbsup, KIBO.celebrate, KIBO.happy][qIdx % 3] : localHearts === 0 ? KIBO.sad : [KIBO.shocked, KIBO.surprised][qIdx % 2]} alt="Kibo" className="w-[60px] h-[60px] object-contain" />
             <div className="flex-1">
               <div className={`text-lg font-black ${isCorrect ? "text-kibo-green" : "text-destructive"}`}>
-                {isCorrect ? PRAISES[Math.floor(Math.random() * 4)] : localHearts === 0 ? <span>No hearts left! <Icon name="heartBroken" size={18} /></span> : <span>Not quite... <Icon name="heartBroken" size={18} /></span>}
+                {isCorrect ? PRAISES[Math.floor(Math.random() * 4)] : localHearts === 0 ? <span>No hearts left! <NotoEmoji name="heartBroken" size={18} /></span> : <span>Not quite... <NotoEmoji name="heartBroken" size={18} /></span>}
               </div>
               <div className="text-[13px] text-muted-foreground leading-relaxed mt-1">{q.explanation}</div>
             </div>
