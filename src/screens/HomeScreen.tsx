@@ -11,8 +11,13 @@ import PreloadedImg from "@/components/PreloadedImg";
 const HomeScreen = () => {
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
 
-  const training = getTodaysTraining(progress.completedLessons);
+  const training = getTodaysTraining(progress.completedLessons, progress.goal);
   const { topic, exercises: quizExercises, tierLabel } = training;
+
+  const goalGreeting = progress.goal === "work" ? "Ready to work smarter with AI?" 
+    : progress.goal === "study" ? "Let's ace your studies with AI!"
+    : progress.goal === "build" ? "Let's build something amazing!"
+    : null;
 
   const startDailyTraining = () => {
     const dailyLesson: Lesson = {
