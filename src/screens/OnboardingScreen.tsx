@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
-import Icon from "@/components/Icon";
+
 import NotoEmoji from "@/components/NotoEmoji";
 
 const slides = [
