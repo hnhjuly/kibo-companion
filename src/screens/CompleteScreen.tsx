@@ -38,7 +38,7 @@ const CompleteScreen = () => {
     : acc >= 70 ? <span>Lesson Complete! <NotoEmoji name="party" size={28} /></span>
     : acc >= 40 ? <span>Not bad! <NotoEmoji name="thumbsUp" size={28} /></span>
     : <span>Keep Practicing! <NotoEmoji name="flexed" size={28} /></span>;
-  const subtitle = acc === 100 ? "Flawless! Kibo is amazed!" : acc >= 70 ? "Kibo is so proud of you!" : acc >= 40 ? "You're getting there!" : "Don't give up — try again!";
+  const subtitle = acc === 100 ? "Flawless! Kibo is amazed!" : acc >= 70 ? "Kibo is so proud of you!" : acc >= 40 ? "You're getting there!" : "Don't give up. Try again!";
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center p-10 text-center relative"
