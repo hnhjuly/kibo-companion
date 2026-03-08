@@ -4,8 +4,26 @@ import { CURRICULUM, KIBO } from "@/data/curriculum";
 import { Check, Lock, ChevronLeft, RotateCcw } from "lucide-react";
 
 const LessonsScreen = () => {
-  const { setScreen, setCurrentLesson, onResetProgress } = useApp();
+  const { setScreen, setCurrentLesson, onResetProgress, progress } = useApp();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+
+  // Derive lesson states from progress instead of hardcoded states
+  const allLessons = CURRICULUM.levels.flatMap(lv => lv.lessons);
+  const completedSet = new Set(progress.completedLessons);
+  
+  // Find the first non-completed lesson to mark as active
+  let foundActive = false;
+  const lessonStates = new Map<string, "done" | "active" | "locked">();
+  for (const lesson of allLessons) {
+    if (completedSet.has(lesson.id)) {
+      lessonStates.set(lesson.id, "done");
+    } else if (!foundActive) {
+      lessonStates.set(lesson.id, "active");
+      foundActive = true;
+    } else {
+      lessonStates.set(lesson.id, "locked");
+    }
+  }
 
   return (
     <>
