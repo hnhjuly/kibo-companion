@@ -3,6 +3,7 @@ import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
 import { X } from "lucide-react";
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 const KEYS = ["A", "B", "C", "D"];
 const PRAISES = [

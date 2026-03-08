@@ -3,6 +3,7 @@ import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
 
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 const slides = [
   {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { KIBO } from "@/data/curriculum";
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 const RankScreen = () => {
   const [activeTab, setActiveTab] = useState(0);

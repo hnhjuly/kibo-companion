@@ -2,6 +2,7 @@ import { KIBO } from "@/data/curriculum";
 import { User, Bell, Clock, HelpCircle, MessageCircle, ChevronRight } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 const PremiumProfileScreen = () => {
   const { progress, setScreen } = useApp();

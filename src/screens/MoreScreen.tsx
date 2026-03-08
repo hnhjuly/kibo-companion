@@ -1,6 +1,7 @@
 import { MessageCircle, HelpCircle, ChevronRight, ExternalLink } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import kiboWave from "@/assets/kibo-wave.png";
+import PreloadedImg from "@/components/PreloadedImg";
 
 const MoreScreen = () => {
   const { setScreen } = useApp();

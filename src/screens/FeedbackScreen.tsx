@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
+import PreloadedImg from "@/components/PreloadedImg";
 import { Send } from "lucide-react";
 
 const FeedbackScreen = () => {

@@ -3,6 +3,7 @@ import { useApp } from "@/context/AppContext";
 import { CURRICULUM, KIBO } from "@/data/curriculum";
 import { Check, Lock, ChevronLeft, RotateCcw } from "lucide-react";
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 const LessonsScreen = () => {
   const { setScreen, setCurrentLesson, onResetProgress, progress } = useApp();
