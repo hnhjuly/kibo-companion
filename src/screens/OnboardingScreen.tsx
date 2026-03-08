@@ -1,0 +1,103 @@
+import { useState } from "react";
+import { useApp } from "@/context/AppContext";
+import { KIBO } from "@/data/curriculum";
+
+const slides = [
+  {
+    img: KIBO.wave,
+    title: <>Learn <b className="text-kibo-green">AI Skills</b><br />5 minutes a day</>,
+    desc: "Join thousands mastering AI for work, school and life — starting right now.",
+  },
+  {
+    img: KIBO.happy,
+    title: <>Practice <b className="text-kibo-green">real tasks</b>,<br />not just theory</>,
+    desc: "Fix prompts. Summarize emails. Choose AI tools. Skills you'll use tomorrow.",
+  },
+  {
+    img: KIBO.neutral,
+    title: <>Earn XP,<br /><b className="text-kibo-green">build streaks</b></>,
+    desc: null,
+    pills: ["🔥 Streaks", "⚡ XP & Levels", "💎 Badges", "🏆 Leaderboard"],
+  },
+  {
+    img: null,
+    title: <>What's your <b className="text-kibo-green">goal?</b></>,
+    desc: "We'll personalise your path with Kibo",
+    goals: [
+      { emoji: "💼", label: "Work smarter" },
+      { emoji: "🎓", label: "Study / School" },
+      { emoji: "🚀", label: "Build a product" },
+      { emoji: "🤔", label: "Just curious" },
+    ],
+  },
+];
+
+const OnboardingScreen = () => {
+  const { setScreen } = useApp();
+  const [slide, setSlide] = useState(0);
+  const [selectedGoal, setSelectedGoal] = useState<number | null>(null);
+
+  const next = () => {
+    if (slide >= 3) { setScreen("home"); return; }
+    setSlide(s => s + 1);
+  };
+
+  const s = slides[slide];
+
+  return (
+    <div className="flex flex-col flex-1 justify-between p-7 pt-12"
+      style={{ background: "linear-gradient(160deg, #dff4ff, #f0fdf4 55%, #fffde8)" }}>
+      {/* Dots */}
+      <div className="flex gap-2 justify-center mb-1">
+        {[0, 1, 2, 3].map(i => (
+          <div key={i} className={`h-2 rounded-full transition-all ${i === slide ? "w-7 bg-kibo-green" : "w-2 bg-border"}`} />
+        ))}
+      </div>
+
+      {/* Body */}
+      <div className="flex-1 flex flex-col items-center justify-center text-center gap-4">
+        {s.img && (
+          <div className="w-40 h-40 flex items-center justify-center">
+            <img src={s.img} alt="Kibo" className="w-40 h-40 object-contain animate-float" />
+          </div>
+        )}
+        <h1 className="text-[29px] font-black text-foreground leading-tight">{s.title}</h1>
+        {s.desc && <p className="text-[15px] text-muted-foreground leading-relaxed max-w-[280px]">{s.desc}</p>}
+        {s.pills && (
+          <div className="flex gap-2 flex-wrap justify-center">
+            {s.pills.map(p => (
+              <div key={p} className="bg-card rounded-full px-4 py-2 text-[13px] font-extrabold card-shadow">{p}</div>
+            ))}
+          </div>
+        )}
+        {s.goals && (
+          <div className="grid grid-cols-2 gap-3 w-full">
+            {s.goals.map((g, i) => (
+              <button key={i}
+                onClick={() => setSelectedGoal(i)}
+                className={`bg-card border-[3px] rounded-2xl p-5 text-center text-sm font-extrabold text-foreground transition-all
+                  ${selectedGoal === i ? "border-kibo-green bg-kibo-green/10" : "border-border"}`}>
+                <span className="text-3xl block mb-2">{g.emoji}</span>
+                {g.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Buttons */}
+      <div className="flex flex-col gap-2 w-full">
+        <button onClick={next}
+          className="w-full py-[18px] bg-kibo-green text-primary-foreground rounded-2xl font-black text-lg kibo-shadow active:translate-y-[3px] active:shadow-none transition-all">
+          {slide === 3 ? "Start Learning with Kibo →" : "Continue →"}
+        </button>
+        <button onClick={() => setScreen("home")}
+          className="bg-transparent border-none text-muted-foreground font-bold text-[15px] py-2.5 text-center">
+          I already know AI →
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default OnboardingScreen;
