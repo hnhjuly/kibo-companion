@@ -98,36 +98,36 @@ const TrainScreen = () => {
             </div>
           </div>
 
-          {/* Game mode cards */}
-          <div className="flex flex-col gap-2.5">
-            <ModeCard
-              emojiName="target" color="#ffb800"
-              title="Daily Challenge" subtitle="One harder question — 2x XP"
-              stat={dailyDone ? <span className="flex items-center gap-1"><NotoEmoji name="checkmark" size={12} /> Done</span> : <span className="flex items-center gap-1"><NotoEmoji name="fire" size={12} /> {progress.streak}</span>}
-              statColor={dailyDone ? "text-kibo-green" : "text-kibo-gold"}
-              badge="2x XP"
-              onClick={() => setScreen("daily-challenge" as any)}
-            />
-            <ModeCard
-              emojiName="joker" color="#4a9eff"
-              title="Flashcards" subtitle="Flip and self-rate to remember terms"
-              stat={dueCards > 0 ? `${dueCards} due today` : "All caught up ✓"}
-              statColor={dueCards > 0 ? "text-secondary" : "text-kibo-green"}
-              onClick={() => setScreen("flashcards" as any)}
-            />
-            <ModeCard
-              emojiName="lightning" color="#ff4f4f"
-              title="Speed Round" subtitle="60 seconds, as many Qs as possible"
-              stat={speedBest > 0 ? `Best: ${speedBest}` : "Best: --"}
-              onClick={() => setScreen("speed-round" as any)}
-            />
-            <ModeCard
-              emojiName="puzzle" color="#9b6dff"
-              title="Match the Pairs" subtitle="Tap terms and definitions to match them"
-              stat={pairsBest ? `Best: ${Math.floor(parseInt(pairsBest) / 60)}:${String(parseInt(pairsBest) % 60).padStart(2, "0")}` : "Best: --:--"}
-              onClick={() => setScreen("match-pairs" as any)}
-            />
-          </div>
+           {/* Game mode cards */}
+           <div className="flex flex-col gap-2.5">
+             <ModeCard
+               emojiName="target" color="hsl(45 95% 75%)"
+               title="Daily Challenge" subtitle="One harder question — 2x XP"
+               stat={dailyDone ? <span className="flex items-center gap-1"><NotoEmoji name="checkmark" size={12} /> Done</span> : <span className="flex items-center gap-1"><NotoEmoji name="fire" size={12} /> {progress.streak}</span>}
+               statColor={dailyDone ? "text-kibo-green" : "text-kibo-gold"}
+               badge="2x XP"
+               onClick={() => setScreen("daily-challenge" as any)}
+             />
+             <ModeCard
+               emojiName="joker" color="hsl(200 80% 80%)"
+               title="Flashcards" subtitle="Flip and self-rate to remember terms"
+               stat={dueCards > 0 ? `${dueCards} due today` : "All caught up ✓"}
+               statColor={dueCards > 0 ? "text-secondary" : "text-kibo-green"}
+               onClick={() => setScreen("flashcards" as any)}
+             />
+             <ModeCard
+               emojiName="lightning" color="hsl(0 85% 75%)"
+               title="Speed Round" subtitle="60 seconds, as many Qs as possible"
+               stat={speedBest > 0 ? `Best: ${speedBest}` : "Best: --"}
+               onClick={() => setScreen("speed-round" as any)}
+             />
+             <ModeCard
+               emojiName="puzzle" color="hsl(270 60% 80%)"
+               title="Match the Pairs" subtitle="Tap terms and definitions to match them"
+               stat={pairsBest ? `Best: ${Math.floor(parseInt(pairsBest) / 60)}:${String(parseInt(pairsBest) % 60).padStart(2, "0")}` : "Best: --:--"}
+               onClick={() => setScreen("match-pairs" as any)}
+             />
+           </div>
 
           {/* Quick Fire divider */}
           <div className="flex items-center gap-3 mt-2">
