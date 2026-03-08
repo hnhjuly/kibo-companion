@@ -17,6 +17,7 @@ const DailyChallengeScreen = () => {
   const [answered, setAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [countdown, setCountdown] = useState("");
+  const [showExit, setShowExit] = useState(false);
 
   useEffect(() => {
     if (!isDone) return;
