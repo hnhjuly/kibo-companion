@@ -252,6 +252,16 @@ const LEVEL_TO_TOPICS: Record<string, string[]> = {
   "l5": ["daily-t2", "daily-t5", "daily-t7"], // AI Safety → Misinformation, Ethics, Privacy
 };
 
+// ═══════════════════════════════════════════════════════════════════
+// MAPPING: User goal → Prioritized topic IDs
+// ═══════════════════════════════════════════════════════════════════
+const GOAL_TO_TOPICS: Record<string, string[]> = {
+  "work":    ["daily-t3", "daily-t1", "daily-t4", "daily-t7"],  // AI at Work, Prompts, Tools, Privacy
+  "study":   ["daily-t10", "daily-t8", "daily-t2", "daily-t5"], // Learning, How AI Works, Misinfo, Ethics
+  "build":   ["daily-t1", "daily-t4", "daily-t6", "daily-t3"],  // Prompts, Tools, Creativity, Work
+  "curious": [],                                                  // No priority — rotate all equally
+};
+
 function getLevelPrefix(lessonId: string): string {
   // "l1-3" → "l1", "l2-1" → "l2"
   return lessonId.split("-")[0];
@@ -281,18 +291,36 @@ export function getTodaysTopic(): DailyTopic {
 }
 
 /**
- * 3-TIER DAILY TRAINING SYSTEM
+ * 3-TIER DAILY TRAINING SYSTEM (now goal-aware)
+ * Tier 0: GOAL-BASED — prioritize topics matching user's selected goal
  * Tier 1: REINFORCE — questions from topics matching recently completed lessons
  * Tier 2: PREVIEW — teaser question from next uncompleted level's topics
  * Tier 3: ROTATION — fallback to day-of-year topic rotation
  */
-export function getTodaysTraining(completedLessons: string[]): {
+export function getTodaysTraining(completedLessons: string[], goal?: string | null): {
   topic: DailyTopic;
   exercises: DailyExercise[];
-  tier: "reinforce" | "preview" | "rotation";
+  tier: "goal" | "reinforce" | "preview" | "rotation";
   tierLabel: string;
 } {
   const day = getDayOfYear();
+
+  // --- Tier 0: GOAL-BASED (for users with few completed lessons) ---
+  if (goal && goal !== "curious" && completedLessons.length < 5) {
+    const goalTopicIds = GOAL_TO_TOPICS[goal] || [];
+    const goalTopics = DAILY_TOPICS.filter(t => goalTopicIds.includes(t.id));
+    if (goalTopics.length > 0) {
+      const goalTopic = goalTopics[day % goalTopics.length];
+      const quizExercises = goalTopic.exercises.filter(e => e.type !== "PROMPT_TYPING");
+      const shuffled = seededShuffle(quizExercises, day);
+      return {
+        topic: goalTopic,
+        exercises: shuffled.slice(0, 3),
+        tier: "goal",
+        tierLabel: `🎯 For you: ${goalTopic.title}`,
+      };
+    }
+  }
 
   // --- Tier 1: REINFORCE ---
   // Find topics matching completed lesson levels
