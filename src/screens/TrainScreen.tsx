@@ -3,6 +3,7 @@ import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import { ArrowRight } from "lucide-react";
 import { KIBO, type Lesson } from "@/data/curriculum";
 import Icon from "@/components/Icon";
+import NotoEmoji from "@/components/NotoEmoji";
 
 const TrainScreen = () => {
   const { setScreen, setCurrentLesson, progress } = useApp();
