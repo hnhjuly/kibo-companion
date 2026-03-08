@@ -1,9 +1,10 @@
 import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
-import { Pencil, FileText, Bot, ChevronRight, ArrowRight, Check, Lock, Star } from "lucide-react";
+import { Pencil, FileText, Bot, ChevronRight, ArrowRight, Check, Lock, Star, Heart } from "lucide-react";
+import { getXPForLevel } from "@/lib/progress";
 
 const HomeScreen = () => {
-  const { setScreen, setCurrentLesson } = useApp();
+  const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
 
   const startQuiz = () => {
     const fallback = CURRICULUM.levels[0].lessons[2];
