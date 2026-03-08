@@ -43,13 +43,12 @@ const HomeScreen = () => {
       <div className="flex-1 overflow-y-auto overflow-x-hidden" style={{ scrollbarWidth: "none" }}>
         <div className="p-[18px] pb-[100px] flex flex-col gap-4">
           {/* Kibo Hero Card */}
-          <div className="rounded-[18px] p-0 px-5 pb-5 relative overflow-hidden flex items-end"
+          <div className="rounded-[18px] p-0 relative overflow-hidden flex items-end min-h-[180px]"
             style={{ backgroundImage: `url(${kiboBg})`, backgroundSize: "cover", backgroundPosition: "center", border: "1.5px solid rgba(74,158,255,0.15)" }}>
             <div className="absolute inset-0 bg-white/20" />
-            <img src={KIBO.happy} alt="Kibo" className="w-[115px] h-[115px] object-contain shrink-0 -mt-2 drop-shadow-lg" />
-            <div className="flex-1 pt-5 pl-1.5">
+            <div className="flex-1 pt-5 pl-5 pb-5 relative z-10">
               <div className="text-base font-black text-foreground mb-1">Hi, I'm Kibo! ✨</div>
-              <div className="text-[13px] text-muted-foreground leading-relaxed mb-3">
+              <div className="text-[13px] text-muted-foreground leading-relaxed mb-3 max-w-[160px]">
                 {!canPlay ? "Your hearts are refilling... Take a break! 😴" :
                   progress.streak > 0 ? `Let's train your AI skills! You're on a ${progress.streak} day streak 🔥` :
                   "Let's start training your AI skills! 💪"}
@@ -59,6 +58,7 @@ const HomeScreen = () => {
                 START <ArrowRight className="w-4 h-4" />
               </button>
             </div>
+            <img src={KIBO.happy} alt="Kibo" className="w-[150px] h-[150px] object-contain shrink-0 relative z-10 -mb-1 mr-2 drop-shadow-lg" />
           </div>
 
           {/* Today's Training */}
