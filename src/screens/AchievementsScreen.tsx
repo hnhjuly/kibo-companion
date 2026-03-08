@@ -56,7 +56,13 @@ const AchievementsScreen = () => {
 
           {/* Kibo encouragement */}
           <div className="flex items-center gap-3 bg-card rounded-2xl p-4 border-[1.5px] border-border mb-5">
-            <img src={unlocked >= 3 ? KIBO.trophy : unlocked > 0 ? KIBO.celebrate : KIBO.thinking} alt="Kibo" className="w-14 h-14 object-contain" />
+            <img src={
+              unlocked >= 8 ? KIBO.streak30 :
+              unlocked >= 5 ? KIBO.trophy :
+              unlocked >= 3 ? KIBO.celebrate :
+              unlocked > 0 ? KIBO.streak3 :
+              KIBO.studying
+            } alt="Kibo" className="w-14 h-14 object-contain" />
             <div className="text-[13px] text-muted-foreground leading-relaxed">
               {unlocked === 0
                 ? "Complete lessons to unlock badges! You got this! 💪"

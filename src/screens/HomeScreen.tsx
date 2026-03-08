@@ -62,6 +62,9 @@ const HomeScreen = () => {
               <div className="text-base font-black text-foreground mb-1">Hi, I'm Kibo! ✨</div>
               <div className="text-[13px] text-muted-foreground leading-relaxed mb-3 max-w-[160px]">
                 {!canPlay ? "Your hearts are refilling... Take a break! 😴" :
+                  progress.streak >= 30 ? `Legendary ${progress.streak} day streak! You're unstoppable! 👑` :
+                  progress.streak >= 7 ? `Amazing ${progress.streak} day streak! Keep it up! ⭐` :
+                  progress.streak >= 3 ? `${progress.streak} day streak! You're on fire! 🔥` :
                   progress.streak > 0 ? `Let's train your AI skills! You're on a ${progress.streak} day streak 🔥` :
                   "Let's start training your AI skills! 💪"}
               </div>
@@ -70,7 +73,12 @@ const HomeScreen = () => {
                 START <ArrowRight className="w-4 h-4" />
               </button>
             </div>
-            <img src={KIBO.happy} alt="Kibo" className="w-[200px] h-[200px] object-contain shrink-0 relative z-10 -mb-1 mr-2 drop-shadow-lg" />
+            <img src={
+              progress.streak >= 30 ? KIBO.streak30 :
+              progress.streak >= 7 ? KIBO.streak7 :
+              progress.streak >= 3 ? KIBO.streak3 :
+              KIBO.happy
+            } alt="Kibo" className="w-[200px] h-[200px] object-contain shrink-0 relative z-10 -mb-1 mr-2 drop-shadow-lg" />
           </div>
 
           {/* Today's Training */}
