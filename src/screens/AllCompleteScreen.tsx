@@ -1,24 +1,60 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
 import { COMING_SOON_MODULES } from "@/data/comingSoon";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 
 const AllCompleteScreen = () => {
   const { setScreen, progress } = useApp();
-  const [notified, setNotified] = useState<Set<number>>(new Set());
+  const [notified, setNotified] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem("kibo_waitlist");
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    } catch { return new Set(); }
+  });
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [pendingModule, setPendingModule] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const totalLessons = CURRICULUM.levels.flatMap(l => l.lessons).length;
   const totalXP = progress.xp;
 
-  const toggleNotify = (i: number) => {
-    setNotified(prev => {
-      const next = new Set(prev);
-      if (next.has(i)) next.delete(i); else next.add(i);
-      return next;
-    });
+  const handleNotifyClick = (moduleTitle: string) => {
+    if (notified.has(moduleTitle)) return;
+    setPendingModule(moduleTitle);
+    setEmail("");
+    setShowEmailModal(true);
+  };
+
+  const handleSubmitEmail = async () => {
+    const trimmed = email.trim().toLowerCase();
+    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      toast({ title: "Invalid email", description: "Please enter a valid email address.", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("waitlist").insert({ email: trimmed, module_title: pendingModule });
+    setSubmitting(false);
+
+    if (error && error.code === "23505") {
+      toast({ title: "Already subscribed!", description: "You're already on the list for this module." });
+    } else if (error) {
+      toast({ title: "Something went wrong", description: "Please try again later.", variant: "destructive" });
+      return;
+    } else {
+      toast({ title: "You're on the list! 🎉", description: `We'll notify you when "${pendingModule}" launches.` });
+    }
+
+    const next = new Set(notified);
+    next.add(pendingModule);
+    setNotified(next);
+    localStorage.setItem("kibo_waitlist", JSON.stringify([...next]));
+    setShowEmailModal(false);
   };
 
   return (
@@ -85,13 +121,14 @@ const AllCompleteScreen = () => {
                     <div className="text-[11px] text-muted-foreground font-semibold truncate">{mod.desc}</div>
                   </div>
                   <button
-                    onClick={() => toggleNotify(i)}
+                    onClick={() => handleNotifyClick(mod.title)}
+                    disabled={notified.has(mod.title)}
                     className={`shrink-0 rounded-lg px-3 py-1.5 text-[11px] font-extrabold transition-all ${
-                      notified.has(i)
+                      notified.has(mod.title)
                         ? "bg-kibo-green/15 text-kibo-green"
                         : "bg-muted text-muted-foreground hover:bg-kibo-green/10 hover:text-kibo-green"
                     }`}>
-                    {notified.has(i) ? "✓ Notified" : "Notify me"}
+                    {notified.has(mod.title) ? "✓ Notified" : "Notify me"}
                   </button>
                 </div>
               ))}
@@ -114,6 +151,40 @@ const AllCompleteScreen = () => {
           </div>
         </div>
       </div>
+
+      {/* Email Modal */}
+      {showEmailModal && (
+        <div className="absolute inset-0 z-[200] flex items-center justify-center bg-black/40 backdrop-blur-sm p-6">
+          <div className="bg-card rounded-2xl p-5 w-full max-w-[320px] border border-border shadow-xl">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-[16px] font-black text-foreground flex items-center gap-1.5">
+                <NotoEmoji name="bell" size={16} /> Get Notified
+              </h3>
+              <button onClick={() => setShowEmailModal(false)} className="text-muted-foreground p-1">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <p className="text-[12px] text-muted-foreground font-semibold mb-4">
+              Enter your email and we'll let you know when <b className="text-foreground">{pendingModule}</b> launches!
+            </p>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="you@email.com"
+              autoFocus
+              className="w-full px-4 py-3 rounded-xl border-[1.5px] border-border bg-background text-foreground text-[14px] font-semibold placeholder:text-muted-foreground/50 focus:outline-none focus:border-kibo-green transition-colors mb-3"
+              onKeyDown={e => e.key === "Enter" && handleSubmitEmail()}
+            />
+            <button
+              onClick={handleSubmitEmail}
+              disabled={submitting}
+              className="w-full py-3 bg-kibo-green text-primary-foreground rounded-xl font-black text-[14px] kibo-shadow active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-50">
+              {submitting ? "Submitting..." : "Notify Me 🔔"}
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
