@@ -92,18 +92,18 @@ const SpeedRoundScreen = () => {
       <div className="flex flex-col flex-1 bg-card">
         <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
           <button onClick={() => setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
-          <span className="font-black text-foreground">⚡ Speed Round</span>
+          <span className="font-black text-foreground flex items-center gap-2"><NotoEmoji name="lightning" size={18} /> Speed Round</span>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center p-8 gap-5">
-          <span className="text-7xl">⚡</span>
+          <NotoEmoji name="lightning" size={72} />
           <h2 className="text-3xl font-black text-foreground">Speed Round</h2>
           <div className="text-muted-foreground font-bold text-center space-y-1.5 text-sm">
             <p>60 seconds, as many Qs as possible</p>
             <p>3-streak = 2x bonus</p>
             <p>+10 XP per correct answer</p>
           </div>
-          <button onClick={startGame} className="mt-4 px-10 py-4 bg-destructive text-primary-foreground rounded-xl font-black text-lg shadow-[0_4px_0_#c00] active:translate-y-[2px] active:shadow-none transition-all">
-            Let's Go! ⚡
+          <button onClick={startGame} className="mt-4 px-10 py-4 bg-destructive text-primary-foreground rounded-xl font-black text-lg shadow-[0_4px_0_#c00] active:translate-y-[2px] active:shadow-none transition-all flex items-center gap-2">
+            Let's Go! <NotoEmoji name="lightning" size={20} />
           </button>
         </div>
       </div>
@@ -118,7 +118,7 @@ const SpeedRoundScreen = () => {
       <div className="flex flex-col flex-1 bg-card">
         <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
           <button onClick={() => setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
-          <span className="font-black text-foreground">⚡ Speed Round</span>
+          <span className="font-black text-foreground flex items-center gap-2"><NotoEmoji name="lightning" size={18} /> Speed Round</span>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center p-8 gap-4">
           <PreloadedImg src={score >= best ? KIBO.celebrate : KIBO.sad} alt="Kibo" className="w-28 h-28 object-contain" />
@@ -129,8 +129,8 @@ const SpeedRoundScreen = () => {
             <div><div className="text-xl font-black text-foreground">{bestStreak}</div><div className="text-xs text-muted-foreground font-bold">Best Streak</div></div>
             <div><div className="text-xl font-black text-foreground">{accuracy}%</div><div className="text-xs text-muted-foreground font-bold">Accuracy</div></div>
           </div>
-          <button onClick={startGame} className="mt-4 px-10 py-3.5 bg-destructive text-primary-foreground rounded-xl font-black shadow-[0_4px_0_#c00] active:translate-y-[2px] active:shadow-none transition-all">
-            Play Again ⚡
+          <button onClick={startGame} className="mt-4 px-10 py-3.5 bg-destructive text-primary-foreground rounded-xl font-black shadow-[0_4px_0_#c00] active:translate-y-[2px] active:shadow-none transition-all flex items-center gap-2">
+            Play Again <NotoEmoji name="lightning" size={18} />
           </button>
           <button onClick={() => setScreen("train")} className="text-muted-foreground font-bold text-sm">Back to Train</button>
         </div>

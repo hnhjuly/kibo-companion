@@ -16,21 +16,21 @@ import streakBg4 from "@/assets/streak-bg-4.png";
 const STREAK_BGS = [streakBg1, streakBg2, streakBg3, streakBg4];
 
 interface ModeCardProps {
-  icon: string;
+  emojiName: string;
   color: string;
   title: string;
   subtitle: string;
-  stat: string;
+  stat: React.ReactNode;
   statColor?: string;
   badge?: string;
   onClick: () => void;
 }
 
-const ModeCard = ({ icon, color, title, subtitle, stat, statColor, badge, onClick }: ModeCardProps) => (
+const ModeCard = ({ emojiName, color, title, subtitle, stat, statColor, badge, onClick }: ModeCardProps) => (
   <button onClick={onClick}
     className="w-full bg-card rounded-[16px] border-[1.5px] border-border p-3.5 flex items-center gap-3.5 text-left transition-all hover:border-muted-foreground/30 active:scale-[0.98]">
-    <div className="w-12 h-12 rounded-[13px] flex items-center justify-center text-2xl shrink-0" style={{ background: color + "20" }}>
-      {icon}
+    <div className="w-12 h-12 rounded-[13px] flex items-center justify-center shrink-0" style={{ background: color + "20" }}>
+      <NotoEmoji name={emojiName as any} size={28} />
     </div>
     <div className="flex-1 min-w-0">
       <div className="flex items-center gap-2">
@@ -101,28 +101,28 @@ const TrainScreen = () => {
           {/* Game mode cards */}
           <div className="flex flex-col gap-2.5">
             <ModeCard
-              icon="🎯" color="#ffb800"
+              emojiName="target" color="#ffb800"
               title="Daily Challenge" subtitle="One harder question — 2x XP"
-              stat={dailyDone ? "✅ Done" : `🔥 ${progress.streak}`}
+              stat={dailyDone ? <span className="flex items-center gap-1"><NotoEmoji name="checkmark" size={12} /> Done</span> : <span className="flex items-center gap-1"><NotoEmoji name="fire" size={12} /> {progress.streak}</span>}
               statColor={dailyDone ? "text-kibo-green" : "text-kibo-gold"}
               badge="2x XP"
               onClick={() => setScreen("daily-challenge" as any)}
             />
             <ModeCard
-              icon="🃏" color="#4a9eff"
+              emojiName="joker" color="#4a9eff"
               title="Flashcards" subtitle="Flip and self-rate to remember terms"
               stat={dueCards > 0 ? `${dueCards} due today` : "All caught up ✓"}
               statColor={dueCards > 0 ? "text-secondary" : "text-kibo-green"}
               onClick={() => setScreen("flashcards" as any)}
             />
             <ModeCard
-              icon="⚡" color="#ff4f4f"
+              emojiName="lightning" color="#ff4f4f"
               title="Speed Round" subtitle="60 seconds, as many Qs as possible"
               stat={speedBest > 0 ? `Best: ${speedBest}` : "Best: --"}
               onClick={() => setScreen("speed-round" as any)}
             />
             <ModeCard
-              icon="🧩" color="#9b6dff"
+              emojiName="puzzle" color="#9b6dff"
               title="Match the Pairs" subtitle="Tap terms and definitions to match them"
               stat={pairsBest ? `Best: ${Math.floor(parseInt(pairsBest) / 60)}:${String(parseInt(pairsBest) % 60).padStart(2, "0")}` : "Best: --:--"}
               onClick={() => setScreen("match-pairs" as any)}
