@@ -16,7 +16,7 @@ const BottomNav = () => {
   const { screen, setScreen } = useApp();
 
   return (
-    <nav className="absolute bottom-0 left-0 right-0 bg-card border-t border-border flex pt-2.5 pb-6 z-[100]">
+    <nav className="absolute bottom-0 left-0 right-0 bg-card border-t border-border flex pt-2.5 pb-[max(1.5rem,env(safe-area-inset-bottom))] z-[100]">
       {tabs.map(tab => {
         const active = screen === tab.id;
         const Icon = tab.icon;
