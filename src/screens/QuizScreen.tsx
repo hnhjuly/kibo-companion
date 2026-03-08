@@ -52,13 +52,15 @@ const Confetti = ({ count }: { count: number }) => {
   );
 };
 
+const QUIZ_SIZE = 10;
+
 const QuizScreen = () => {
   const { setScreen, currentLesson, setQuizStats, progress, onLoseHeart, onCompleteLesson } = useApp();
   const rawQuestions = currentLesson?.questions?.length
     ? currentLesson.questions
-    : CURRICULUM.levels[0].lessons[2].questions;
+    : CURRICULUM.levels[0].lessons[0].questions;
 
-  const [questions] = useState(() => shuffleQuestions(rawQuestions));
+  const [questions] = useState(() => shuffleQuestions(rawQuestions).slice(0, QUIZ_SIZE));
 
   const [qIdx, setQIdx] = useState(0);
   const [localHearts, setLocalHearts] = useState(progress.hearts);
