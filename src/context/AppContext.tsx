@@ -87,6 +87,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setScreen("home");
   }, []);
 
+  const onRestoreHeart = useCallback(() => {
+    setProgress(p => restoreHeart(p));
+  }, []);
+
   // Override setScreen to check hearts
   const safeSetScreen = useCallback((s: Screen) => {
     if ((s === "quiz") && !canPlay) {
@@ -103,7 +107,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     <AppContext.Provider value={{
       screen, setScreen: safeSetScreen, currentLesson, setCurrentLesson,
       quizStats, setQuizStats, progress, onLoseHeart, onCompleteLesson,
-      onUseFreeze, onResetProgress, heartsTimeRemaining, canPlay
+      onUseFreeze, onResetProgress, onRestoreHeart, heartsTimeRemaining, canPlay
     }}>
       {children}
     </AppContext.Provider>
