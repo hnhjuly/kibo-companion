@@ -115,7 +115,9 @@ const QuizScreen = () => {
 
       {/* Quiz body */}
       <div className="flex-1 overflow-y-auto px-[22px] pt-7 pb-[200px] flex flex-col">
-        <div className="text-[11px] font-black tracking-[2px] uppercase text-muted-foreground/50 mb-2.5">Multiple Choice</div>
+        <div className="text-[11px] font-black tracking-[2px] uppercase text-muted-foreground/50 mb-2.5">
+          {q.type === "mcq" ? "Multiple Choice" : q.type === "identify" ? "Identify" : q.type === "scenario" ? "Scenario" : q.type === "multiple_choice" ? "Multiple Choice" : "Multiple Choice"}
+        </div>
         <h2 className="text-[22px] font-black text-foreground leading-tight mb-1.5">{q.question}</h2>
         <p className="text-sm text-muted-foreground mb-7">
           {q.hint ? `💡 ${q.hint}` : "Choose the best answer"}
