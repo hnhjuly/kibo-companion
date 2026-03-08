@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 import { Lesson } from "@/data/curriculum";
-import { UserProgress, loadProgress, saveProgress, resetProgress, loseHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX } from "@/lib/progress";
+import { UserProgress, loadProgress, saveProgress, resetProgress, loseHeart, restoreHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX } from "@/lib/progress";
 
 type Screen = "onboarding" | "home" | "lessons" | "quiz" | "complete" | "train" | "achievements" | "more" | "hearts-depleted" | "feedback";
 
@@ -16,6 +16,7 @@ interface AppState {
   onCompleteLesson: (lessonId: string, xpEarned: number, correct: number, total: number) => void;
   onUseFreeze: () => void;
   onResetProgress: () => void;
+  onRestoreHeart: () => void;
   heartsTimeRemaining: number;
   canPlay: boolean;
 }
@@ -86,6 +87,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setScreen("home");
   }, []);
 
+  const onRestoreHeart = useCallback(() => {
+    setProgress(p => restoreHeart(p));
+  }, []);
+
   // Override setScreen to check hearts
   const safeSetScreen = useCallback((s: Screen) => {
     if ((s === "quiz") && !canPlay) {
@@ -102,7 +107,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     <AppContext.Provider value={{
       screen, setScreen: safeSetScreen, currentLesson, setCurrentLesson,
       quizStats, setQuizStats, progress, onLoseHeart, onCompleteLesson,
-      onUseFreeze, onResetProgress, heartsTimeRemaining, canPlay
+      onUseFreeze, onResetProgress, onRestoreHeart, heartsTimeRemaining, canPlay
     }}>
       {children}
     </AppContext.Provider>
