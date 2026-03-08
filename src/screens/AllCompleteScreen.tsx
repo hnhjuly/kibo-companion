@@ -72,7 +72,7 @@ const AllCompleteScreen = () => {
           {/* Celebration Card */}
           <div className="rounded-[18px] p-6 text-center border-[2px] border-kibo-gold/40"
             style={{ background: "linear-gradient(160deg, #fef9e7, #fff7ed 50%, #fef0f5)" }}>
-            <PreloadedImg src={KIBO.celebrate} alt="Kibo celebrating" className="w-32 h-32 object-contain mx-auto mb-3 drop-shadow-lg" />
+            <PreloadedImg src={KIBO.graduate2} alt="Kibo graduated" className="w-32 h-32 object-contain mx-auto mb-3 drop-shadow-lg" />
             <div className="inline-flex items-center gap-1.5 bg-kibo-gold/15 text-kibo-gold rounded-full px-4 py-1.5 text-xs font-black mb-3">
               <NotoEmoji name="trophy" size={14} /> AI FOUNDATIONS COMPLETE
             </div>
