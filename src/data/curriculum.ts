@@ -74,7 +74,7 @@ export const CURRICULUM: Curriculum = {
       id: 1, title: "AI Basics", color: "#3db74a", lessons: [
         {
           id: "l1-1", title: "What is AI?", duration: "3 min", xp: 20, state: "done", questions: [
-            { type: "mcq", question: "What does 'AI' stand for?", hint: "Think about the letters...", choices: ["Automated Interface", "Artificial Intelligence", "Advanced Interaction", "Analog Integration"], correct: 1, explanation: "AI = Artificial Intelligence — teaching machines to think and learn like humans.", xp: 10 },
+            { type: "mcq", question: "What does 'AI' stand for?", hint: "Think about the letters...", choices: ["Automated Interface", "Artificial Intelligence", "Advanced Interaction", "Analog Integration"], correct: 1, explanation: "AI = Artificial Intelligence. It's about teaching machines to think and learn like humans.", xp: 10 },
             { type: "mcq", question: "Which of these is an example of AI in everyday life?", choices: ["A calculator", "A light switch", "A voice assistant like Siri", "A wooden chair"], correct: 2, explanation: "Voice assistants use AI to understand speech and respond intelligently.", xp: 10 },
             { type: "mcq", question: "AI was first seriously researched in which decade?", choices: ["1930s", "1950s", "1970s", "1990s"], correct: 1, explanation: "The term 'Artificial Intelligence' was coined at Dartmouth in 1956.", xp: 10 }
           ]
