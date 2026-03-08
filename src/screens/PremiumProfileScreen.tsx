@@ -9,7 +9,7 @@ const MoreScreen = () => {
   return (
     <>
       <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center justify-center gap-3.5">
-        <span className="text-lg font-black text-foreground">⚙️ More</span>
+        <span className="text-lg font-black text-foreground flex items-center gap-1.5"><NotoEmoji name="gear" size={20} /> More</span>
       </div>
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="p-[18px] pb-[100px] flex flex-col gap-3.5">
