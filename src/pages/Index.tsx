@@ -31,7 +31,7 @@ const screens: Record<string, React.FC> = {
 
 const AppContent = () => {
   const { screen } = useApp();
-  const showNav = ["home", "train", "achievements", "lessons", "more", "all-complete"].includes(screen);
+  const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete"].includes(screen);
   const Screen = screens[screen];
 
   return (
