@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { CURRICULUM, KIBO } from "@/data/curriculum";
 import { Check, Lock, ChevronLeft, RotateCcw } from "lucide-react";
@@ -11,6 +11,11 @@ const LessonsScreen = () => {
 
   const allLessons = CURRICULUM.levels.flatMap(lv => lv.lessons);
   const completedSet = new Set(progress.completedLessons);
+  const allDone = allLessons.every(l => completedSet.has(l.id));
+
+  useEffect(() => {
+    if (allDone) setScreen("all-complete");
+  }, [allDone, setScreen]);
   
   let foundActive = false;
   const lessonStates = new Map<string, "done" | "active" | "locked">();

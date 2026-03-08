@@ -1,0 +1,128 @@
+import { useState } from "react";
+import { useApp } from "@/context/AppContext";
+import { KIBO, CURRICULUM } from "@/data/curriculum";
+import { ChevronLeft } from "lucide-react";
+import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
+
+const COMING_SOON_MODULES = [
+  { icon: "🤖", title: "ChatGPT for Work", desc: "Master the world's most popular AI assistant", color: "#10a37f" },
+  { icon: "🎨", title: "Midjourney: Visual AI", desc: "Create stunning images with AI prompts", color: "#7c3aed" },
+  { icon: "✨", title: "Claude & Prompting Mastery", desc: "Advanced prompting with Anthropic's Claude", color: "#d97706" },
+  { icon: "🔷", title: "Gemini in Google Workspace", desc: "AI-powered productivity in Google apps", color: "#4285f4" },
+  { icon: "💻", title: "AI for Coding", desc: "Build with AI — no experience needed", color: "#1e293b" },
+];
+
+const AllCompleteScreen = () => {
+  const { setScreen, progress } = useApp();
+  const [notified, setNotified] = useState<Set<number>>(new Set());
+
+  const totalLessons = CURRICULUM.levels.flatMap(l => l.lessons).length;
+  const totalXP = progress.xp;
+
+  const toggleNotify = (i: number) => {
+    setNotified(prev => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i); else next.add(i);
+      return next;
+    });
+  };
+
+  return (
+    <>
+      <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center gap-3.5">
+        <button onClick={() => setScreen("home")} className="text-foreground p-1"><ChevronLeft className="w-6 h-6" /></button>
+        <span className="text-lg font-black text-foreground flex-1 flex items-center gap-2">
+          <NotoEmoji name="graduation" size={20} /> Learning Path
+        </span>
+      </div>
+
+      <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+        <div className="p-[18px] pb-[100px] flex flex-col gap-4">
+          
+          {/* Celebration Card */}
+          <div className="rounded-[18px] p-6 text-center border-[2px] border-kibo-gold/40"
+            style={{ background: "linear-gradient(160deg, #fef9e7, #fff7ed 50%, #fef0f5)" }}>
+            <PreloadedImg src={KIBO.celebrate} alt="Kibo celebrating" className="w-32 h-32 object-contain mx-auto mb-3 drop-shadow-lg" />
+            <div className="inline-flex items-center gap-1.5 bg-kibo-gold/15 text-kibo-gold rounded-full px-4 py-1.5 text-xs font-black mb-3">
+              <NotoEmoji name="trophy" size={14} /> AI FOUNDATIONS COMPLETE
+            </div>
+            <h1 className="text-[22px] font-black text-foreground leading-tight mb-2">
+              You've mastered<br />the basics! <NotoEmoji name="sparkles" size={20} />
+            </h1>
+            <p className="text-[13px] text-muted-foreground font-semibold leading-relaxed mb-4">
+              {totalLessons} lessons completed · {totalXP} XP earned
+            </p>
+            <div className="flex justify-center gap-3">
+              <div className="bg-card rounded-xl px-4 py-2.5 border border-border">
+                <div className="text-lg font-black text-kibo-green">{totalLessons}</div>
+                <div className="text-[10px] font-bold text-muted-foreground">Lessons</div>
+              </div>
+              <div className="bg-card rounded-xl px-4 py-2.5 border border-border">
+                <div className="text-lg font-black text-kibo-gold">{totalXP}</div>
+                <div className="text-[10px] font-bold text-muted-foreground">Total XP</div>
+              </div>
+              <div className="bg-card rounded-xl px-4 py-2.5 border border-border">
+                <div className="text-lg font-black text-kibo-orange">{progress.streak}</div>
+                <div className="text-[10px] font-bold text-muted-foreground">Day Streak</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Coming Soon */}
+          <div>
+            <h3 className="text-[17px] font-black text-foreground mb-1 flex items-center gap-2">
+              <NotoEmoji name="rocket" size={18} /> What's Next?
+            </h3>
+            <p className="text-[12px] text-muted-foreground font-semibold mb-3">
+              Tool-specific modules are coming soon. Tap to get notified!
+            </p>
+
+            <div className="flex flex-col gap-2.5">
+              {COMING_SOON_MODULES.map((mod, i) => (
+                <div key={i} className="bg-card rounded-[14px] p-3.5 border-[1.5px] border-border flex items-center gap-3">
+                  <div className="w-11 h-11 rounded-[12px] flex items-center justify-center text-xl shrink-0"
+                    style={{ background: mod.color + "15" }}>
+                    {mod.icon}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[14px] font-extrabold text-foreground flex items-center gap-1.5">
+                      <NotoEmoji name="lock" size={12} /> {mod.title}
+                    </div>
+                    <div className="text-[11px] text-muted-foreground font-semibold truncate">{mod.desc}</div>
+                  </div>
+                  <button
+                    onClick={() => toggleNotify(i)}
+                    className={`shrink-0 rounded-lg px-3 py-1.5 text-[11px] font-extrabold transition-all ${
+                      notified.has(i)
+                        ? "bg-kibo-green/15 text-kibo-green"
+                        : "bg-muted text-muted-foreground hover:bg-kibo-green/10 hover:text-kibo-green"
+                    }`}>
+                    {notified.has(i) ? "✓ Notified" : "Notify me"}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Keep Training CTA */}
+          <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border text-center">
+            <PreloadedImg src={KIBO.happy} alt="Kibo" className="w-16 h-16 object-contain mx-auto mb-2" />
+            <div className="text-[14px] font-black text-foreground mb-1">
+              Keep your streak alive! <NotoEmoji name="fire" size={14} />
+            </div>
+            <p className="text-[12px] text-muted-foreground font-semibold mb-3">
+              While you wait — daily challenges keep your AI skills sharp
+            </p>
+            <button onClick={() => setScreen("train")}
+              className="w-full py-3 bg-kibo-green text-primary-foreground rounded-xl font-black text-[15px] kibo-shadow active:translate-y-[2px] active:shadow-none transition-all">
+              DAILY CHALLENGE →
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default AllCompleteScreen;
