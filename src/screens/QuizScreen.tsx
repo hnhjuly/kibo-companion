@@ -135,14 +135,14 @@ const QuizScreen = () => {
               background: "linear-gradient(90deg, #3db74a, #72e07a)"
             }} />
           </div>
-          <div className="flex gap-1">
-            {Array.from({ length: localHearts }).map((_, i) => (
-              <NotoEmoji key={`h${i}`} name="heart" size={20} />
-            ))}
-            {Array.from({ length: 3 - localHearts }).map((_, i) => (
-              <NotoEmoji key={`e${i}`} name="heartEmpty" size={20} />
-            ))}
-          </div>
+           <div className="flex gap-1">
+             {Array.from({ length: localHearts }).map((_, i) => (
+               <NotoEmoji key={`h${i}`} name="heart" size={20} />
+             ))}
+             {Array.from({ length: 6 - localHearts }).map((_, i) => (
+               <NotoEmoji key={`e${i}`} name="heartEmpty" size={20} />
+             ))}
+           </div>
         </div>
       </div>
 
