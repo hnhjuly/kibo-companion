@@ -2,16 +2,15 @@ import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { CURRICULUM, KIBO } from "@/data/curriculum";
 import { Check, Lock, ChevronLeft, RotateCcw } from "lucide-react";
+import Icon from "@/components/Icon";
 
 const LessonsScreen = () => {
   const { setScreen, setCurrentLesson, onResetProgress, progress } = useApp();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
-  // Derive lesson states from progress instead of hardcoded states
   const allLessons = CURRICULUM.levels.flatMap(lv => lv.lessons);
   const completedSet = new Set(progress.completedLessons);
   
-  // Find the first non-completed lesson to mark as active
   let foundActive = false;
   const lessonStates = new Map<string, "done" | "active" | "locked">();
   for (const lesson of allLessons) {
@@ -29,7 +28,9 @@ const LessonsScreen = () => {
     <>
       <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center gap-3.5">
         <button onClick={() => setScreen("home")} className="text-foreground p-1"><ChevronLeft className="w-6 h-6" /></button>
-        <span className="text-lg font-black text-foreground flex-1">🎓 Learning Path</span>
+        <span className="text-lg font-black text-foreground flex-1 flex items-center gap-2">
+          <Icon name="graduation" size={20} /> Learning Path
+        </span>
         <button onClick={() => setShowResetConfirm(true)}
           className="text-muted-foreground p-1.5 rounded-lg hover:bg-background transition-colors"
           title="Reset Progress">
@@ -42,7 +43,7 @@ const LessonsScreen = () => {
           <div className="flex items-center gap-3 bg-card rounded-2xl p-4 border-[1.5px] border-border">
             <img src={KIBO.studying} alt="Kibo studying" className="w-14 h-14 object-contain" />
             <div className="text-[13px] text-muted-foreground leading-relaxed font-semibold">
-              Keep learning! Each lesson brings you closer to AI mastery 📚
+              Keep learning! Each lesson brings you closer to AI mastery <Icon name="book" size={14} />
             </div>
           </div>
           {CURRICULUM.levels.map(lv => (

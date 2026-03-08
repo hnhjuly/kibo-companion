@@ -1,6 +1,7 @@
 import { KIBO } from "@/data/curriculum";
 import { User, Bell, Clock, HelpCircle, ChevronRight } from "lucide-react";
 import { useApp } from "@/context/AppContext";
+import Icon from "@/components/Icon";
 
 const MoreScreen = () => {
   const { progress } = useApp();
@@ -24,7 +25,7 @@ const MoreScreen = () => {
             <div className="flex gap-2">
               {[
                 { val: String(progress.xp), label: "Total XP" },
-                { val: `🔥 ${progress.streak}`, label: "Streak" },
+                { val: <span className="inline-flex items-center gap-1"><Icon name="fire" size={18} /> {progress.streak}</span>, label: "Streak" },
                 { val: String(progress.completedLessons.length), label: "Lessons" },
               ].map(s => (
                 <div key={s.label} className="flex-1 bg-background rounded-xl p-3 text-center">
@@ -47,13 +48,19 @@ const MoreScreen = () => {
 
           {/* Badges */}
           <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border">
-            <h3 className="text-[15px] font-black text-foreground mb-3">🏅 Badges</h3>
+            <h3 className="text-[15px] font-black text-foreground mb-3 flex items-center gap-1.5">
+              <Icon name="trophy" size={18} /> Badges
+            </h3>
             <div className="flex gap-2.5 flex-wrap">
-              {["🔥", "⚡", "🎯"].map(b => (
-                <div key={b} className="w-[54px] h-[54px] bg-background rounded-[14px] flex items-center justify-center text-[26px] hover:scale-110 transition-transform">{b}</div>
+              {(["fire", "lightning", "target"] as const).map(b => (
+                <div key={b} className="w-[54px] h-[54px] bg-background rounded-[14px] flex items-center justify-center hover:scale-110 transition-transform">
+                  <Icon name={b} size={30} />
+                </div>
               ))}
-              {["🏆", "💎", "🚀"].map(b => (
-                <div key={b} className="w-[54px] h-[54px] bg-background rounded-[14px] flex items-center justify-center text-[26px] opacity-30 grayscale">{b}</div>
+              {(["trophy", "diamond", "rocket"] as const).map(b => (
+                <div key={b} className="w-[54px] h-[54px] bg-background rounded-[14px] flex items-center justify-center opacity-30 grayscale">
+                  <Icon name={b} size={30} />
+                </div>
               ))}
             </div>
           </div>
