@@ -1,5 +1,5 @@
 import { useApp } from "@/context/AppContext";
-import { CURRICULUM } from "@/data/curriculum";
+import { CURRICULUM, KIBO } from "@/data/curriculum";
 import { Check, Lock, ChevronLeft } from "lucide-react";
 
 const LessonsScreen = () => {
@@ -13,6 +13,13 @@ const LessonsScreen = () => {
       </div>
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="p-[18px] pb-[100px] flex flex-col gap-5">
+          {/* Kibo studying header */}
+          <div className="flex items-center gap-3 bg-card rounded-2xl p-4 border-[1.5px] border-border">
+            <img src={KIBO.studying} alt="Kibo studying" className="w-14 h-14 object-contain" />
+            <div className="text-[13px] text-muted-foreground leading-relaxed font-semibold">
+              Keep learning! Each lesson brings you closer to AI mastery 📚
+            </div>
+          </div>
           {CURRICULUM.levels.map(lv => (
             <div key={lv.id}>
               <div className="flex items-center gap-2.5 mb-3">

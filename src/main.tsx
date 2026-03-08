@@ -15,8 +15,15 @@ import kiboSad from "@/assets/kibo-sad.png";
 import kiboShocked from "@/assets/kibo-shocked.png";
 import kiboThumbsup from "@/assets/kibo-thumbsup.png";
 import kiboTrophy from "@/assets/kibo-trophy.png";
+import kibo3DayStreak from "@/assets/kibo-3daystreak.png";
+import kibo7DayStreak from "@/assets/kibo-7daystreak.png";
+import kiboDay30 from "@/assets/kibo-day30.png";
+import kiboFreezeStreak from "@/assets/kibo-freezestreak.png";
+import kiboStudying from "@/assets/kibo-studying.png";
+import kiboLowStreak from "@/assets/kibo-lowstreak.png";
+import kiboStreakAtRisk from "@/assets/kibo-streakatrisk.png";
 
-[kiboHappy, kiboSmile, kiboWave, kiboSurprised, kiboThinking, kiboCelebrate, kiboBg, kiboFocused, kiboSad, kiboShocked, kiboThumbsup, kiboTrophy].forEach(src => {
+[kiboHappy, kiboSmile, kiboWave, kiboSurprised, kiboThinking, kiboCelebrate, kiboBg, kiboFocused, kiboSad, kiboShocked, kiboThumbsup, kiboTrophy, kibo3DayStreak, kibo7DayStreak, kiboDay30, kiboFreezeStreak, kiboStudying, kiboLowStreak, kiboStreakAtRisk].forEach(src => {
   const img = new Image();
   img.src = src;
 });
