@@ -17,7 +17,7 @@ const TrainScreen = () => {
   const { setScreen, setCurrentLesson, progress } = useApp();
   const randomBg = useMemo(() => STREAK_BGS[Math.floor(Math.random() * STREAK_BGS.length)], []);
 
-  const training = getTodaysTraining(progress.completedLessons);
+  const training = getTodaysTraining(progress.completedLessons, progress.goal);
   const { topic, exercises: quizExercises, tierLabel } = training;
 
   const startDailyChallenge = () => {
