@@ -8,11 +8,12 @@ import TrainScreen from "@/screens/TrainScreen";
 import AchievementsScreen from "@/screens/AchievementsScreen";
 import MoreScreen from "@/screens/MoreScreen";
 import HeartsDepletedScreen from "@/screens/HeartsDepletedScreen";
+import FeedbackScreen from "@/screens/FeedbackScreen";
 import BottomNav from "@/components/BottomNav";
 
 const AppContent = () => {
   const { screen } = useApp();
-  const showNav = ["home", "train", "achievements", "lessons"].includes(screen);
+  const showNav = ["home", "train", "achievements", "lessons", "feedback"].includes(screen);
 
   return (
     <div className="w-[390px] h-[844px] bg-background rounded-[46px] overflow-hidden relative flex flex-col"
@@ -36,6 +37,7 @@ const AppContent = () => {
         {screen === "achievements" && <AchievementsScreen />}
         {screen === "more" && <MoreScreen />}
         {screen === "hearts-depleted" && <HeartsDepletedScreen />}
+        {screen === "feedback" && <FeedbackScreen />}
       </div>
 
       {showNav && <BottomNav />}
