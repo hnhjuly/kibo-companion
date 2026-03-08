@@ -8,7 +8,7 @@ const slides = [
   {
     img: KIBO.wave,
     title: <>Learn <b className="text-kibo-green">AI Skills</b><br />5 minutes a day</>,
-    desc: "Join thousands mastering AI for work, school and life — starting right now.",
+    desc: "Join thousands mastering AI for work, school and life. Start right now.",
   },
   {
     img: KIBO.focused,

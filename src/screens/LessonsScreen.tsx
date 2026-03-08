@@ -93,7 +93,7 @@ const LessonsScreen = () => {
             <img src={KIBO.surprised} alt="Kibo" className="w-20 h-20 object-contain mx-auto mb-3" />
             <h2 className="text-xl font-black text-foreground mb-2">Reset Everything?</h2>
             <p className="text-[13px] text-muted-foreground leading-relaxed mb-5">
-              This will erase all your progress — XP, streaks, hearts, and completed lessons. Questions will be reshuffled. <b>This can't be undone!</b>
+              This will erase all your progress: XP, streaks, hearts, and completed lessons. Questions will be reshuffled. <b>This can't be undone!</b>
             </p>
             <div className="flex flex-col gap-2">
               <button onClick={() => { onResetProgress(); setShowResetConfirm(false); }}
