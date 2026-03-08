@@ -14,6 +14,7 @@ const STREAK_BGS = [streakBg1, streakBg2, streakBg3, streakBg4];
 
 const TrainScreen = () => {
   const { setScreen, setCurrentLesson, progress } = useApp();
+  const randomBg = useMemo(() => STREAK_BGS[Math.floor(Math.random() * STREAK_BGS.length)], []);
 
   const training = getTodaysTraining(progress.completedLessons);
   const { topic, exercises: quizExercises, tierLabel } = training;
@@ -41,22 +42,25 @@ const TrainScreen = () => {
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="p-[18px] pb-[100px] flex flex-col gap-4">
           {/* Streak */}
-          <div className="rounded-[18px] p-[18px] flex items-center gap-4"
-            style={{ background: "linear-gradient(135deg, #fffbeb, #fff0d6, #ffecd2)", border: "1.5px solid #ffb800" }}>
-            <img src={
-              progress.streak >= 30 ? KIBO.streak30 :
-              progress.streak >= 7 ? KIBO.streak7 :
-              progress.streak >= 3 ? KIBO.streak3 :
-              progress.streak > 0 ? KIBO.streakAtRisk :
-              KIBO.neutral
-            } alt="Kibo streak" className="w-[50px] h-[50px] object-contain" />
-            <div className="flex-1">
-              <div className="text-[28px] font-black text-foreground">{progress.streak} Day Streak</div>
-              <div className="text-[13px] text-muted-foreground font-bold">
-                {progress.streak >= 30 ? <span>Legendary! <NotoEmoji name="crown" size={14} /></span> : progress.streak >= 7 ? <span>Amazing! <NotoEmoji name="star" size={14} /></span> : progress.streak >= 3 ? <span>On fire! <NotoEmoji name="fire" size={14} /></span> : "Don't break it!"}
+          <div className="rounded-[18px] overflow-hidden relative" style={{ border: "1.5px solid #ffb800" }}>
+            <img src={randomBg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/30" />
+            <div className="relative p-[18px] flex items-center gap-4">
+              <img src={
+                progress.streak >= 30 ? KIBO.streak30 :
+                progress.streak >= 7 ? KIBO.streak7 :
+                progress.streak >= 3 ? KIBO.streak3 :
+                progress.streak > 0 ? KIBO.streakAtRisk :
+                KIBO.neutral
+              } alt="Kibo streak" className="w-[150px] h-[150px] object-contain drop-shadow-lg" />
+              <div className="flex-1">
+                <div className="text-[28px] font-black text-white drop-shadow-md">{progress.streak} Day Streak</div>
+                <div className="text-[13px] text-white/80 font-bold drop-shadow-sm">
+                  {progress.streak >= 30 ? <span>Legendary! <NotoEmoji name="crown" size={14} /></span> : progress.streak >= 7 ? <span>Amazing! <NotoEmoji name="star" size={14} /></span> : progress.streak >= 3 ? <span>On fire! <NotoEmoji name="fire" size={14} /></span> : "Don't break it!"}
+                </div>
               </div>
+              <button className="bg-white/20 backdrop-blur-sm border-2 border-white/40 rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-white inline-flex items-center gap-1"><NotoEmoji name="snowflake" size={14} /> Freeze</button>
             </div>
-            <button className="bg-card border-2 border-kibo-gold rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-kibo-orange inline-flex items-center gap-1"><NotoEmoji name="snowflake" size={14} /> Freeze</button>
           </div>
 
           {/* Today's topic header */}
