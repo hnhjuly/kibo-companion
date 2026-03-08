@@ -87,7 +87,3 @@
   from { transform: translateY(0) rotate(-4deg); }
   to { transform: translateY(-18px) rotate(4deg); }
 }
-  .card-shadow {
-    box-shadow: 0 2px 12px hsl(220 20% 18% / 0.06);
-  }
-}
