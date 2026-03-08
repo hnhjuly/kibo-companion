@@ -2,6 +2,7 @@ import { KIBO } from "@/data/curriculum";
 import { User, Bell, Clock, HelpCircle, MessageCircle, ChevronRight } from "lucide-react";
 import { useApp } from "@/context/AppContext";
 import Icon from "@/components/Icon";
+import NotoEmoji from "@/components/NotoEmoji";
 
 const MoreScreen = () => {
   const { progress, setScreen } = useApp();
