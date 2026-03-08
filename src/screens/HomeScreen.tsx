@@ -2,6 +2,10 @@ import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
 import { Pencil, FileText, Bot, ChevronRight, ArrowRight, Check, Lock, Star, Heart } from "lucide-react";
 import { getXPForLevel } from "@/lib/progress";
+import kiboBg from "@/assets/kibo-bg.png";
+import { KIBO, CURRICULUM } from "@/data/curriculum";
+import { Pencil, FileText, Bot, ChevronRight, ArrowRight, Check, Lock, Star, Heart } from "lucide-react";
+import { getXPForLevel } from "@/lib/progress";
 
 const HomeScreen = () => {
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
