@@ -9,6 +9,13 @@ import kiboSad from "@/assets/kibo-sad.png";
 import kiboShocked from "@/assets/kibo-shocked.png";
 import kiboThumbsup from "@/assets/kibo-thumbsup.png";
 import kiboTrophy from "@/assets/kibo-trophy.png";
+import kibo3DayStreak from "@/assets/kibo-3daystreak.png";
+import kibo7DayStreak from "@/assets/kibo-7daystreak.png";
+import kiboDay30 from "@/assets/kibo-day30.png";
+import kiboFreezeStreak from "@/assets/kibo-freezestreak.png";
+import kiboStudying from "@/assets/kibo-studying.png";
+import kiboLowStreak from "@/assets/kibo-lowstreak.png";
+import kiboStreakAtRisk from "@/assets/kibo-streakatrisk.png";
 
 export const KIBO = {
   happy: kiboHappy,
@@ -22,6 +29,13 @@ export const KIBO = {
   shocked: kiboShocked,
   thumbsup: kiboThumbsup,
   trophy: kiboTrophy,
+  streak3: kibo3DayStreak,
+  streak7: kibo7DayStreak,
+  streak30: kiboDay30,
+  freezeStreak: kiboFreezeStreak,
+  studying: kiboStudying,
+  lowStreak: kiboLowStreak,
+  streakAtRisk: kiboStreakAtRisk,
 };
 
 export interface Question {
