@@ -32,7 +32,7 @@ const HeartsDepletedScreen = () => {
         Out of Hearts! <NotoEmoji name="heartBroken" size={28} />
       </h1>
       <p className="text-muted-foreground text-[15px] mb-6 max-w-[260px]">
-        You've used all 3 hearts. Take a break and come back when they refill!
+        You've used all 6 hearts. Take a break and come back when they refill!
       </p>
 
       {/* Timer */}
