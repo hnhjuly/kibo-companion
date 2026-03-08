@@ -42,7 +42,7 @@ const LessonsScreen = () => {
         <div className="p-[18px] pb-[100px] flex flex-col gap-5">
           {/* Kibo studying header */}
           <div className="flex items-center gap-3 bg-card rounded-2xl p-4 border-[1.5px] border-border">
-            <img src={KIBO.studying} alt="Kibo studying" className="w-14 h-14 object-contain" />
+            <PreloadedImg src={KIBO.studying} alt="Kibo studying" className="w-14 h-14 object-contain" />
             <div className="text-[13px] text-muted-foreground leading-relaxed font-semibold">
               Keep learning! Each lesson brings you closer to AI mastery <NotoEmoji name="book" size={14} />
             </div>
