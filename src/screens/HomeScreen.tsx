@@ -121,23 +121,41 @@ const HomeScreen = () => {
             <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-[13px] font-black text-foreground">LEVEL 1: <span className="text-kibo-green">AI BASICS</span></span>
-                <button onClick={() => setScreen("lessons")} className="text-[13px] font-extrabold text-kibo-green">3/10 ›</button>
+                <button onClick={() => setScreen("lessons")} className="text-[13px] font-extrabold text-kibo-green">
+                  {progress.completedLessons.length}/{CURRICULUM.levels.flatMap(l => l.lessons).length} ›
+                </button>
               </div>
-              <div className="flex flex-col gap-1.5 mb-3.5">
-                {["What's AI?", "AI vs Humans", "Types of AI Tools"].map((t, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm font-bold text-muted-foreground">
-                    <Star className="w-4 h-4 text-kibo-gold fill-kibo-gold" /> {t}
+              {(() => {
+                const allLessons = CURRICULUM.levels[0].lessons;
+                const completed = allLessons.filter(l => progress.completedLessons.includes(l.id));
+                const recentDone = completed.slice(-3);
+                return recentDone.length > 0 ? (
+                  <div className="flex flex-col gap-1.5 mb-3.5">
+                    {recentDone.map((l, i) => (
+                      <div key={i} className="flex items-center gap-2 text-sm font-bold text-muted-foreground">
+                        <Star className="w-4 h-4 text-kibo-gold fill-kibo-gold" /> {l.title}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                ) : (
+                  <div className="text-[13px] text-muted-foreground mb-3.5">Start your first lesson! 🚀</div>
+                );
+              })()}
               <div className="flex items-center gap-[7px] mb-3.5">
-                <div className="w-9 h-9 rounded-[10px] bg-secondary/20 text-secondary flex items-center justify-center"><Check className="w-4 h-4" /></div>
-                <span className="text-muted-foreground/50 text-sm">→</span>
-                <div className="w-9 h-9 rounded-[10px] bg-secondary/20 text-secondary flex items-center justify-center"><Check className="w-4 h-4" /></div>
-                <span className="text-muted-foreground/50 text-sm">→</span>
-                <div className="w-9 h-9 rounded-[10px] bg-kibo-gold/20 text-kibo-gold border-2 border-kibo-gold flex items-center justify-center text-[13px] font-black">3</div>
-                <span className="text-muted-foreground/50 text-sm">→</span>
-                <div className="w-9 h-9 rounded-[10px] bg-background text-muted-foreground/50 flex items-center justify-center"><Lock className="w-3.5 h-3.5" /></div>
+                {CURRICULUM.levels[0].lessons.slice(0, 4).map((lesson, i) => {
+                  const isDone = progress.completedLessons.includes(lesson.id);
+                  const isActive = !isDone && !progress.completedLessons.includes(lesson.id) && 
+                    (i === 0 || progress.completedLessons.includes(CURRICULUM.levels[0].lessons[i-1]?.id));
+                  return (
+                    <div key={lesson.id} className="flex items-center gap-[7px]">
+                      {i > 0 && <span className="text-muted-foreground/50 text-sm">→</span>}
+                      <div className={`w-9 h-9 rounded-[10px] flex items-center justify-center text-[13px] font-black
+                        ${isDone ? "bg-secondary/20 text-secondary" : isActive ? "bg-kibo-gold/20 text-kibo-gold border-2 border-kibo-gold" : "bg-background text-muted-foreground/50"}`}>
+                        {isDone ? <Check className="w-4 h-4" /> : isActive ? i + 1 : <Lock className="w-3.5 h-3.5" />}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
               <button onClick={() => setScreen("lessons")}
                 className="w-full py-3 bg-secondary/15 text-secondary rounded-xl font-black text-sm hover:bg-secondary hover:text-primary-foreground transition-all">
