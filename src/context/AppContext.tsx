@@ -17,6 +17,7 @@ interface AppState {
   onUseFreeze: () => void;
   onResetProgress: () => void;
   onRestoreHeart: () => void;
+  onSetGoal: (goal: UserGoal) => void;
   heartsTimeRemaining: number;
   canPlay: boolean;
 }
