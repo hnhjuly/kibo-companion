@@ -6,6 +6,7 @@ import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import type { Lesson } from "@/data/curriculum";
 import kiboBg from "@/assets/kibo-bg.png";
 import Icon from "@/components/Icon";
+import NotoEmoji from "@/components/NotoEmoji";
 import ICONS from "@/assets/icons";
 
 const HomeScreen = () => {
