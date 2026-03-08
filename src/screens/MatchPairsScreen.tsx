@@ -112,8 +112,9 @@ const MatchPairsScreen = () => {
 
   return (
     <div className="flex flex-col flex-1 bg-card">
+      <ExitGameDialog open={showExit} onOpenChange={setShowExit} onConfirm={() => setScreen("train")} gameName="Match the Pairs" />
       <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
-        <button onClick={() => setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
+        <button onClick={() => started && !done ? setShowExit(true) : setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
         <span className="font-black text-foreground">🧩 Match the Pairs</span>
         <span className="ml-auto font-black text-foreground">{formatTime(timer)}</span>
       </div>

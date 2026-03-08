@@ -141,8 +141,10 @@ const SpeedRoundScreen = () => {
   // Playing
   return (
     <div className="flex flex-col flex-1 bg-card">
+      <ExitGameDialog open={showExit} onOpenChange={setShowExit} onConfirm={() => setScreen("train")} gameName="Speed Round" />
       {/* Header */}
       <div className="px-5 py-3 border-b border-border flex items-center gap-3">
+        <button onClick={() => setShowExit(true)}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
         <div className={`text-2xl font-black ${timeLeft <= 10 ? "text-destructive animate-pulse" : "text-foreground"}`}>{timeLeft}s</div>
         <div className="flex-1 h-2.5 bg-background rounded-full overflow-hidden">
           <div className="h-full rounded-full bg-destructive transition-all duration-1000" style={{ width: `${(timeLeft / 60) * 100}%` }} />
