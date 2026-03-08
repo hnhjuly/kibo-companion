@@ -20,7 +20,7 @@ const slides = [
     desc: "Fix prompts. Summarize emails. Choose AI tools. Skills you'll use tomorrow.",
   },
   {
-    img: KIBO.studying,
+    img: KIBO.trophy,
     title: <>Earn XP,<br /><b className="text-kibo-green">build streaks</b></>,
     desc: null,
     pills: [
