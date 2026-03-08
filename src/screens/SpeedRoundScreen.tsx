@@ -23,6 +23,7 @@ const SpeedRoundScreen = () => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [selected, setSelected] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
+  const [showExit, setShowExit] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval>>();
 
   const q = questions[qIdx % questions.length];
