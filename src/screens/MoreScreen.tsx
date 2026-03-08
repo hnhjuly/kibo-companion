@@ -13,7 +13,12 @@ const MoreScreen = () => {
         <div className="p-[18px] pb-[100px] flex flex-col gap-3.5">
           {/* Profile */}
           <div className="bg-card rounded-[18px] p-[22px] text-center border-[1.5px] border-border">
-            <img src={KIBO.celebrate} alt="Kibo" className="w-24 h-24 object-contain mx-auto mb-2.5" />
+            <img src={
+              progress.streak >= 30 ? KIBO.streak30 :
+              progress.streak >= 7 ? KIBO.streak7 :
+              progress.streak >= 3 ? KIBO.streak3 :
+              KIBO.celebrate
+            } alt="Kibo" className="w-24 h-24 object-contain mx-auto mb-2.5" />
             <div className="text-xl font-black text-foreground">Your Name</div>
             <div className="text-sm text-muted-foreground font-bold mb-4">Level {progress.level} · AI {progress.level <= 1 ? "Beginner" : progress.level <= 3 ? "Learner" : "Expert"}</div>
             <div className="flex gap-2">
