@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import OnboardingScreen from "@/screens/OnboardingScreen";
 import HomeScreen from "@/screens/HomeScreen";
 import LessonsScreen from "@/screens/LessonsScreen";
+import GlossaryScreen from "@/screens/GlossaryScreen";
 import QuizScreen from "@/screens/QuizScreen";
 import CompleteScreen from "@/screens/CompleteScreen";
 import TrainScreen from "@/screens/TrainScreen";
@@ -17,6 +18,7 @@ const screens: Record<string, React.FC> = {
   onboarding: OnboardingScreen,
   home: HomeScreen,
   lessons: LessonsScreen,
+  glossary: GlossaryScreen,
   quiz: QuizScreen,
   complete: CompleteScreen,
   train: TrainScreen,
