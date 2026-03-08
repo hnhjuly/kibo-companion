@@ -78,6 +78,12 @@ export function saveProgress(progress: UserProgress) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
+export function resetProgress(): UserProgress {
+  const fresh = defaultProgress();
+  localStorage.removeItem(STORAGE_KEY);
+  return fresh;
+}
+
 export function addXP(progress: UserProgress, amount: number): UserProgress {
   const updated = { ...progress, xp: progress.xp + amount };
   // Level up check
