@@ -17,13 +17,11 @@ export const KIBO = {
   surprised: kiboSurprised,
   thinking: kiboThinking,
   celebrate: kiboCelebrate,
-  coolbadge: kiboCoolbadge,
   focused: kiboFocused,
   sad: kiboSad,
   shocked: kiboShocked,
   thumbsup: kiboThumbsup,
   trophy: kiboTrophy,
-  waiting: kiboWaiting,
 };
 
 export interface Question {
