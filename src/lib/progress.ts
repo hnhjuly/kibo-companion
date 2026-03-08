@@ -41,6 +41,7 @@ function defaultProgress(): UserProgress {
     heartsDepletedAt: null,
     completedLessons: [],
     totalCorrect: 0,
+    goal: null,
     totalAnswered: 0,
     dailyTasksDone: 0,
     freezesAvailable: 1,
