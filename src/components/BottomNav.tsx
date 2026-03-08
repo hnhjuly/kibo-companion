@@ -1,36 +1,42 @@
-import { Home, Flame, Crown, MoreHorizontal } from "lucide-react";
+import { useApp } from "@/context/AppContext";
+import { Home, Flame, Trophy, MoreHorizontal } from "lucide-react";
 
-const tabs = [
-  { icon: <Home className="w-6 h-6" />, label: "Learn", active: true },
-  { icon: <Flame className="w-6 h-6" />, label: "Train", active: false, badge: true },
-  { icon: <Crown className="w-6 h-6" />, label: "Rank", active: false },
-  { icon: <MoreHorizontal className="w-6 h-6" />, label: "More", active: false },
+type Tab = "home" | "train" | "rank" | "more";
+
+const tabs: { id: Tab; icon: typeof Home; label: string; badge?: number }[] = [
+  { id: "home", icon: Home, label: "Learn" },
+  { id: "train", icon: Flame, label: "Train", badge: 3 },
+  { id: "rank", icon: Trophy, label: "Rank" },
+  { id: "more", icon: MoreHorizontal, label: "More" },
 ];
 
 const BottomNav = () => {
+  const { screen, setScreen } = useApp();
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50">
-      <div className="max-w-[480px] mx-auto flex items-center justify-around py-2 pb-[env(safe-area-inset-bottom,8px)]">
-        {tabs.map((tab) => (
-          <button
-            key={tab.label}
-            className={`flex flex-col items-center gap-0.5 px-4 py-1 relative transition-colors ${
-              tab.active ? "text-secondary" : "text-muted-foreground"
-            }`}
-          >
-            <div className="relative">
-              {tab.icon}
+    <nav className="absolute bottom-0 left-0 right-0 bg-card border-t border-border flex pt-2.5 pb-6 z-[100]">
+      {tabs.map(tab => {
+        const active = screen === tab.id;
+        const Icon = tab.icon;
+        return (
+          <button key={tab.id}
+            onClick={() => setScreen(tab.id)}
+            className="flex-1 flex flex-col items-center gap-1 py-1 bg-transparent border-none cursor-pointer transition-all">
+            <div className="relative flex items-center justify-center w-7 h-7">
+              <Icon className="w-6 h-6" style={{ color: active ? "#3db74a" : "#b0b8cc" }} />
               {tab.badge && (
-                <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-destructive rounded-full flex items-center justify-center">
-                  <span className="text-[8px] font-bold text-destructive-foreground">3</span>
-                </div>
+                <span className="absolute -top-1 -right-1.5 bg-destructive text-primary-foreground rounded-full w-[15px] h-[15px] text-[8px] font-black flex items-center justify-center">
+                  {tab.badge}
+                </span>
               )}
             </div>
-            <span className="text-[10px] font-bold">{tab.label}</span>
+            <span className={`text-[11px] font-extrabold transition-colors ${active ? "text-kibo-green" : "text-muted-foreground/50"}`}>
+              {tab.label}
+            </span>
           </button>
-        ))}
-      </div>
-    </div>
+        );
+      })}
+    </nav>
   );
 };
 
