@@ -18,7 +18,7 @@ const ACHIEVEMENTS: Achievement[] = [
   { emoji: "🏆", title: "Level Up!", desc: "Reach Level 2", check: p => p.level >= 2 },
   { emoji: "🎓", title: "Scholar", desc: "Complete 10 lessons", check: p => p.completedLessons.length >= 10 },
   { emoji: "🌟", title: "Superstar", desc: "Earn 1000 XP", check: p => p.xp >= 1000 },
-  { emoji: "🔥", title: "Unstoppable", desc: "Reach a 30-day streak", check: p => p.streak >= 30 },
+  { emoji: "👑", title: "Unstoppable", desc: "Reach a 30-day streak", check: p => p.streak >= 30 },
 ];
 
 const AchievementsScreen = () => {
