@@ -14,6 +14,7 @@ import FeedbackScreen from "@/screens/FeedbackScreen";
 import AllCompleteScreen from "@/screens/AllCompleteScreen";
 import HelpFaqScreen from "@/screens/HelpFaqScreen";
 import BottomNav from "@/components/BottomNav";
+import DesktopSidebar from "@/components/DesktopSidebar";
 
 const screens: Record<string, React.FC> = {
   onboarding: OnboardingScreen,
@@ -37,31 +38,33 @@ const AppContent = () => {
   const Screen = screens[screen];
 
   return (
-    <div className="w-[390px] h-[844px] bg-background rounded-[46px] overflow-hidden relative flex flex-col"
-      style={{ boxShadow: "0 50px 100px rgba(0,0,0,0.28), 0 0 0 1.5px rgba(255,255,255,0.5), inset 0 1px 0 rgba(255,255,255,0.9)" }}>
-      {/* Status bar */}
-      <div className="flex justify-between items-center px-7 pt-3.5 text-[13px] font-extrabold text-foreground shrink-0">
-        <span>9:41</span>
-        <div className="flex gap-1.5 items-center text-[11px]">
-          <span>▲▼</span><span>WiFi</span><span>🔋</span>
-        </div>
+    <div className="w-full h-dvh flex bg-background overflow-hidden">
+      {/* Desktop sidebar — hidden on mobile */}
+      {showNav && <DesktopSidebar />}
+
+      {/* Main content area */}
+      <div className="flex-1 flex flex-col relative overflow-hidden">
+        {/* Screen content with animation */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={screen}
+            initial={{ opacity: 0, y: 12, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="flex flex-col flex-1 overflow-hidden"
+          >
+            {Screen && <Screen />}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Mobile bottom nav — hidden on desktop */}
+        {showNav && (
+          <div className="md:hidden">
+            <BottomNav />
+          </div>
+        )}
       </div>
-
-      {/* Screen content with animation */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={screen}
-          initial={{ opacity: 0, y: 12, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -8, scale: 0.98 }}
-          transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="flex flex-col flex-1 overflow-hidden"
-        >
-          {Screen && <Screen />}
-        </motion.div>
-      </AnimatePresence>
-
-      {showNav && <BottomNav />}
     </div>
   );
 };
@@ -69,10 +72,7 @@ const AppContent = () => {
 const Index = () => {
   return (
     <AppProvider>
-      <div className="min-h-screen flex items-center justify-center p-5"
-        style={{ background: "#dde3f0" }}>
-        <AppContent />
-      </div>
+      <AppContent />
     </AppProvider>
   );
 };
