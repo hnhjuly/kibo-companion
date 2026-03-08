@@ -12,9 +12,10 @@ interface AppState {
   quizStats: { correct: number; total: number; time: number };
   setQuizStats: (s: { correct: number; total: number; time: number }) => void;
   progress: UserProgress;
-  onLoseHeart: () => boolean; // returns false if hearts depleted
+  onLoseHeart: () => boolean;
   onCompleteLesson: (lessonId: string, xpEarned: number, correct: number, total: number) => void;
   onUseFreeze: () => void;
+  onResetProgress: () => void;
   heartsTimeRemaining: number;
   canPlay: boolean;
 }
