@@ -1,8 +1,16 @@
+import { useMemo } from "react";
 import { useApp } from "@/context/AppContext";
 import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import { ArrowRight } from "lucide-react";
 import { KIBO, type Lesson } from "@/data/curriculum";
 import NotoEmoji from "@/components/NotoEmoji";
+
+import streakBg1 from "@/assets/streak-bg-1.png";
+import streakBg2 from "@/assets/streak-bg-2.png";
+import streakBg3 from "@/assets/streak-bg-3.png";
+import streakBg4 from "@/assets/streak-bg-4.png";
+
+const STREAK_BGS = [streakBg1, streakBg2, streakBg3, streakBg4];
 
 const TrainScreen = () => {
   const { setScreen, setCurrentLesson, progress } = useApp();
