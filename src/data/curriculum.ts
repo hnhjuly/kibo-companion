@@ -17,6 +17,16 @@ import kiboStudying from "@/assets/kibo-studying.png";
 import kiboLowStreak from "@/assets/kibo-lowstreak.png";
 import kiboStreakAtRisk from "@/assets/kibo-streakatrisk.png";
 
+// New Kibo variants
+import kiboCelebration2 from "@/assets/kibo-celebration2.png";
+import kiboGraduate from "@/assets/kibo-graduate.png";
+import kiboGraduate2 from "@/assets/kibo-graduate2.png";
+import kiboFocusedIpad from "@/assets/kibo-focused-ipad.png";
+import kiboFocusedLaptop from "@/assets/kibo-focused-laptop.png";
+import kiboRobotics from "@/assets/kibo-robotics.png";
+import kiboDetective from "@/assets/kibo-detective.png";
+import kiboSad2 from "@/assets/kibo-sad2.png";
+
 export const KIBO = {
   happy: kiboHappy,
   neutral: kiboSmile,
@@ -36,6 +46,15 @@ export const KIBO = {
   studying: kiboStudying,
   lowStreak: kiboLowStreak,
   streakAtRisk: kiboStreakAtRisk,
+  // New variants
+  celebration2: kiboCelebration2,
+  graduate: kiboGraduate,
+  graduate2: kiboGraduate2,
+  focusedIpad: kiboFocusedIpad,
+  focusedLaptop: kiboFocusedLaptop,
+  robotics: kiboRobotics,
+  detective: kiboDetective,
+  sad2: kiboSad2,
 };
 
 export interface Question {
