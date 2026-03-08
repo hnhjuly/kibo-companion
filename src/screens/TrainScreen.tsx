@@ -74,7 +74,7 @@ const TrainScreen = () => {
                 {topic.icon}
               </div>
               <div className="flex-1">
-                <div className="text-[15px] font-black text-foreground">{tierLabel}</div>
+                <div className="text-[15px] font-black text-foreground">{topic.title}</div>
                 <div className="text-xs text-muted-foreground font-semibold">{topic.desc}</div>
               </div>
             </div>
