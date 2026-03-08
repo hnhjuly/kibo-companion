@@ -1,11 +1,17 @@
 import kiboHappy from "@/assets/kibo-happy.png";
 import kiboSmile from "@/assets/kibo-smile.png";
 import kiboWave from "@/assets/kibo-wave.png";
+import kiboSurprised from "@/assets/kibo-surprised.png";
+import kiboThinking from "@/assets/kibo-thinking.png";
+import kiboCelebrate from "@/assets/kibo-celebrate.png";
 
 export const KIBO = {
   happy: kiboHappy,
   neutral: kiboSmile,
   wave: kiboWave,
+  surprised: kiboSurprised,
+  thinking: kiboThinking,
+  celebrate: kiboCelebrate,
 };
 
 export interface Question {
