@@ -38,7 +38,7 @@ const MoreScreen = () => {
           <div className="bg-card rounded-[18px] border-[1.5px] border-border overflow-hidden">
             {[
               { icon: <MessageCircle className="w-[22px] h-[22px]" />, label: "Feedback", action: () => setScreen("feedback") },
-              { icon: <HelpCircle className="w-[22px] h-[22px]" />, label: "Help & FAQ", action: undefined },
+              { icon: <HelpCircle className="w-[22px] h-[22px]" />, label: "Help & FAQ", action: () => setScreen("help-faq") },
             ].map(m => (
               <button key={m.label} onClick={m.action} className="w-full flex items-center gap-3.5 px-4 py-4 border-b border-border last:border-0 hover:bg-background transition-colors text-left">
                 <div className="w-9 flex items-center justify-center text-muted-foreground">{m.icon}</div>

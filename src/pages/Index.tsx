@@ -28,6 +28,7 @@ const screens: Record<string, React.FC> = {
   "hearts-depleted": HeartsDepletedScreen,
   feedback: FeedbackScreen,
   "all-complete": AllCompleteScreen,
+  "help-faq": HelpFaqScreen,
 };
 
 const AppContent = () => {
