@@ -117,7 +117,7 @@ export const FlashcardState = {
   getSessionQueue(newCardLimit = 5): Flashcard[] {
     const due = this.getDueCards();
     const newCards = this.getNewCards(newCardLimit);
-    const shuffle = <T,>(arr: T[]) => [...arr].sort(() => Math.random() - 0.5);
+    const shuffle = (arr: Flashcard[]): Flashcard[] => [...arr].sort(() => Math.random() - 0.5);
     return [...shuffle(due), ...shuffle(newCards)];
   },
 };
