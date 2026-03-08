@@ -1,7 +1,9 @@
 import { KIBO } from "@/data/curriculum";
 import { User, Bell, Clock, HelpCircle, ChevronRight } from "lucide-react";
+import { useApp } from "@/context/AppContext";
 
 const MoreScreen = () => {
+  const { progress } = useApp();
   return (
     <>
       <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center justify-center gap-3.5">
