@@ -137,7 +137,7 @@ const AllCompleteScreen = () => {
 
           {/* Keep Training CTA */}
           <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border text-center">
-            <PreloadedImg src={KIBO.happy} alt="Kibo" className="w-16 h-16 object-contain mx-auto mb-2" />
+            <PreloadedImg src={KIBO.focusedIpad} alt="Kibo" className="w-16 h-16 object-contain mx-auto mb-2" />
             <div className="text-[14px] font-black text-foreground mb-1">
               Keep your streak alive! <NotoEmoji name="fire" size={14} />
             </div>
