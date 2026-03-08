@@ -47,7 +47,7 @@ const CompleteScreen = () => {
         {[
           { val: `${acc}%`, label: "Accuracy" },
           { val: `${quizStats.time}s`, label: "Time" },
-          { val: "🔥 4", label: "Streak" },
+          { val: `🔥 ${progress.streak}`, label: "Streak" },
         ].map(s => (
           <div key={s.label} className="flex-1 bg-card rounded-2xl p-4 border-[1.5px] border-border">
             <div className="text-2xl font-black text-foreground">{s.val}</div>
