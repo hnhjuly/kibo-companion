@@ -116,6 +116,17 @@ export function loseHeart(progress: UserProgress): UserProgress {
   };
 }
 
+/** Restore 1 heart (e.g. after watching a rewarded ad) */
+export function restoreHeart(progress: UserProgress): UserProgress {
+  if (progress.hearts >= HEARTS_MAX) return progress;
+  const newHearts = progress.hearts + 1;
+  return {
+    ...progress,
+    hearts: newHearts,
+    heartsDepletedAt: newHearts > 0 ? null : progress.heartsDepletedAt,
+  };
+}
+
 export function completeLesson(progress: UserProgress, lessonId: string, xpEarned: number, correctCount: number, totalCount: number): UserProgress {
   let updated = { ...progress };
   if (!updated.completedLessons.includes(lessonId)) {
