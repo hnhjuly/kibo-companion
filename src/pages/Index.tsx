@@ -12,6 +12,7 @@ import MoreScreen from "@/screens/MoreScreen";
 import HeartsDepletedScreen from "@/screens/HeartsDepletedScreen";
 import FeedbackScreen from "@/screens/FeedbackScreen";
 import AllCompleteScreen from "@/screens/AllCompleteScreen";
+import HelpFaqScreen from "@/screens/HelpFaqScreen";
 import BottomNav from "@/components/BottomNav";
 
 const screens: Record<string, React.FC> = {
@@ -27,6 +28,7 @@ const screens: Record<string, React.FC> = {
   "hearts-depleted": HeartsDepletedScreen,
   feedback: FeedbackScreen,
   "all-complete": AllCompleteScreen,
+  "help-faq": HelpFaqScreen,
 };
 
 const AppContent = () => {
