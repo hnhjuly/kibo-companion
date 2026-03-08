@@ -81,7 +81,7 @@ export const CURRICULUM: Curriculum = {
         },
         {
           id: "l1-2", title: "AI vs Humans", duration: "3 min", xp: 20, state: "done", questions: [
-            { type: "mcq", question: "What can AI currently do BETTER than most humans?", choices: ["Feel emotions", "Process huge datasets quickly", "Understand sarcasm perfectly", "Create original art with meaning"], correct: 1, explanation: "AI excels at speed and scale — processing millions of data points humans never could.", xp: 10 },
+            { type: "mcq", question: "What can AI currently do BETTER than most humans?", choices: ["Feel emotions", "Process huge datasets quickly", "Understand sarcasm perfectly", "Create original art with meaning"], correct: 1, explanation: "AI excels at speed and scale, processing millions of data points humans never could.", xp: 10 },
             { type: "mcq", question: "What is something humans still do better than AI?", choices: ["Play chess", "Translate languages", "Understand context and nuance", "Recognize faces"], correct: 2, explanation: "Humans naturally understand cultural context, irony, and nuance far better than AI.", xp: 10 }
           ]
         },
