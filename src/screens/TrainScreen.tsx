@@ -4,6 +4,7 @@ import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import { ArrowRight } from "lucide-react";
 import { KIBO, type Lesson } from "@/data/curriculum";
 import NotoEmoji from "@/components/NotoEmoji";
+import PreloadedImg from "@/components/PreloadedImg";
 
 import streakBg1 from "@/assets/streak-bg-1.png";
 import streakBg2 from "@/assets/streak-bg-2.png";
