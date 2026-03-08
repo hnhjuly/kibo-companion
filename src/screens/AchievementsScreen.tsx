@@ -72,7 +72,7 @@ const AchievementsScreen = () => {
               const earned = a.check({
                 xp: progress.xp,
                 streak: progress.streak,
-                lessonsCompleted: progress.lessonsCompleted,
+                completedLessons: progress.completedLessons,
                 level: progress.level,
               });
               return (
