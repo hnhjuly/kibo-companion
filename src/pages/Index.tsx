@@ -39,6 +39,7 @@ const AppContent = () => {
         {screen === "more" && <MoreScreen />}
         {screen === "hearts-depleted" && <HeartsDepletedScreen />}
         {screen === "feedback" && <FeedbackScreen />}
+        {screen === "all-complete" && <AllCompleteScreen />}
       </div>
 
       {showNav && <BottomNav />}
