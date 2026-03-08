@@ -140,7 +140,8 @@ const HomeScreen = () => {
               progress.streak >= 30 ? KIBO.streak30 :
               progress.streak >= 7 ? KIBO.streak7 :
               progress.streak >= 3 ? KIBO.streak3 :
-              KIBO.happy
+              progress.streak > 0 ? KIBO.robotics :
+              KIBO.focusedLaptop
             } alt="Kibo" className="w-[200px] h-[200px] object-contain shrink-0 relative z-10 -mb-1 mr-2 drop-shadow-lg" />
           </div>
 
