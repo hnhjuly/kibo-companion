@@ -6,6 +6,27 @@ import { X } from "lucide-react";
 const KEYS = ["A", "B", "C", "D"];
 const PRAISES = ["Brilliant! 🎉", "Correct! ✨", "Nailed it! 🔥", "Spot on! ⚡"];
 
+// Fisher-Yates shuffle
+function shuffleArray<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function shuffleQuestions(questions: typeof CURRICULUM.levels[0]["lessons"][0]["questions"]) {
+  return shuffleArray(questions).map(q => {
+    // Shuffle choices and update correct index
+    const indices = q.choices.map((_, i) => i);
+    const shuffledIndices = shuffleArray(indices);
+    const newChoices = shuffledIndices.map(i => q.choices[i]);
+    const newCorrect = shuffledIndices.indexOf(q.correct);
+    return { ...q, choices: newChoices, correct: newCorrect };
+  });
+}
+
 const Confetti = ({ count }: { count: number }) => {
   const cols = ["#3db74a", "#4a9eff", "#ffb800", "#ff8c42", "#9b6dff", "#ff5a5a"];
   return (
