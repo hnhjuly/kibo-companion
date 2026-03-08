@@ -11,6 +11,13 @@ const LessonsScreen = () => {
 
   const allLessons = CURRICULUM.levels.flatMap(lv => lv.lessons);
   const completedSet = new Set(progress.completedLessons);
+  const allDone = allLessons.every(l => completedSet.has(l.id));
+
+  // If all lessons complete, show the completion screen
+  if (allDone) {
+    setScreen("all-complete");
+    return null;
+  }
   
   let foundActive = false;
   const lessonStates = new Map<string, "done" | "active" | "locked">();
