@@ -4,6 +4,7 @@ import { FLASHCARD_DATA } from "@/data/flashcards";
 import { KIBO } from "@/data/curriculum";
 import { ArrowLeft } from "lucide-react";
 import PreloadedImg from "@/components/PreloadedImg";
+import ExitGameDialog from "@/components/ExitGameDialog";
 
 interface Tile {
   id: string;
