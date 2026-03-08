@@ -68,12 +68,13 @@ const MoreScreen = () => {
           {/* Menu */}
           <div className="bg-card rounded-[18px] border-[1.5px] border-border overflow-hidden">
             {[
-              { icon: <User className="w-[22px] h-[22px]" />, label: "Edit Profile" },
-              { icon: <Bell className="w-[22px] h-[22px]" />, label: "Notifications" },
-              { icon: <Clock className="w-[22px] h-[22px]" />, label: "Daily Goal" },
-              { icon: <HelpCircle className="w-[22px] h-[22px]" />, label: "Help & FAQ" },
+              { icon: <User className="w-[22px] h-[22px]" />, label: "Edit Profile", action: undefined },
+              { icon: <Bell className="w-[22px] h-[22px]" />, label: "Notifications", action: undefined },
+              { icon: <Clock className="w-[22px] h-[22px]" />, label: "Daily Goal", action: undefined },
+              { icon: <MessageCircle className="w-[22px] h-[22px]" />, label: "Feedback", action: () => setScreen("feedback") },
+              { icon: <HelpCircle className="w-[22px] h-[22px]" />, label: "Help & FAQ", action: undefined },
             ].map(m => (
-              <button key={m.label} className="w-full flex items-center gap-3.5 px-4 py-4 border-b border-border last:border-0 hover:bg-background transition-colors text-left">
+              <button key={m.label} onClick={m.action} className="w-full flex items-center gap-3.5 px-4 py-4 border-b border-border last:border-0 hover:bg-background transition-colors text-left">
                 <div className="w-9 flex items-center justify-center text-muted-foreground">{m.icon}</div>
                 <span className="flex-1 text-[15px] font-bold text-foreground">{m.label}</span>
                 <ChevronRight className="w-[18px] h-[18px] text-muted-foreground/50" />
