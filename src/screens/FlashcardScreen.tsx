@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import PreloadedImg from "@/components/PreloadedImg";
 import DidYouKnowCard from "@/components/DidYouKnowCard";
 import ExitGameDialog from "@/components/ExitGameDialog";
+import NotoEmoji from "@/components/NotoEmoji";
 
 const FlashcardScreen = () => {
   const { setScreen } = useApp();
@@ -41,7 +42,7 @@ const FlashcardScreen = () => {
       <div className="flex flex-col flex-1 bg-card">
         <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
           <button onClick={() => setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
-          <span className="font-black text-foreground">🃏 Flashcards</span>
+          <span className="font-black text-foreground flex items-center gap-2"><NotoEmoji name="joker" size={18} /> Flashcards</span>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center p-8 gap-5">
           <PreloadedImg src={KIBO.celebrate} alt="Kibo" className="w-32 h-32 object-contain" />
@@ -63,7 +64,7 @@ const FlashcardScreen = () => {
       {/* Header */}
       <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
         <button onClick={() => idx > 0 ? setShowExit(true) : setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
-        <span className="font-black text-foreground">🃏 Flashcards</span>
+        <span className="font-black text-foreground flex items-center gap-2"><NotoEmoji name="joker" size={18} /> Flashcards</span>
         <span className="ml-auto text-xs font-bold text-muted-foreground">{idx + 1} / {queue.length}</span>
       </div>
 
@@ -122,17 +123,17 @@ const FlashcardScreen = () => {
           <button onClick={() => handleRate('again')}
             className="flex-1 py-3.5 rounded-xl font-black text-sm border-2 transition-all"
             style={{ background: "#fff0f0", color: "#ff4f4f", borderColor: "#ffdede" }}>
-            😬 Again
+            <NotoEmoji name="grimacing" size={14} /> Again
           </button>
           <button onClick={() => handleRate('almost')}
             className="flex-1 py-3.5 rounded-xl font-black text-sm border-2 transition-all"
             style={{ background: "#fff8e6", color: "#ffb800", borderColor: "#ffebad" }}>
-            😐 Almost
+            <NotoEmoji name="neutral" size={14} /> Almost
           </button>
           <button onClick={() => handleRate('got-it')}
             className="flex-1 py-3.5 rounded-xl font-black text-sm border-2 transition-all"
             style={{ background: "#edfff0", color: "#3db74a", borderColor: "#c3f0c8" }}>
-            ✅ Got it!
+            <NotoEmoji name="checkmark" size={14} /> Got it!
           </button>
         </div>
       )}

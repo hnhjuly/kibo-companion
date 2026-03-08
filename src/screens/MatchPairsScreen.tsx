@@ -5,6 +5,7 @@ import { KIBO } from "@/data/curriculum";
 import { ArrowLeft } from "lucide-react";
 import PreloadedImg from "@/components/PreloadedImg";
 import ExitGameDialog from "@/components/ExitGameDialog";
+import NotoEmoji from "@/components/NotoEmoji";
 
 interface Tile {
   id: string;
@@ -94,15 +95,15 @@ const MatchPairsScreen = () => {
       <div className="flex flex-col flex-1 bg-card">
         <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
           <button onClick={() => setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
-          <span className="font-black text-foreground">🧩 Match the Pairs</span>
+          <span className="font-black text-foreground flex items-center gap-2"><NotoEmoji name="puzzle" size={18} /> Match the Pairs</span>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center p-8 gap-4">
           <PreloadedImg src={KIBO.celebrate} alt="Kibo" className="w-28 h-28 object-contain" />
           <h2 className="text-2xl font-black text-foreground">Matched in {formatTime(timer)}!</h2>
-          {timer <= best && <p className="text-kibo-gold font-black">🏆 New best time!</p>}
+          {timer <= best && <p className="text-kibo-gold font-black flex items-center gap-1"><NotoEmoji name="trophy" size={16} /> New best time!</p>}
           <p className="text-kibo-gold font-bold text-lg">+30 XP earned</p>
-          <button onClick={restart} className="mt-4 px-10 py-3.5 bg-[#9b6dff] text-primary-foreground rounded-xl font-black shadow-[0_4px_0_#7a4ddf] active:translate-y-[2px] active:shadow-none transition-all">
-            Play Again 🧩
+          <button onClick={restart} className="mt-4 px-10 py-3.5 bg-[#9b6dff] text-primary-foreground rounded-xl font-black shadow-[0_4px_0_#7a4ddf] active:translate-y-[2px] active:shadow-none transition-all flex items-center gap-2">
+            Play Again <NotoEmoji name="puzzle" size={18} />
           </button>
           <button onClick={() => setScreen("train")} className="text-muted-foreground font-bold text-sm">Back to Train</button>
         </div>
@@ -115,7 +116,7 @@ const MatchPairsScreen = () => {
       <ExitGameDialog open={showExit} onOpenChange={setShowExit} onConfirm={() => setScreen("train")} gameName="Match the Pairs" />
       <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
         <button onClick={() => started && !done ? setShowExit(true) : setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
-        <span className="font-black text-foreground">🧩 Match the Pairs</span>
+        <span className="font-black text-foreground flex items-center gap-2"><NotoEmoji name="puzzle" size={18} /> Match the Pairs</span>
         <span className="ml-auto font-black text-foreground">{formatTime(timer)}</span>
       </div>
 

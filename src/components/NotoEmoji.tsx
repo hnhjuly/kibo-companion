@@ -35,6 +35,11 @@ const EMOJI_MAP: Record<string, string> = {
   dna: "noto-v1:dna",
   lock: "noto-v1:locked",
   hourglass: "noto-v1:hourglass-not-done",
+  // Game mode icons
+  puzzle: "noto-v1:puzzle-piece",
+  joker: "noto-v1:flower-playing-cards",
+  grimacing: "noto-v1:grimacing-face",
+  neutral: "noto-v1:neutral-face",
 };
 
 interface NotoEmojiProps {

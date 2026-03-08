@@ -50,7 +50,7 @@ const DailyChallengeScreen = () => {
       <div className="flex flex-col flex-1 bg-card">
         <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
           <button onClick={() => setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
-          <span className="font-black text-foreground">🎯 Daily Challenge</span>
+          <span className="font-black text-foreground flex items-center gap-2"><NotoEmoji name="target" size={18} /> Daily Challenge</span>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center p-8 gap-5">
           <PreloadedImg src={KIBO.celebrate} alt="Kibo" className="w-32 h-32 object-contain" />
@@ -70,7 +70,7 @@ const DailyChallengeScreen = () => {
       <ExitGameDialog open={showExit} onOpenChange={setShowExit} onConfirm={() => setScreen("train")} gameName="Daily Challenge" />
       <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
         <button onClick={() => !answered ? setShowExit(true) : setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
-        <span className="font-black text-foreground flex items-center gap-2">🎯 Daily Challenge</span>
+        <span className="font-black text-foreground flex items-center gap-2"><NotoEmoji name="target" size={18} /> Daily Challenge</span>
         <span className="ml-auto bg-destructive/15 text-destructive px-2.5 py-0.5 rounded-full text-xs font-black">2x XP</span>
         <span className="text-sm font-bold text-muted-foreground flex items-center gap-1"><NotoEmoji name="fire" size={14} /> {progress.streak}</span>
       </div>
@@ -79,7 +79,7 @@ const DailyChallengeScreen = () => {
         <div className="px-5 pt-6 pb-8 flex flex-col gap-5">
           {/* Question card */}
           <div className="rounded-[18px] p-5" style={{ background: "linear-gradient(135deg, #1a1a2e, #2d2d5e)" }}>
-            <div className="text-xs font-black text-kibo-gold uppercase tracking-wider mb-3 flex items-center gap-1.5">⭐ Today's Question</div>
+            <div className="text-xs font-black text-kibo-gold uppercase tracking-wider mb-3 flex items-center gap-1.5"><NotoEmoji name="star" size={14} /> Today's Question</div>
             <p className="text-white font-black text-lg leading-relaxed mb-3">{challenge.question}</p>
             <div className="flex gap-1">
               {Array.from({ length: 5 }).map((_, i) => (
