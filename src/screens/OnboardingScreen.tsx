@@ -70,7 +70,7 @@ const OnboardingScreen = () => {
       </div>
 
       {/* Body */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center gap-4">
+      <div className="flex-1 flex flex-col items-center justify-center text-center gap-4 mb-6">
         {s.img && (
           <div className="w-48 h-48 flex items-center justify-center">
             <PreloadedImg src={s.img} alt="Kibo" className="w-48 h-48 object-contain" />
