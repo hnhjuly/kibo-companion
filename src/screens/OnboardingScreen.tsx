@@ -20,7 +20,7 @@ const slides = [
     pills: ["🔥 Streaks", "⚡ XP & Levels", "💎 Badges", "🏆 Leaderboard"],
   },
   {
-    img: null,
+    img: KIBO.thinking,
     title: <>What's your <b className="text-kibo-green">goal?</b></>,
     desc: "We'll personalise your path with Kibo",
     goals: [
