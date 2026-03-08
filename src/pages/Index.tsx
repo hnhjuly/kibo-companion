@@ -33,7 +33,7 @@ const AppContent = () => {
         {screen === "quiz" && <QuizScreen />}
         {screen === "complete" && <CompleteScreen />}
         {screen === "train" && <TrainScreen />}
-        {screen === "rank" && <RankScreen />}
+        {screen === "achievements" && <AchievementsScreen />}
         {screen === "more" && <MoreScreen />}
         {screen === "hearts-depleted" && <HeartsDepletedScreen />}
       </div>

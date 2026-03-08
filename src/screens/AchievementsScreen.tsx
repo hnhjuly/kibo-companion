@@ -1,0 +1,101 @@
+import { useApp } from "@/context/AppContext";
+import { KIBO } from "@/data/curriculum";
+
+interface Achievement {
+  emoji: string;
+  title: string;
+  desc: string;
+  check: (p: { xp: number; streak: number; lessonsCompleted: string[]; level: number }) => boolean;
+}
+
+const ACHIEVEMENTS: Achievement[] = [
+  { emoji: "🎯", title: "First Steps", desc: "Complete your first lesson", check: p => p.lessonsCompleted.length >= 1 },
+  { emoji: "🔥", title: "On Fire", desc: "Reach a 3-day streak", check: p => p.streak >= 3 },
+  { emoji: "⚡", title: "XP Hunter", desc: "Earn 100 XP", check: p => p.xp >= 100 },
+  { emoji: "📚", title: "Bookworm", desc: "Complete 5 lessons", check: p => p.lessonsCompleted.length >= 5 },
+  { emoji: "🔥", title: "Blazing", desc: "Reach a 7-day streak", check: p => p.streak >= 7 },
+  { emoji: "💎", title: "XP Master", desc: "Earn 500 XP", check: p => p.xp >= 500 },
+  { emoji: "🏆", title: "Level Up!", desc: "Reach Level 2", check: p => p.level >= 2 },
+  { emoji: "🎓", title: "Scholar", desc: "Complete 10 lessons", check: p => p.lessonsCompleted.length >= 10 },
+  { emoji: "🌟", title: "Superstar", desc: "Earn 1000 XP", check: p => p.xp >= 1000 },
+  { emoji: "🔥", title: "Unstoppable", desc: "Reach a 30-day streak", check: p => p.streak >= 30 },
+];
+
+const AchievementsScreen = () => {
+  const { progress } = useApp();
+
+  const unlocked = ACHIEVEMENTS.filter(a =>
+    a.check({ xp: progress.xp, streak: progress.streak, lessonsCompleted: progress.lessonsCompleted, level: progress.level })
+  ).length;
+
+  return (
+    <>
+      <div className="bg-card px-5 pt-4 pb-3.5 border-b border-border shrink-0">
+        <div className="text-[22px] font-black text-foreground">🏅 Achievements</div>
+        <div className="text-[13px] text-muted-foreground font-semibold mt-0.5">
+          {unlocked}/{ACHIEVEMENTS.length} unlocked
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+        <div className="p-[18px] pb-[100px]">
+          {/* Stats summary */}
+          <div className="flex gap-2.5 mb-5">
+            {[
+              { val: `${progress.xp}`, label: "Total XP", emoji: "⚡" },
+              { val: `${progress.streak}`, label: "Streak", emoji: "🔥" },
+              { val: `${progress.lessonsCompleted.length}`, label: "Lessons", emoji: "📚" },
+            ].map(s => (
+              <div key={s.label} className="flex-1 bg-card rounded-2xl p-3.5 border-[1.5px] border-border text-center">
+                <div className="text-lg mb-0.5">{s.emoji}</div>
+                <div className="text-xl font-black text-foreground">{s.val}</div>
+                <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-wide mt-0.5">{s.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Kibo encouragement */}
+          <div className="flex items-center gap-3 bg-card rounded-2xl p-4 border-[1.5px] border-border mb-5">
+            <img src={KIBO.happy} alt="Kibo" className="w-12 h-12 object-contain" />
+            <div className="text-[13px] text-muted-foreground leading-relaxed">
+              {unlocked === 0
+                ? "Complete lessons to unlock badges! You got this! 💪"
+                : unlocked < 5
+                  ? `${unlocked} badge${unlocked > 1 ? "s" : ""} earned! Keep going! ✨`
+                  : "You're an AI learning machine! 🚀"}
+            </div>
+          </div>
+
+          {/* Achievements grid */}
+          <div className="flex flex-col gap-2.5">
+            {ACHIEVEMENTS.map((a, i) => {
+              const earned = a.check({
+                xp: progress.xp,
+                streak: progress.streak,
+                lessonsCompleted: progress.lessonsCompleted,
+                level: progress.level,
+              });
+              return (
+                <div key={i}
+                  className={`flex items-center gap-3.5 bg-card rounded-xl p-4 border-[1.5px] transition-all
+                    ${earned ? "border-kibo-gold bg-kibo-gold/5" : "border-border opacity-50"}`}>
+                  <div className={`w-11 h-11 rounded-[12px] flex items-center justify-center text-xl shrink-0
+                    ${earned ? "bg-kibo-gold/15" : "bg-background"}`}>
+                    {earned ? a.emoji : "🔒"}
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-[15px] font-extrabold text-foreground">{a.title}</div>
+                    <div className="text-xs text-muted-foreground font-semibold mt-0.5">{a.desc}</div>
+                  </div>
+                  {earned && <span className="text-kibo-gold text-sm font-black">✓</span>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default AchievementsScreen;
