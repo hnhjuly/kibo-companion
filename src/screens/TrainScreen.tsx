@@ -2,7 +2,6 @@ import { useApp } from "@/context/AppContext";
 import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import { ArrowRight } from "lucide-react";
 import { KIBO, type Lesson } from "@/data/curriculum";
-import Icon from "@/components/Icon";
 import NotoEmoji from "@/components/NotoEmoji";
 
 const TrainScreen = () => {
@@ -28,7 +27,7 @@ const TrainScreen = () => {
     <>
       <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center gap-3.5 justify-center">
         <span className="text-lg font-black text-foreground flex items-center gap-2">
-          <Icon name="fire" size={20} /> Daily Challenge
+          <NotoEmoji name="fire" size={20} /> Daily Challenge
         </span>
       </div>
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
@@ -46,7 +45,7 @@ const TrainScreen = () => {
             <div className="flex-1">
               <div className="text-[28px] font-black text-foreground">{progress.streak} Day Streak</div>
               <div className="text-[13px] text-muted-foreground font-bold">
-                {progress.streak >= 30 ? <span>Legendary! <NotoEmoji name="crown" size={14} /></span> : progress.streak >= 7 ? <span>Amazing! <Icon name="star" size={14} /></span> : progress.streak >= 3 ? <span>On fire! <Icon name="fire" size={14} /></span> : "Don't break it!"}
+                {progress.streak >= 30 ? <span>Legendary! <NotoEmoji name="crown" size={14} /></span> : progress.streak >= 7 ? <span>Amazing! <NotoEmoji name="star" size={14} /></span> : progress.streak >= 3 ? <span>On fire! <NotoEmoji name="fire" size={14} /></span> : "Don't break it!"}
               </div>
             </div>
             <button className="bg-card border-2 border-kibo-gold rounded-[10px] px-3 py-1.5 text-xs font-extrabold text-kibo-orange inline-flex items-center gap-1"><NotoEmoji name="snowflake" size={14} /> Freeze</button>
@@ -91,7 +90,7 @@ const TrainScreen = () => {
                 <button key={ex.id} onClick={startDailyChallenge}
                   className="w-full bg-background rounded-[14px] p-4 mb-2.5 text-left border-2 border-transparent hover:border-kibo-green transition-all">
                   <div className="text-[11px] font-extrabold text-muted-foreground/50 uppercase tracking-wider mb-1 flex items-center gap-1">
-                    <Icon name={meta.icon as any} size={12} /> {meta.label}
+                    <NotoEmoji name={meta.icon as any} size={12} /> {meta.label}
                   </div>
                   <div className="text-[15px] font-extrabold text-foreground mb-1.5">
                     {ex.question.length > 55 ? ex.question.slice(0, 52) + "..." : ex.question}

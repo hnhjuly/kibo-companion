@@ -1,13 +1,11 @@
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
-import Icon from "@/components/Icon";
 import NotoEmoji from "@/components/NotoEmoji";
-import ICONS from "@/assets/icons";
 
-type IconName = keyof typeof ICONS;
+type EmojiName = "target" | "fire" | "lightning" | "book" | "diamond" | "trophy" | "graduation" | "star";
 
 interface Achievement {
-  icon: IconName;
+  icon: EmojiName;
   title: string;
   desc: string;
   check: (p: { xp: number; streak: number; completedLessons: string[]; level: number }) => boolean;
@@ -37,7 +35,7 @@ const AchievementsScreen = () => {
     <>
       <div className="bg-card px-5 pt-4 pb-3.5 border-b border-border shrink-0">
         <div className="text-[22px] font-black text-foreground flex items-center gap-2">
-          <Icon name="trophy" size={24} /> Achievements
+          <NotoEmoji name="trophy" size={24} /> Achievements
         </div>
         <div className="text-[13px] text-muted-foreground font-semibold mt-0.5">
           {unlocked}/{ACHIEVEMENTS.length} unlocked
@@ -49,12 +47,12 @@ const AchievementsScreen = () => {
           {/* Stats summary */}
           <div className="flex gap-2.5 mb-5">
             {[
-              { val: `${progress.xp}`, label: "Total XP", iconName: "lightning" as IconName },
-              { val: `${progress.streak}`, label: "Streak", iconName: "fire" as IconName },
-              { val: `${progress.completedLessons.length}`, label: "Lessons", iconName: "book" as IconName },
+              { val: `${progress.xp}`, label: "Total XP", iconName: "lightning" as EmojiName },
+              { val: `${progress.streak}`, label: "Streak", iconName: "fire" as EmojiName },
+              { val: `${progress.completedLessons.length}`, label: "Lessons", iconName: "book" as EmojiName },
             ].map(s => (
               <div key={s.label} className="flex-1 bg-card rounded-2xl p-3.5 border-[1.5px] border-border text-center">
-                <div className="mb-0.5 flex justify-center"><Icon name={s.iconName} size={22} /></div>
+                <div className="mb-0.5 flex justify-center"><NotoEmoji name={s.iconName} size={22} /></div>
                 <div className="text-xl font-black text-foreground">{s.val}</div>
                 <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-wide mt-0.5">{s.label}</div>
               </div>
@@ -75,7 +73,7 @@ const AchievementsScreen = () => {
                 ? <span>Complete lessons to unlock badges! You got this! <NotoEmoji name="flexed" size={14} /></span>
                 : unlocked < 5
                   ? <span>{unlocked} badge{unlocked > 1 ? "s" : ""} earned! Keep going! <NotoEmoji name="sparkles" size={14} /></span>
-                  : <span>You're an AI learning machine! <Icon name="rocket" size={14} /></span>}
+                  : <span>You're an AI learning machine! <NotoEmoji name="rocket" size={14} /></span>}
             </div>
           </div>
 
@@ -94,13 +92,13 @@ const AchievementsScreen = () => {
                     ${earned ? "border-kibo-gold bg-kibo-gold/5" : "border-border opacity-50"}`}>
                   <div className={`w-11 h-11 rounded-[12px] flex items-center justify-center shrink-0
                     ${earned ? "bg-kibo-gold/15" : "bg-background"}`}>
-                    {earned ? <Icon name={a.icon} size={26} /> : "🔒"}
+                    {earned ? <NotoEmoji name={a.icon} size={26} /> : <NotoEmoji name="lock" size={22} />}
                   </div>
                   <div className="flex-1">
                     <div className="text-[15px] font-extrabold text-foreground">{a.title}</div>
                     <div className="text-xs text-muted-foreground font-semibold mt-0.5">{a.desc}</div>
                   </div>
-                  {earned && <Icon name="checkmark" size={20} />}
+                  {earned && <NotoEmoji name="checkmark" size={20} />}
                 </div>
               );
             })}
