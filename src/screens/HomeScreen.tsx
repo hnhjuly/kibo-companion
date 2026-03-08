@@ -1,15 +1,27 @@
 import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
-import { Pencil, FileText, Bot, ChevronRight, ArrowRight, Check, Lock, Star, Heart } from "lucide-react";
+import { ChevronRight, ArrowRight, Check, Lock, Star } from "lucide-react";
 import { getXPForLevel } from "@/lib/progress";
+import { getTodaysTopic, getTodaysQuizExercises, exerciseToQuestion } from "@/data/dailyTraining";
+import type { Lesson } from "@/data/curriculum";
 import kiboBg from "@/assets/kibo-bg.png";
 
 const HomeScreen = () => {
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
 
-  const startQuiz = () => {
-    const fallback = CURRICULUM.levels[0].lessons[2];
-    setCurrentLesson(fallback);
+  const topic = getTodaysTopic();
+  const quizExercises = getTodaysQuizExercises();
+
+  const startDailyTraining = () => {
+    const dailyLesson: Lesson = {
+      id: `daily-${topic.id}`,
+      title: topic.title,
+      duration: `${quizExercises.length} min`,
+      xp: quizExercises.length * 10,
+      state: "active",
+      questions: quizExercises.map(exerciseToQuestion),
+    };
+    setCurrentLesson(dailyLesson);
     setScreen("quiz");
   };
 
