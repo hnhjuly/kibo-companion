@@ -15,7 +15,7 @@ const slides = [
     desc: "Join thousands mastering AI for work, school and life. Start right now.",
   },
   {
-    img: KIBO.focused,
+    img: KIBO.thinking,
     title: <>Practice <b className="text-kibo-green">real tasks</b>,<br />not just theory</>,
     desc: "Fix prompts. Summarize emails. Choose AI tools. Skills you'll use tomorrow.",
   },
