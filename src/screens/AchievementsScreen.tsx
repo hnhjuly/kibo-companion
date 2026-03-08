@@ -5,7 +5,7 @@ interface Achievement {
   emoji: string;
   title: string;
   desc: string;
-  check: (p: { xp: number; streak: number; lessonsCompleted: string[]; level: number }) => boolean;
+  check: (p: { xp: number; streak: number; completedLessons: string[]; level: number }) => boolean;
 }
 
 const ACHIEVEMENTS: Achievement[] = [
