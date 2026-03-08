@@ -4,7 +4,7 @@ import kiboWave from "@/assets/kibo-wave.png";
 import kiboSurprised from "@/assets/kibo-surprised.png";
 import kiboThinking from "@/assets/kibo-thinking.png";
 import kiboCelebrate from "@/assets/kibo-celebrate.png";
-import kiboFocused from "@/assets/kibo-focused.png";
+
 import kiboSad from "@/assets/kibo-sad.png";
 import kiboShocked from "@/assets/kibo-shocked.png";
 import kiboThumbsup from "@/assets/kibo-thumbsup.png";
