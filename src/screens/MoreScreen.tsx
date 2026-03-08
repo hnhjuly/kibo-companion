@@ -4,7 +4,7 @@ import { useApp } from "@/context/AppContext";
 import Icon from "@/components/Icon";
 
 const MoreScreen = () => {
-  const { progress } = useApp();
+  const { progress, setScreen } = useApp();
   return (
     <>
       <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center justify-center gap-3.5">
