@@ -1,13 +1,13 @@
 import { useApp } from "@/context/AppContext";
-import { getTodaysTopic, getTodaysQuizExercises, exerciseToQuestion } from "@/data/dailyTraining";
+import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import { ArrowRight } from "lucide-react";
 import { KIBO, type Lesson } from "@/data/curriculum";
 
 const TrainScreen = () => {
   const { setScreen, setCurrentLesson, progress } = useApp();
 
-  const topic = getTodaysTopic();
-  const quizExercises = getTodaysQuizExercises();
+  const training = getTodaysTraining(progress.completedLessons);
+  const { topic, exercises: quizExercises, tierLabel } = training;
 
   const startDailyChallenge = () => {
     // Convert daily exercises into a quiz-compatible Lesson
@@ -57,7 +57,7 @@ const TrainScreen = () => {
                 {topic.icon}
               </div>
               <div className="flex-1">
-                <div className="text-[15px] font-black text-foreground">Today: {topic.title}</div>
+                <div className="text-[15px] font-black text-foreground">{tierLabel}</div>
                 <div className="text-xs text-muted-foreground font-semibold">{topic.desc}</div>
               </div>
             </div>

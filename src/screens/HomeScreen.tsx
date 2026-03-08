@@ -2,15 +2,15 @@ import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
 import { ChevronRight, ArrowRight, Check, Lock, Star } from "lucide-react";
 import { getXPForLevel } from "@/lib/progress";
-import { getTodaysTopic, getTodaysQuizExercises, exerciseToQuestion } from "@/data/dailyTraining";
+import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import type { Lesson } from "@/data/curriculum";
 import kiboBg from "@/assets/kibo-bg.png";
 
 const HomeScreen = () => {
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
 
-  const topic = getTodaysTopic();
-  const quizExercises = getTodaysQuizExercises();
+  const training = getTodaysTraining(progress.completedLessons);
+  const { topic, exercises: quizExercises, tierLabel } = training;
 
   const startDailyTraining = () => {
     const dailyLesson: Lesson = {
@@ -85,7 +85,7 @@ const HomeScreen = () => {
           <div>
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-[17px] font-black text-foreground flex items-center gap-2">🔥 Today's AI Training</h3>
-              <span className="text-xs font-extrabold px-2.5 py-1 rounded-full" style={{ background: topic.color + "20", color: topic.color }}>{topic.icon} {topic.title}</span>
+              <span className="text-xs font-extrabold px-2.5 py-1 rounded-full" style={{ background: topic.color + "20", color: topic.color }}>{tierLabel}</span>
             </div>
             <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border">
               {quizExercises.slice(0, 3).map((ex, i) => {
