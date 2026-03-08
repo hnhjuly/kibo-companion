@@ -1,5 +1,5 @@
 import { useApp } from "@/context/AppContext";
-import { CURRICULUM } from "@/data/curriculum";
+import { CURRICULUM, KIBO } from "@/data/curriculum";
 import { Check, Lock, ChevronLeft } from "lucide-react";
 
 const LessonsScreen = () => {
