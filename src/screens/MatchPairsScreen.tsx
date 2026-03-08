@@ -4,6 +4,7 @@ import { FLASHCARD_DATA } from "@/data/flashcards";
 import { KIBO } from "@/data/curriculum";
 import { ArrowLeft } from "lucide-react";
 import PreloadedImg from "@/components/PreloadedImg";
+import ExitGameDialog from "@/components/ExitGameDialog";
 
 interface Tile {
   id: string;
@@ -31,6 +32,7 @@ const MatchPairsScreen = () => {
   const [timer, setTimer] = useState(0);
   const [started, setStarted] = useState(false);
   const [done, setDone] = useState(false);
+  const [showExit, setShowExit] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
@@ -110,8 +112,9 @@ const MatchPairsScreen = () => {
 
   return (
     <div className="flex flex-col flex-1 bg-card">
+      <ExitGameDialog open={showExit} onOpenChange={setShowExit} onConfirm={() => setScreen("train")} gameName="Match the Pairs" />
       <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
-        <button onClick={() => setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
+        <button onClick={() => started && !done ? setShowExit(true) : setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
         <span className="font-black text-foreground">🧩 Match the Pairs</span>
         <span className="ml-auto font-black text-foreground">{formatTime(timer)}</span>
       </div>

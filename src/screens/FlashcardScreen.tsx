@@ -5,6 +5,7 @@ import { KIBO } from "@/data/curriculum";
 import { ArrowLeft } from "lucide-react";
 import PreloadedImg from "@/components/PreloadedImg";
 import DidYouKnowCard from "@/components/DidYouKnowCard";
+import ExitGameDialog from "@/components/ExitGameDialog";
 
 const FlashcardScreen = () => {
   const { setScreen } = useApp();
@@ -14,6 +15,7 @@ const FlashcardScreen = () => {
   const [done, setDone] = useState(false);
   const [showDYK, setShowDYK] = useState(false);
   const [rated, setRated] = useState(0);
+  const [showExit, setShowExit] = useState(false);
 
   const card = queue[idx] as Flashcard | undefined;
 
@@ -57,9 +59,10 @@ const FlashcardScreen = () => {
 
   return (
     <div className="flex flex-col flex-1 bg-card">
+      <ExitGameDialog open={showExit} onOpenChange={setShowExit} onConfirm={() => setScreen("train")} gameName="Flashcards" />
       {/* Header */}
       <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
-        <button onClick={() => setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
+        <button onClick={() => idx > 0 ? setShowExit(true) : setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
         <span className="font-black text-foreground">🃏 Flashcards</span>
         <span className="ml-auto text-xs font-bold text-muted-foreground">{idx + 1} / {queue.length}</span>
       </div>

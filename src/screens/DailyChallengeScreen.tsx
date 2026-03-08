@@ -5,6 +5,7 @@ import { KIBO } from "@/data/curriculum";
 import { ArrowLeft } from "lucide-react";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
+import ExitGameDialog from "@/components/ExitGameDialog";
 
 const KEYS = ["A", "B", "C", "D"];
 
@@ -16,6 +17,7 @@ const DailyChallengeScreen = () => {
   const [answered, setAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [countdown, setCountdown] = useState("");
+  const [showExit, setShowExit] = useState(false);
 
   useEffect(() => {
     if (!isDone) return;
@@ -65,8 +67,9 @@ const DailyChallengeScreen = () => {
 
   return (
     <div className="flex flex-col flex-1 bg-card relative overflow-hidden">
+      <ExitGameDialog open={showExit} onOpenChange={setShowExit} onConfirm={() => setScreen("train")} gameName="Daily Challenge" />
       <div className="px-5 py-3.5 border-b border-border flex items-center gap-3">
-        <button onClick={() => setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
+        <button onClick={() => !answered ? setShowExit(true) : setScreen("train")}><ArrowLeft className="w-5 h-5 text-muted-foreground" /></button>
         <span className="font-black text-foreground flex items-center gap-2">🎯 Daily Challenge</span>
         <span className="ml-auto bg-destructive/15 text-destructive px-2.5 py-0.5 rounded-full text-xs font-black">2x XP</span>
         <span className="text-sm font-bold text-muted-foreground flex items-center gap-1"><NotoEmoji name="fire" size={14} /> {progress.streak}</span>
