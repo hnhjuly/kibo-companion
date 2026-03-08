@@ -26,13 +26,13 @@ const Confetti = ({ count }: { count: number }) => {
 };
 
 const QuizScreen = () => {
-  const { setScreen, currentLesson, setQuizStats } = useApp();
+  const { setScreen, currentLesson, setQuizStats, progress, onLoseHeart, onCompleteLesson } = useApp();
   const questions = currentLesson?.questions?.length
     ? currentLesson.questions
     : CURRICULUM.levels[0].lessons[2].questions;
 
   const [qIdx, setQIdx] = useState(0);
-  const [hearts, setHearts] = useState(3);
+  const [localHearts, setLocalHearts] = useState(progress.hearts);
   const [correct, setCorrect] = useState(0);
   const [answered, setAnswered] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
@@ -53,19 +53,31 @@ const QuizScreen = () => {
       setCorrect(c => c + 1);
       setConfetti(10);
     } else {
-      setHearts(h => Math.max(0, h - 1));
+      const hasHearts = onLoseHeart();
+      setLocalHearts(h => Math.max(0, h - 1));
+      if (!hasHearts) {
+        // Hearts depleted - show feedback then redirect
+        setTimeout(() => {
+          setScreen("hearts-depleted");
+        }, 2000);
+      }
     }
     setShowFb(true);
-  }, [answered, q]);
+  }, [answered, q, onLoseHeart, setScreen]);
 
   const nextQ = useCallback(() => {
+    if (localHearts <= 0 && !isCorrect) {
+      setScreen("hearts-depleted");
+      return;
+    }
     const nextIdx = qIdx + 1;
-    if (nextIdx >= questions.length || hearts <= (isCorrect ? 0 : 1)) {
-      setQuizStats({
-        correct: correct + (isCorrect ? 0 : 0), // already updated
-        total: questions.length,
-        time: Math.round((Date.now() - startT.current) / 1000),
-      });
+    if (nextIdx >= questions.length) {
+      const elapsed = Math.round((Date.now() - startT.current) / 1000);
+      const xpEarned = correct * 20;
+      setQuizStats({ correct, total: questions.length, time: elapsed });
+      if (currentLesson) {
+        onCompleteLesson(currentLesson.id, xpEarned, correct, questions.length);
+      }
       setScreen("complete");
       return;
     }
@@ -74,11 +86,11 @@ const QuizScreen = () => {
     setSelected(null);
     setShowFb(false);
     setConfetti(0);
-  }, [qIdx, questions, hearts, isCorrect, correct, setQuizStats, setScreen]);
+  }, [qIdx, questions, localHearts, isCorrect, correct, setQuizStats, setScreen, currentLesson, onCompleteLesson]);
 
   // Reset on mount
   useEffect(() => {
-    setQIdx(0); setHearts(3); setCorrect(0); setAnswered(false);
+    setQIdx(0); setLocalHearts(progress.hearts); setCorrect(0); setAnswered(false);
     setSelected(null); setShowFb(false); setConfetti(0);
     startT.current = Date.now();
   }, [currentLesson]);
@@ -96,7 +108,7 @@ const QuizScreen = () => {
             }} />
           </div>
           <div className="flex gap-1 text-lg">
-            {"❤️".repeat(hearts)}{"🖤".repeat(3 - hearts)}
+            {"❤️".repeat(localHearts)}{"🖤".repeat(3 - localHearts)}
           </div>
         </div>
       </div>
@@ -141,7 +153,7 @@ const QuizScreen = () => {
             <img src={isCorrect ? KIBO.happy : KIBO.neutral} alt="Kibo" className="w-[52px] h-[52px] object-contain" />
             <div className="flex-1">
               <div className={`text-lg font-black ${isCorrect ? "text-kibo-green" : "text-destructive"}`}>
-                {isCorrect ? PRAISES[Math.floor(Math.random() * 4)] : "Not quite... 💔"}
+                {isCorrect ? PRAISES[Math.floor(Math.random() * 4)] : localHearts === 0 ? "No hearts left! 💔" : "Not quite... 💔"}
               </div>
               <div className="text-[13px] text-muted-foreground leading-relaxed mt-1">{q.explanation}</div>
             </div>
@@ -150,7 +162,7 @@ const QuizScreen = () => {
             className={`w-full py-3.5 rounded-[14px] font-black text-base transition-all
               ${isCorrect ? "bg-kibo-green text-primary-foreground kibo-shadow active:translate-y-[2px] active:shadow-none" :
                 "bg-destructive text-primary-foreground shadow-[0_4px_0_#c00]"}`}>
-            CONTINUE
+            {localHearts === 0 && !isCorrect ? "SEE RESULTS" : "CONTINUE"}
           </button>
         </div>
       )}

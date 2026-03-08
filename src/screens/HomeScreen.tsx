@@ -1,9 +1,10 @@
 import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
-import { Pencil, FileText, Bot, ChevronRight, ArrowRight, Check, Lock, Star } from "lucide-react";
+import { Pencil, FileText, Bot, ChevronRight, ArrowRight, Check, Lock, Star, Heart } from "lucide-react";
+import { getXPForLevel } from "@/lib/progress";
 
 const HomeScreen = () => {
-  const { setScreen, setCurrentLesson } = useApp();
+  const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
 
   const startQuiz = () => {
     const fallback = CURRICULUM.levels[0].lessons[2];
@@ -21,16 +22,19 @@ const HomeScreen = () => {
             <div className="text-[13px] text-muted-foreground font-semibold mt-0.5">Learn AI with Kibo</div>
           </div>
           <div className="flex gap-2">
-            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-orange">🔥 3</div>
-            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-gold">💎 230</div>
+            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-orange">🔥 {progress.streak}</div>
+            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-gold">💎 {progress.xp}</div>
+            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold">
+              {"❤️".repeat(progress.hearts)}{"🖤".repeat(3 - progress.hearts)}
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-black text-muted-foreground tracking-wide whitespace-nowrap">LEVEL 1</span>
+          <span className="text-[11px] font-black text-muted-foreground tracking-wide whitespace-nowrap">LEVEL {progress.level}</span>
           <div className="flex-1 h-[9px] bg-background rounded-full overflow-hidden">
-            <div className="h-full rounded-full" style={{ width: "87%", background: "linear-gradient(90deg, #3db74a, #72e07a)" }} />
+            <div className="h-full rounded-full" style={{ width: `${(progress.xp / getXPForLevel(progress.level)) * 100}%`, background: "linear-gradient(90deg, #3db74a, #72e07a)" }} />
           </div>
-          <span className="text-[11px] font-black text-kibo-green whitespace-nowrap">260/300 XP</span>
+          <span className="text-[11px] font-black text-kibo-green whitespace-nowrap">{progress.xp}/{getXPForLevel(progress.level)} XP</span>
         </div>
       </div>
 
@@ -44,7 +48,11 @@ const HomeScreen = () => {
             <img src={KIBO.happy} alt="Kibo" className="w-[115px] h-[115px] object-contain shrink-0 -mt-2 animate-float drop-shadow-lg" />
             <div className="flex-1 pt-5 pl-1.5">
               <div className="text-base font-black text-foreground mb-1">Hi, I'm Kibo! ✨</div>
-              <div className="text-[13px] text-muted-foreground leading-relaxed mb-3">Let's train your AI skills! You're on a 3 day streak 🔥</div>
+              <div className="text-[13px] text-muted-foreground leading-relaxed mb-3">
+                {!canPlay ? "Your hearts are refilling... Take a break! 😴" :
+                  progress.streak > 0 ? `Let's train your AI skills! You're on a ${progress.streak} day streak 🔥` :
+                  "Let's start training your AI skills! 💪"}
+              </div>
               <button onClick={() => setScreen("lessons")}
                 className="bg-kibo-green text-primary-foreground rounded-xl px-[22px] py-2.5 font-black text-sm inline-flex items-center gap-2 kibo-shadow active:translate-y-[2px] active:shadow-none transition-all">
                 START <ArrowRight className="w-4 h-4" />
