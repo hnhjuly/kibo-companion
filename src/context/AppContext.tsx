@@ -112,7 +112,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     <AppContext.Provider value={{
       screen, setScreen: safeSetScreen, currentLesson, setCurrentLesson,
       quizStats, setQuizStats, progress, onLoseHeart, onCompleteLesson,
-      onUseFreeze, onResetProgress, onRestoreHeart, heartsTimeRemaining, canPlay
+      onUseFreeze, onResetProgress, onRestoreHeart, onSetGoal, heartsTimeRemaining, canPlay
     }}>
       {children}
     </AppContext.Provider>
