@@ -52,10 +52,13 @@ const QuizScreen = () => {
     ? currentLesson.questions
     : CURRICULUM.levels[0].lessons[2].questions;
 
+  const rawQuestions = currentLesson?.questions?.length
+    ? currentLesson.questions
+    : CURRICULUM.levels[0].lessons[2].questions;
+
+  const [questions] = useState(() => shuffleQuestions(rawQuestions));
+
   const [qIdx, setQIdx] = useState(0);
-  const [localHearts, setLocalHearts] = useState(progress.hearts);
-  const [correct, setCorrect] = useState(0);
-  const [answered, setAnswered] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
   const [showFb, setShowFb] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
