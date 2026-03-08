@@ -62,9 +62,9 @@ const CompleteScreen = () => {
           </div>
         ))}
       </div>
-      <button onClick={() => setScreen("home")}
+      <button onClick={() => setScreen("lessons")}
         className="w-full py-[18px] bg-kibo-green text-primary-foreground rounded-2xl font-black text-lg kibo-shadow active:translate-y-[3px] active:shadow-none transition-all">
-        Continue →
+        Continue to Learning Path →
       </button>
       {showConfetti && <Confetti />}
     </div>
