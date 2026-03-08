@@ -81,30 +81,28 @@ const HomeScreen = () => {
     <>
       {/* Header */}
       <div className="bg-card px-5 pt-4 pb-3.5 border-b border-border shrink-0">
-        <div className="flex justify-between items-start mb-2.5">
-          <div>
-            <div className="text-[22px] font-black text-foreground flex items-center gap-1.5">
-              {goalGreeting ? goalGreeting : <>Hello! <NotoEmoji name="wave" size={24} /></>}
-            </div>
-            <div className="text-[13px] text-muted-foreground font-semibold mt-0.5">Learn AI with Kibo</div>
+        <div className="flex items-center gap-2 mb-2.5 flex-wrap">
+          <div className="text-[18px] font-black text-foreground leading-tight mr-auto">
+            {goalGreeting ? goalGreeting : <>Hello! <NotoEmoji name="wave" size={20} /></>}
           </div>
-          <div className="flex gap-2">
-            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-orange">
-              <NotoEmoji name="fire" size={16} /> {progress.streak}
+          <div className="flex gap-1.5 shrink-0">
+            <div className="flex items-center gap-1.5 bg-background rounded-full px-3 py-1.5 text-[13px] font-extrabold text-kibo-orange">
+              <NotoEmoji name="fire" size={15} /> {progress.streak}
             </div>
-            <div className="flex items-center gap-1.5 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold text-kibo-gold">
-              <NotoEmoji name="diamond" size={16} /> {progress.xp}
+            <div className="flex items-center gap-1.5 bg-background rounded-full px-3 py-1.5 text-[13px] font-extrabold text-kibo-gold">
+              <NotoEmoji name="diamond" size={15} /> {progress.xp}
             </div>
-            <div className="flex items-center gap-1 bg-background rounded-full px-3.5 py-1.5 text-sm font-extrabold">
+            <div className="flex items-center gap-0.5 bg-background rounded-full px-2.5 py-1.5">
               {Array.from({ length: progress.hearts }).map((_, i) => (
-                <NotoEmoji key={`h${i}`} name="heart" size={16} />
+                <NotoEmoji key={`h${i}`} name="heart" size={14} />
               ))}
               {Array.from({ length: 3 - progress.hearts }).map((_, i) => (
-                <NotoEmoji key={`e${i}`} name="heartEmpty" size={16} />
+                <NotoEmoji key={`e${i}`} name="heartEmpty" size={14} />
               ))}
             </div>
           </div>
         </div>
+        <div className="text-[12px] text-muted-foreground font-semibold mb-2">Learn AI with Kibo</div>
         <div className="flex items-center gap-2">
           <span className="text-[11px] font-black text-muted-foreground tracking-wide whitespace-nowrap">LEVEL {progress.level}</span>
           <div className="flex-1 h-[9px] bg-background rounded-full overflow-hidden">
