@@ -124,7 +124,7 @@ const QuizScreen = () => {
   }, [currentLesson]);
 
   return (
-    <div className="flex flex-col flex-1 bg-card relative">
+    <div className="flex flex-col flex-1 bg-card relative overflow-hidden">
       {/* Header */}
       <div className="px-5 pt-4 pb-3 border-b border-border shrink-0">
         <div className="flex items-center gap-3 mb-3">
@@ -146,43 +146,45 @@ const QuizScreen = () => {
         </div>
       </div>
 
-      {/* Quiz body */}
-      <div className="flex-1 overflow-y-auto px-[22px] pt-7 pb-[200px] flex flex-col">
-        <div className="text-[11px] font-black tracking-[2px] uppercase text-muted-foreground/50 mb-2.5">
-          {q.type === "mcq" ? "Multiple Choice" : q.type === "identify" ? "Identify" : q.type === "scenario" ? "Scenario" : q.type === "multiple_choice" ? "Multiple Choice" : "Multiple Choice"}
-        </div>
-        <h2 className="text-[22px] font-black text-foreground leading-tight mb-1.5">{q.question}</h2>
-        <p className="text-sm text-muted-foreground mb-7">
-          {q.hint ? <span><NotoEmoji name="lightbulb" size={14} /> {q.hint}</span> : "Choose the best answer"}
-        </p>
-        <div className="flex flex-col gap-2.5">
-          {q.choices.map((c, i) => {
-            let cls = "bg-background border-[2.5px] border-border";
-            if (answered) {
-              if (i === q.correct) cls = "bg-kibo-green/10 border-[2.5px] border-kibo-green text-kibo-green";
-              else if (i === selected) cls = "bg-destructive/10 border-[2.5px] border-destructive text-destructive";
-            } else if (i === selected) {
-              cls = "bg-secondary/10 border-[2.5px] border-secondary";
-            }
-            let keyCls = "bg-card border-2 border-border text-muted-foreground";
-            if (answered && i === q.correct) keyCls = "bg-kibo-green border-2 border-kibo-green text-primary-foreground";
-            else if (answered && i === selected) keyCls = "bg-destructive border-2 border-destructive text-primary-foreground";
-            else if (i === selected) keyCls = "bg-secondary border-2 border-secondary text-primary-foreground";
+      {/* Quiz body — scrollable */}
+      <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+        <div className="px-[22px] pt-7 pb-8 flex flex-col">
+          <div className="text-[11px] font-black tracking-[2px] uppercase text-muted-foreground/50 mb-2.5">
+            {q.type === "mcq" ? "Multiple Choice" : q.type === "identify" ? "Identify" : q.type === "scenario" ? "Scenario" : "Multiple Choice"}
+          </div>
+          <h2 className="text-[22px] font-black text-foreground leading-tight mb-1.5">{q.question}</h2>
+          <p className="text-sm text-muted-foreground mb-7">
+            {q.hint ? <span><NotoEmoji name="lightbulb" size={14} /> {q.hint}</span> : "Choose the best answer"}
+          </p>
+          <div className="flex flex-col gap-2.5">
+            {q.choices.map((c, i) => {
+              let cls = "bg-background border-[2.5px] border-border";
+              if (answered) {
+                if (i === q.correct) cls = "bg-kibo-green/10 border-[2.5px] border-kibo-green text-kibo-green";
+                else if (i === selected) cls = "bg-destructive/10 border-[2.5px] border-destructive text-destructive";
+              } else if (i === selected) {
+                cls = "bg-secondary/10 border-[2.5px] border-secondary";
+              }
+              let keyCls = "bg-card border-2 border-border text-muted-foreground";
+              if (answered && i === q.correct) keyCls = "bg-kibo-green border-2 border-kibo-green text-primary-foreground";
+              else if (answered && i === selected) keyCls = "bg-destructive border-2 border-destructive text-primary-foreground";
+              else if (i === selected) keyCls = "bg-secondary border-2 border-secondary text-primary-foreground";
 
-            return (
-              <button key={i} onClick={() => pick(i)} disabled={answered}
-                className={`${cls} rounded-[14px] p-4 px-[18px] font-bold text-[15px] text-left transition-all flex items-center gap-3 hover:border-secondary hover:bg-secondary/10`}>
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black shrink-0 transition-all ${keyCls}`}>{KEYS[i]}</div>
-                {c}
-              </button>
-            );
-          })}
+              return (
+                <button key={i} onClick={() => pick(i)} disabled={answered}
+                  className={`${cls} rounded-[14px] p-4 px-[18px] font-bold text-[15px] text-left transition-all flex items-center gap-3 hover:border-secondary hover:bg-secondary/10`}>
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black shrink-0 transition-all ${keyCls}`}>{KEYS[i]}</div>
+                  {c}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* Feedback panel */}
+      {/* Feedback panel — fixed to bottom, not absolute over content */}
       {showFb && (
-        <div className={`absolute bottom-0 left-0 right-0 p-5 pb-9 flex flex-col gap-2.5 border-t-[2.5px] backdrop-blur-xl
+        <div className={`shrink-0 p-5 pb-[max(2.25rem,calc(env(safe-area-inset-bottom)+1rem))] flex flex-col gap-2.5 border-t-[2.5px] backdrop-blur-xl
           ${isCorrect ? "bg-[rgba(240,255,244,0.97)] border-kibo-green" : "bg-[rgba(255,240,240,0.97)] border-destructive"}`}>
           <div className="flex items-center gap-3">
             <PreloadedImg src={isCorrect ? [KIBO.thumbsup, KIBO.celebration2, KIBO.happy][qIdx % 3] : localHearts === 0 ? KIBO.sad2 : [KIBO.detective, KIBO.shocked][qIdx % 2]} alt="Kibo" className="w-[60px] h-[60px] object-contain" />
