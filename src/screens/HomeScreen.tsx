@@ -190,6 +190,27 @@ const HomeScreen = () => {
               </button>
             </div>
           </div>
+
+          {/* Coming Soon Teaser */}
+          <div>
+            <h3 className="text-[17px] font-black text-foreground mb-3 flex items-center gap-2">
+              <NotoEmoji name="rocket" size={18} /> Coming Soon
+            </h3>
+            <div className="flex gap-2.5 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+              {COMING_SOON_MODULES.slice(0, 3).map((mod, i) => (
+                <div key={i} className="bg-card rounded-[14px] p-3.5 border-[1.5px] border-border min-w-[140px] shrink-0">
+                  <div className="w-9 h-9 rounded-[10px] flex items-center justify-center text-lg mb-2"
+                    style={{ background: mod.color + "15" }}>
+                    {mod.icon}
+                  </div>
+                  <div className="text-[12px] font-extrabold text-foreground leading-tight mb-0.5">{mod.title}</div>
+                  <div className="text-[10px] text-muted-foreground font-semibold flex items-center gap-1">
+                    <NotoEmoji name="lock" size={10} /> Coming soon
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </>

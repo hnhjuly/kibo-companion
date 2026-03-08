@@ -87,6 +87,31 @@ const LessonsScreen = () => {
               })}
             </div>
           ))}
+
+          {/* Coming Soon Modules */}
+          <div>
+            <div className="flex items-center gap-2.5 mb-3">
+              <span className="rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-wide bg-muted text-muted-foreground">
+                COMING SOON
+              </span>
+              <span className="text-[15px] font-black text-muted-foreground">AI Tool Mastery</span>
+            </div>
+            {COMING_SOON_MODULES.map((mod, i) => (
+              <div key={i}
+                className="w-full bg-card rounded-xl p-3.5 flex items-center gap-3.5 mb-2 border-[1.5px] border-dashed border-border/80 opacity-60">
+                <div className="w-9 h-9 rounded-[10px] flex items-center justify-center text-sm shrink-0"
+                  style={{ background: mod.color + "15" }}>
+                  {mod.icon}
+                </div>
+                <div className="flex-1">
+                  <div className="text-[15px] font-extrabold text-foreground flex items-center gap-1.5">
+                    <Lock className="w-3.5 h-3.5 text-muted-foreground" /> {mod.title}
+                  </div>
+                  <div className="text-xs text-muted-foreground font-semibold mt-0.5">{mod.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
