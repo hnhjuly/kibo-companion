@@ -80,6 +80,12 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setProgress(p => useFreeze(p));
   }, []);
 
+  const onResetProgress = useCallback(() => {
+    const fresh = resetProgress();
+    setProgress(fresh);
+    setScreen("home");
+  }, []);
+
   // Override setScreen to check hearts
   const safeSetScreen = useCallback((s: Screen) => {
     if ((s === "quiz") && !canPlay) {
