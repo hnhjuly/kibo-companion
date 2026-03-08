@@ -1,6 +1,7 @@
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
 import Icon from "@/components/Icon";
+import NotoEmoji from "@/components/NotoEmoji";
 import ICONS from "@/assets/icons";
 
 type IconName = keyof typeof ICONS;
