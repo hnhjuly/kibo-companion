@@ -25,7 +25,7 @@ const HeartsDepletedScreen = () => {
   return (
     <div className="flex flex-col flex-1 items-center justify-center p-8 text-center"
       style={{ background: "linear-gradient(160deg, #fff0f0, #ffe8ea)" }}>
-      <img src={KIBO.surprised} alt="Kibo sad" className="w-[150px] h-[150px] object-contain mb-6 drop-shadow-lg" />
+      <img src={KIBO.sad} alt="Kibo sad" className="w-[150px] h-[150px] object-contain mb-6 drop-shadow-lg" />
       
       <h1 className="text-[28px] font-black text-foreground mb-2">Out of Hearts! 💔</h1>
       <p className="text-muted-foreground text-[15px] mb-6 max-w-[260px]">

@@ -31,13 +31,16 @@ const CompleteScreen = () => {
   }, []);
 
   const acc = quizStats.total ? Math.round((quizStats.correct / quizStats.total) * 100) : 0;
+  const kiboImg = acc === 100 ? KIBO.trophy : acc >= 70 ? KIBO.celebrate : acc >= 40 ? KIBO.thumbsup : KIBO.sad;
+  const title = acc === 100 ? "Perfect Score! 🏆" : acc >= 70 ? "Lesson Complete! 🎉" : acc >= 40 ? "Not bad! 👍" : "Keep Practicing! 💪";
+  const subtitle = acc === 100 ? "Flawless! Kibo is amazed!" : acc >= 70 ? "Kibo is so proud of you!" : acc >= 40 ? "You're getting there!" : "Don't give up — try again!";
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center p-10 text-center relative"
       style={{ background: "linear-gradient(160deg, #f0fff4, #e8f4ff)" }}>
-      <img src={KIBO.celebrate} alt="Kibo" className="w-[160px] h-[160px] object-contain mb-4 drop-shadow-xl" />
-      <h1 className="text-[32px] font-black text-foreground mb-1.5">Lesson Complete! 🎉</h1>
-      <p className="text-muted-foreground mb-7 text-[15px]">Kibo is so proud of you!</p>
+      <img src={kiboImg} alt="Kibo" className="w-[160px] h-[160px] object-contain mb-4 drop-shadow-xl" />
+      <h1 className="text-[32px] font-black text-foreground mb-1.5">{title}</h1>
+      <p className="text-muted-foreground mb-7 text-[15px]">{subtitle}</p>
       <div className="bg-kibo-gold/15 border-2 border-kibo-gold rounded-[14px] px-6 py-3.5 text-xl font-black text-kibo-gold mb-6 inline-flex items-center gap-2">
         ⚡ +{quizStats.correct * 20} XP earned
       </div>
