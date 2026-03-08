@@ -48,7 +48,11 @@ const HomeScreen = () => {
             <img src={KIBO.happy} alt="Kibo" className="w-[115px] h-[115px] object-contain shrink-0 -mt-2 animate-float drop-shadow-lg" />
             <div className="flex-1 pt-5 pl-1.5">
               <div className="text-base font-black text-foreground mb-1">Hi, I'm Kibo! ✨</div>
-              <div className="text-[13px] text-muted-foreground leading-relaxed mb-3">Let's train your AI skills! You're on a 3 day streak 🔥</div>
+              <div className="text-[13px] text-muted-foreground leading-relaxed mb-3">
+                {!canPlay ? "Your hearts are refilling... Take a break! 😴" :
+                  progress.streak > 0 ? `Let's train your AI skills! You're on a ${progress.streak} day streak 🔥` :
+                  "Let's start training your AI skills! 💪"}
+              </div>
               <button onClick={() => setScreen("lessons")}
                 className="bg-kibo-green text-primary-foreground rounded-xl px-[22px] py-2.5 font-black text-sm inline-flex items-center gap-2 kibo-shadow active:translate-y-[2px] active:shadow-none transition-all">
                 START <ArrowRight className="w-4 h-4" />
