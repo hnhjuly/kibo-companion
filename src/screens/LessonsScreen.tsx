@@ -4,6 +4,7 @@ import { CURRICULUM, KIBO } from "@/data/curriculum";
 import { Check, Lock, ChevronLeft, RotateCcw } from "lucide-react";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
+import { COMING_SOON_MODULES } from "@/data/comingSoon";
 
 const LessonsScreen = () => {
   const { setScreen, setCurrentLesson, onResetProgress, progress } = useApp();
