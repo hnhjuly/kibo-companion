@@ -13,7 +13,8 @@ const MoreScreen = () => {
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="p-[18px] pb-[100px] flex flex-col gap-3.5">
           {/* About */}
-          <div className="bg-card rounded-[18px] p-[22px] text-center border-[1.5px] border-border">
+          <div className="rounded-[18px] p-[22px] text-center border-[1.5px] border-border/50"
+            style={{ background: "linear-gradient(160deg, #e8f8ff, #f0fdf4 50%, #fef9e7)" }}>
             <img src={kiboWave} alt="Kibo" className="w-32 h-32 object-contain mx-auto mb-3" />
             <div className="text-xl font-black text-foreground mb-1">KIBO</div>
             <p className="text-sm text-muted-foreground font-bold leading-relaxed mb-4">

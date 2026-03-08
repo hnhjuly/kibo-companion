@@ -42,7 +42,7 @@ const CompleteScreen = () => {
 
   return (
     <div className="flex flex-col flex-1 items-center justify-center p-10 text-center relative"
-      style={{ background: "linear-gradient(160deg, #f0fff4, #e8f4ff)" }}>
+      style={{ background: "linear-gradient(160deg, #e8f8ff, #f0fdf4 40%, #fef9e7 80%, #fff0f6)" }}>
       <img src={kiboImg} alt="Kibo" className="w-[160px] h-[160px] object-contain mb-4 drop-shadow-xl" />
       <h1 className="text-[32px] font-black text-foreground mb-1.5">{title}</h1>
       <p className="text-muted-foreground mb-7 text-[15px]">{subtitle}</p>
