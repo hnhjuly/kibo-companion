@@ -9,12 +9,12 @@ const slides = [
     desc: "Join thousands mastering AI for work, school and life — starting right now.",
   },
   {
-    img: KIBO.happy,
+    img: KIBO.celebrate,
     title: <>Practice <b className="text-kibo-green">real tasks</b>,<br />not just theory</>,
     desc: "Fix prompts. Summarize emails. Choose AI tools. Skills you'll use tomorrow.",
   },
   {
-    img: KIBO.neutral,
+    img: KIBO.thinking,
     title: <>Earn XP,<br /><b className="text-kibo-green">build streaks</b></>,
     desc: null,
     pills: ["🔥 Streaks", "⚡ XP & Levels", "💎 Badges", "🏆 Leaderboard"],
