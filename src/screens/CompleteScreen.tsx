@@ -35,8 +35,7 @@ const CompleteScreen = () => {
   return (
     <div className="flex flex-col flex-1 items-center justify-center p-10 text-center relative"
       style={{ background: "linear-gradient(160deg, #f0fff4, #e8f4ff)" }}>
-      <img src={KIBO.happy} alt="Kibo" className="w-[140px] h-[140px] object-contain mb-4 drop-shadow-xl"
-        style={{ animation: "bounce 0.5s ease infinite alternate" }} />
+      <img src={KIBO.happy} alt="Kibo" className="w-[140px] h-[140px] object-contain mb-4 drop-shadow-xl" />
       <h1 className="text-[32px] font-black text-foreground mb-1.5">Lesson Complete! 🎉</h1>
       <p className="text-muted-foreground mb-7 text-[15px]">Kibo is so proud of you!</p>
       <div className="bg-kibo-gold/15 border-2 border-kibo-gold rounded-[14px] px-6 py-3.5 text-xl font-black text-kibo-gold mb-6 inline-flex items-center gap-2">
