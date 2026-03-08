@@ -15,7 +15,7 @@ const MoreScreen = () => {
           <div className="bg-card rounded-[18px] p-[22px] text-center border-[1.5px] border-border">
             <img src={KIBO.wave} alt="Kibo" className="w-20 h-20 object-contain mx-auto mb-2.5" />
             <div className="text-xl font-black text-foreground">Your Name</div>
-            <div className="text-sm text-muted-foreground font-bold mb-4">Level 1 · AI Beginner</div>
+            <div className="text-sm text-muted-foreground font-bold mb-4">Level {progress.level} · AI {progress.level <= 1 ? "Beginner" : progress.level <= 3 ? "Learner" : "Expert"}</div>
             <div className="flex gap-2">
               {[
                 { val: "260", label: "Total XP" },
