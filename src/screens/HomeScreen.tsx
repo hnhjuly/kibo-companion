@@ -77,23 +77,27 @@ const HomeScreen = () => {
           <div>
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-[17px] font-black text-foreground flex items-center gap-2">🔥 Today's AI Training</h3>
-              <div className="flex gap-1.5">
-                {[0, 1, 2].map(i => <div key={i} className={`w-[7px] h-[7px] rounded-full ${i === 0 ? "bg-kibo-green" : "bg-border"}`} />)}
-              </div>
+              <span className="text-xs font-extrabold px-2.5 py-1 rounded-full" style={{ background: topic.color + "20", color: topic.color }}>{topic.icon} {topic.title}</span>
             </div>
             <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border">
-              {[
-                { icon: <Pencil className="w-5 h-5" />, bg: "bg-[#ffe8ea]", label: "1. Fix a bad prompt" },
-                { icon: <FileText className="w-5 h-5" />, bg: "bg-[#e0faf0]", label: "2. Summarize a long email" },
-                { icon: <Bot className="w-5 h-5" />, bg: "bg-[#ffe8d6]", label: "3. Choose the best AI tool" },
-              ].map((t, i) => (
-                <button key={i} onClick={startQuiz}
-                  className="w-full bg-background rounded-xl p-3.5 flex items-center gap-3.5 mb-2 last:mb-0 border-[1.5px] border-transparent hover:border-kibo-green hover:bg-kibo-green/5 hover:translate-x-0.5 transition-all text-left">
-                  <div className={`w-[38px] h-[38px] rounded-[11px] flex items-center justify-center shrink-0 ${t.bg}`}>{t.icon}</div>
-                  <span className="flex-1 text-[15px] font-bold text-foreground">{t.label}</span>
-                  <ChevronRight className="w-5 h-5 text-muted-foreground/50" />
-                </button>
-              ))}
+              {quizExercises.slice(0, 3).map((ex, i) => {
+                const typeLabels: Record<string, { icon: string; bg: string }> = {
+                  MULTIPLE_CHOICE: { icon: "✏️", bg: "bg-[#ffe8ea]" },
+                  IDENTIFY: { icon: "🔍", bg: "bg-[#e0faf0]" },
+                  SCENARIO: { icon: "💡", bg: "bg-[#ffe8d6]" },
+                };
+                const meta = typeLabels[ex.type] || { icon: "❓", bg: "bg-muted" };
+                return (
+                  <button key={ex.id} onClick={startDailyTraining}
+                    className="w-full bg-background rounded-xl p-3.5 flex items-center gap-3.5 mb-2 last:mb-0 border-[1.5px] border-transparent hover:border-kibo-green hover:bg-kibo-green/5 hover:translate-x-0.5 transition-all text-left">
+                    <div className={`w-[38px] h-[38px] rounded-[11px] flex items-center justify-center shrink-0 ${meta.bg} text-lg`}>{meta.icon}</div>
+                    <span className="flex-1 text-[15px] font-bold text-foreground">
+                      {i + 1}. {ex.question.length > 35 ? ex.question.slice(0, 32) + "..." : ex.question}
+                    </span>
+                    <ChevronRight className="w-5 h-5 text-muted-foreground/50" />
+                  </button>
+                );
+              })}
               <button onClick={() => setScreen("train")}
                 className="w-full py-3.5 bg-kibo-green text-primary-foreground rounded-xl font-black text-[15px] mt-3 kibo-shadow active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-2">
                 START TRAINING <ArrowRight className="w-4 h-4" />
