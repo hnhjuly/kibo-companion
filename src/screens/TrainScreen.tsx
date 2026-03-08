@@ -1,7 +1,7 @@
 import { useApp } from "@/context/AppContext";
 import { getTodaysTopic, getTodaysQuizExercises, exerciseToQuestion } from "@/data/dailyTraining";
 import { ArrowRight } from "lucide-react";
-import type { Lesson } from "@/data/curriculum";
+import { KIBO, type Lesson } from "@/data/curriculum";
 
 const TrainScreen = () => {
   const { setScreen, setCurrentLesson, progress } = useApp();
