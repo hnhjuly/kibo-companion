@@ -52,16 +52,23 @@ export function loadProgress(): UserProgress {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return defaultProgress();
-    const data = JSON.parse(raw) as UserProgress;
+    const parsed = JSON.parse(raw);
+    // Merge with defaults to handle missing fields gracefully
+    const data: UserProgress = { ...defaultProgress(), ...parsed };
+    // Ensure completedLessons is always a valid array (never lose lesson progress)
+    if (!Array.isArray(data.completedLessons)) {
+      data.completedLessons = [];
+    }
     // Validate streak on load
     const today = getToday();
     const yesterday = getYesterday();
     if (data.lastActiveDate !== today && data.lastActiveDate !== yesterday) {
-      // Streak broken (missed more than 1 day)
+      // Streak broken (missed more than 1 day) — only reset streak & daily tasks, NOT lessons
       data.streak = 0;
       data.dailyTasksDone = 0;
     }
     if (data.lastActiveDate !== today) {
+      // New day — only reset daily tasks counter
       data.dailyTasksDone = 0;
     }
     // Check heart regen
@@ -74,6 +81,18 @@ export function loadProgress(): UserProgress {
     }
     return data;
   } catch {
+    // If parsing fails, try to salvage completedLessons from raw data
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const partial = JSON.parse(raw);
+        const fresh = defaultProgress();
+        if (Array.isArray(partial.completedLessons)) {
+          fresh.completedLessons = partial.completedLessons;
+        }
+        return fresh;
+      }
+    } catch { /* truly corrupted */ }
     return defaultProgress();
   }
 }
