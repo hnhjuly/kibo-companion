@@ -36,6 +36,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [screen, setScreen] = useState<Screen>("onboarding");
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
   const [quizStats, setQuizStats] = useState({ correct: 0, total: 0, time: 0 });
+  const [readingModule, setReadingModule] = useState<string | null>(null);
   const [progress, setProgress] = useState<UserProgress>(loadProgress);
   const [heartsTimeRemaining, setHeartsTimeRemaining] = useState(0);
 
