@@ -32,6 +32,18 @@ const LessonsScreen = () => {
     return () => clearTimeout(t);
   }, []);
 
+  // Detect if user just came back from reading cards
+  useEffect(() => {
+    const moduleIds = ['m1','m2','m3','m4','m5','m6','m7'];
+    for (const mId of moduleIds) {
+      if (ReadingCardState.hasReadAll(mId) && ReadingCardState.wasJustCompleted(mId)) {
+        setJustReadModule(mId);
+        ReadingCardState.clearJustCompleted(mId);
+        break;
+      }
+    }
+  }, []);
+
   let foundActive = false;
   const lessonStates = new Map<string, "done" | "active" | "locked">();
   for (const lesson of allLessons) {
