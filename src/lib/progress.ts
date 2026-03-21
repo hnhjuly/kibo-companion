@@ -59,18 +59,38 @@ export function loadProgress(): UserProgress {
     if (!Array.isArray(data.completedLessons)) {
       data.completedLessons = [];
     }
-    // Validate streak on load
+    // --- STREAK VALIDATION ON LOAD ---
     const today = getToday();
     const yesterday = getYesterday();
-    if (data.lastActiveDate !== today && data.lastActiveDate !== yesterday) {
-      // Streak broken (missed more than 1 day) — only reset streak & daily tasks, NOT lessons
-      data.streak = 0;
+
+    if (data.lastActiveDate === today) {
+      // Active today — nothing to do
+    } else if (data.lastActiveDate === yesterday) {
+      // Was active yesterday — streak still alive, just reset daily tasks
       data.dailyTasksDone = 0;
-    }
-    if (data.lastActiveDate !== today) {
-      // New day — only reset daily tasks counter
+    } else if (data.lastActiveDate === '') {
+      // Brand new user — do not touch streak, it starts at 0
       data.dailyTasksDone = 0;
+    } else {
+      // Missed at least 2 days
+      const last = new Date(data.lastActiveDate);
+      const now = new Date(today);
+      const diffMs = now.getTime() - last.getTime();
+      const daysSince = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+      if (daysSince === 2 && (data.freezesAvailable ?? 0) > 0) {
+        // Missed exactly 1 day AND has a freeze — use it
+        data.freezesAvailable = data.freezesAvailable - 1;
+        data.lastActiveDate = today;
+        data.dailyTasksDone = 0;
+        // streak stays intact
+      } else {
+        // Missed 2+ days or no freeze — reset
+        data.streak = 0;
+        data.dailyTasksDone = 0;
+      }
     }
+    // --- END STREAK VALIDATION ---
     // Check heart regen
     if (data.heartsDepletedAt) {
       const elapsed = Date.now() - data.heartsDepletedAt;
@@ -122,9 +142,10 @@ export function markActive(progress: UserProgress): UserProgress {
   const yesterday = getYesterday();
   if (progress.lastActiveDate === today) return progress;
   const updated = { ...progress, lastActiveDate: today };
-  if (progress.lastActiveDate === yesterday || progress.lastActiveDate === "") {
+  if (progress.lastActiveDate === yesterday) {
     updated.streak = progress.streak + 1;
-  } else {
+  } else if (progress.lastActiveDate === "") {
+    // First ever activity — start streak at 1
     updated.streak = 1;
   }
   return updated;

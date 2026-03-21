@@ -339,11 +339,13 @@ function saveReadState(set: Set<string>) {
 
 export const ReadingCardState = {
   _read: loadReadState(),
+  _justCompleted: new Set<string>(),
 
   markAllRead(moduleId: string) {
     const mod = READING_CARDS[moduleId];
     if (!mod) return;
     mod.cards.forEach((c) => this._read.add(c.id));
+    this._justCompleted.add(moduleId);
     saveReadState(this._read);
   },
 
@@ -353,8 +355,17 @@ export const ReadingCardState = {
     return mod.cards.every((c) => this._read.has(c.id));
   },
 
+  wasJustCompleted(moduleId: string): boolean {
+    return this._justCompleted.has(moduleId);
+  },
+
+  clearJustCompleted(moduleId: string) {
+    this._justCompleted.delete(moduleId);
+  },
+
   reset() {
     this._read.clear();
+    this._justCompleted.clear();
     localStorage.removeItem(READING_STATE_KEY);
   },
 };
