@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
 import { COMING_SOON_MODULES } from "@/data/comingSoon";
+import { ReadingCardState, READING_CARDS, MODULE_COLORS } from "@/data/readingCards";
 
 const ZIGZAG_OFFSETS = [0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0];
 
