@@ -89,6 +89,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const onResetProgress = useCallback(() => {
     const fresh = resetProgress();
     setProgress(fresh);
+    ReadingCardState.reset();
     setScreen("home");
   }, []);
 
