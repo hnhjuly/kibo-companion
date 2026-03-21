@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useApp } from "@/context/AppContext";
 import { CURRICULUM, KIBO } from "@/data/curriculum";
-import { Check, Lock, ChevronLeft, RotateCcw, Sparkles, Star } from "lucide-react";
+import { Check, Lock, ChevronLeft, RotateCcw, Sparkles, Star, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
@@ -13,6 +13,7 @@ const ZIGZAG_OFFSETS = [0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0];
 const LessonsScreen = () => {
   const { setScreen, setCurrentLesson, onResetProgress, progress, setReadingModule } = useApp();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [justReadModule, setJustReadModule] = useState<string | null>(null);
   const activeRef = useRef<HTMLButtonElement>(null);
 
   const allLessons = CURRICULUM.levels.flatMap(lv => lv.lessons);
