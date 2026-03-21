@@ -142,9 +142,10 @@ export function markActive(progress: UserProgress): UserProgress {
   const yesterday = getYesterday();
   if (progress.lastActiveDate === today) return progress;
   const updated = { ...progress, lastActiveDate: today };
-  if (progress.lastActiveDate === yesterday || progress.lastActiveDate === "") {
+  if (progress.lastActiveDate === yesterday) {
     updated.streak = progress.streak + 1;
-  } else {
+  } else if (progress.lastActiveDate === "") {
+    // First ever activity — start streak at 1
     updated.streak = 1;
   }
   return updated;
