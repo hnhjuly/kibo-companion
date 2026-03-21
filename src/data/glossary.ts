@@ -183,7 +183,7 @@ export const GLOSSARY: GlossaryTerm[] = [
   { term: "Max Tokens", definition: "A setting that limits how long an AI's response can be. Useful for keeping answers concise or managing costs." },
   { term: "Meeting Summary", definition: "An AI-generated recap of a meeting including key points, decisions made, and action items. Saves time compared to manual note-taking." },
   { term: "Memory", definition: "A feature that allows an AI to remember information about you across different conversations, personalising future interactions." },
-  { term: "Midjourney", definition: "An AI image generation tool accessed via Discord or the Midjourney web app. Known for producing highly artistic and visually stunning images from text prompts." },
+  { term: "Nano Banana", definition: "Google's AI image generation model built into Gemini. Powered by Gemini 2.5 Flash, it generates and edits images from text prompts for free. Known for speed, character consistency, and being accessible without any special subscription." },
   { term: "Misinformation", definition: "False or inaccurate information. AI can both help detect misinformation and, through deepfakes and generated content, help spread it." },
   { term: "Mistral", definition: "A family of efficient, open-weight language models from Mistral AI, a French AI startup. Popular for being lightweight and capable enough to run on local devices." },
   { term: "Model", definition: "A trained AI system that has learned patterns from data and can now make predictions or generate outputs based on new inputs." },
