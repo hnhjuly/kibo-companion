@@ -36,7 +36,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Will there be more content added to Kibo?",
-    a: "Yes! The current version covers AI Fundamentals across 7 core modules. Coming soon are tool-specific learning paths for Claude, ChatGPT, Midjourney, Gemini, and more. Finish all current modules and you will see a preview of what is coming next. Tap \"Notify Me\" on any upcoming module to be first to know when it drops.",
+    a: "Yes! The current version covers AI Fundamentals across 7 core modules. Coming soon are tool-specific learning paths for Claude, ChatGPT, Nano Banana, Gemini, and more. Finish all current modules and you will see a preview of what is coming next. Tap \"Notify Me\" on any upcoming module to be first to know when it drops.",
   },
 ];
 

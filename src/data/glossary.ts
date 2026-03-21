@@ -269,7 +269,7 @@ export const GLOSSARY: GlossaryTerm[] = [
   { term: "System Prompt", definition: "Instructions given to an AI at the start of a conversation to set its behaviour, tone, or role. Users usually do not see this. It works behind the scenes." },
   { term: "Task Decomposition", definition: "Breaking a large, complex task into smaller subtasks that an AI agent can tackle one at a time, making big goals more manageable." },
   { term: "Temperature", definition: "A setting that controls how creative or random an AI's responses are. Low temperature means predictable and focused. High temperature means more varied and creative." },
-  { term: "Text-to-Image", definition: "AI that generates images from written descriptions. You describe what you want and the AI creates it. Midjourney and DALL-E 3 are leading examples." },
+  { term: "Text-to-Image", definition: "AI that generates images from written descriptions. You describe what you want and the AI creates it. Nano Banana (Google) and DALL-E (OpenAI) are leading examples." },
   { term: "Text-to-Music", definition: "AI that generates original music or audio from text descriptions. Tools like Suno and Udio can create full songs complete with vocals and instruments from a short prompt." },
   { term: "Text-to-Speech (TTS)", definition: "AI that converts written text into spoken audio. Used in audiobooks, accessibility tools, and voice agents." },
   { term: "Text-to-Video", definition: "AI that generates video clips from written prompts. A fast-moving field with tools like Sora, Runway, Kling, and Pika all offering different capabilities." },

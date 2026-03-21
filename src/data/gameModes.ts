@@ -70,7 +70,7 @@ export const SPEED_ROUND_QUESTIONS: SpeedRoundQuestion[] = [
   { id: 'sp-003', question: 'Which company created ChatGPT?', options: ['Google', 'Anthropic', 'Meta', 'OpenAI'], correct: 3, difficulty: 1 },
   { id: 'sp-004', question: 'When AI makes up false information confidently, it is called a...?', options: ['Bug', 'Hallucination', 'Glitch', 'Bias'], correct: 1, difficulty: 1 },
   { id: 'sp-005', question: 'Claude is an AI assistant made by which company?', options: ['OpenAI', 'Google', 'Anthropic', 'Meta'], correct: 2, difficulty: 1 },
-  { id: 'sp-006', question: 'Midjourney and DALL-E are examples of what type of AI?', options: ['Language AI', 'Voice AI', 'Image AI', 'Video AI'], correct: 2, difficulty: 1 },
+  { id: 'sp-006', question: 'Nano Banana and DALL-E are examples of what type of AI?', options: ['Language AI', 'Voice AI', 'Image AI', 'Video AI'], correct: 2, difficulty: 1 },
   { id: 'sp-007', question: 'Which AI model can transcribe speech to text accurately?', options: ['Sora', 'Whisper', 'ARIA', 'Echo'], correct: 1, difficulty: 1 },
   { id: 'sp-008', question: 'What is a deepfake?', options: ['A type of chatbot', 'Fake AI-generated video of a real person', 'A hacking technique', 'A training method'], correct: 1, difficulty: 1 },
   { id: 'sp-009', question: 'An AI that handles text, images, and audio together is called...?', options: ['Generative', 'Multimodal', 'Open-source', 'Adaptive'], correct: 1, difficulty: 1 },
