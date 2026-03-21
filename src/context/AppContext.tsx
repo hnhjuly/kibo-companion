@@ -20,6 +20,8 @@ interface AppState {
   onSetGoal: (goal: UserGoal) => void;
   heartsTimeRemaining: number;
   canPlay: boolean;
+  readingModule: string | null;
+  setReadingModule: (m: string | null) => void;
 }
 
 const AppContext = createContext<AppState | null>(null);
