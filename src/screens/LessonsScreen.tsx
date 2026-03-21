@@ -135,7 +135,17 @@ const LessonsScreen = () => {
                         <button
                           ref={isActive ? activeRef : undefined}
                           disabled={isLocked || lesson.questions.length === 0}
-                          onClick={() => { setCurrentLesson(lesson); setScreen("quiz"); }}
+                          onClick={() => {
+                            // Check if reading cards need to be shown for this lesson's module
+                            const moduleId = `m${lvIdx + 1}`;
+                            if (READING_CARDS[moduleId] && !ReadingCardState.hasReadAll(moduleId)) {
+                              setReadingModule(moduleId);
+                              setScreen("reading-cards" as any);
+                              return;
+                            }
+                            setCurrentLesson(lesson);
+                            setScreen("quiz");
+                          }}
                           className={`relative w-full max-w-[320px] rounded-2xl p-4 flex items-center gap-3.5 transition-all text-left
                             ${isDone
                               ? "bg-card border-[2px] border-kibo-green/30 shadow-sm"

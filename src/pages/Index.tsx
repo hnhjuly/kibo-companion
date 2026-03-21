@@ -39,6 +39,7 @@ const screens: Record<string, React.FC> = {
   "flashcards": FlashcardScreen,
   "speed-round": SpeedRoundScreen,
   "match-pairs": MatchPairsScreen,
+  "reading-cards": ReadingCardsScreen,
 };
 
 const AppContent = () => {
