@@ -75,6 +75,39 @@ const LessonsScreen = () => {
 
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="p-[18px] pb-[100px] flex flex-col gap-5">
+          {/* Ready to train banner */}
+          <AnimatePresence>
+            {justReadModule && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="rounded-2xl p-4 border-[1.5px] flex items-center gap-3"
+                style={{ background: 'hsl(135 60% 96%)', borderColor: 'hsla(135, 60%, 40%, 0.25)' }}
+              >
+                <PreloadedImg
+                  src={KIBO.celebrate}
+                  alt="Kibo"
+                  className="w-12 h-12 object-contain shrink-0"
+                />
+                <div className="flex-1">
+                  <div className="text-[14px] font-black text-foreground">
+                    Reading done! Ready to train?
+                  </div>
+                  <div className="text-[12px] text-muted-foreground font-semibold mt-0.5">
+                    Tap your first lesson below to test your knowledge.
+                  </div>
+                </div>
+                <button
+                  onClick={() => setJustReadModule(null)}
+                  className="text-muted-foreground p-1"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Kibo studying header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
