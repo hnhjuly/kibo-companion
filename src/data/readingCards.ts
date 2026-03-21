@@ -147,7 +147,7 @@ export const READING_CARDS: Record<string, ModuleReadingCards> = {
         emoji: "🖼️",
         body: [
           "Chat AI tools like ChatGPT, Claude, and Gemini are built to understand and generate text. You type something, they type back. They can write, summarise, answer questions, and help you think through problems.",
-          "Image AI tools like Midjourney, DALL-E, and Stable Diffusion are built to generate pictures from text descriptions. You describe what you want to see, and the AI creates it.",
+          "Image AI tools like Nano Banana (built into Google Gemini), DALL-E (from OpenAI), and Adobe Firefly are built to generate pictures from text descriptions. You describe what you want to see, and the AI creates it.",
           "These are separate types of AI with different training data and different purposes. Some newer tools combine both, letting you send an image and ask questions about it.",
         ],
         tip: null,
