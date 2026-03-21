@@ -106,7 +106,7 @@ export const GLOSSARY: GlossaryTerm[] = [
   { term: "Deepfake", definition: "AI-generated video or audio that realistically depicts someone saying or doing something they never actually did. Raises serious concerns about misinformation." },
   { term: "Default Behaviour", definition: "How an AI responds without any special instructions, its baseline tone, format, and approach." },
   { term: "Descript", definition: "An AI-powered audio and video editor that lets you edit recordings by editing the text transcript, like editing a document. Great for podcasters and video creators." },
-  { term: "Diffusion Model", definition: "The type of AI model behind most modern image generators including Midjourney and Stable Diffusion. It works by gradually removing noise from a random image until a clear picture emerges." },
+  { term: "Diffusion Model", definition: "The type of AI model behind many image generators including Stable Diffusion and DALL-E. It works by gradually removing noise from a random image until a clear picture emerges." },
   { term: "Digital Literacy", definition: "A broader skill set that includes understanding how digital technology works and how to use it critically, safely, and productively in daily life." },
   { term: "Digital Twin", definition: "A virtual replica of a real-world object, system, or process, powered by AI and real-time data. Used in manufacturing, healthcare, and urban planning." },
   { term: "Disinformation", definition: "Deliberately false information created and spread with the intent to deceive. AI tools lower the cost and effort of producing it at scale." },
