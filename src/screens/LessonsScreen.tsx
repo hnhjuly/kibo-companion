@@ -11,7 +11,7 @@ import { ReadingCardState, READING_CARDS, MODULE_COLORS } from "@/data/readingCa
 const ZIGZAG_OFFSETS = [0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0];
 
 const LessonsScreen = () => {
-  const { setScreen, setCurrentLesson, onResetProgress, progress } = useApp();
+  const { setScreen, setCurrentLesson, onResetProgress, progress, setReadingModule } = useApp();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const activeRef = useRef<HTMLButtonElement>(null);
 
