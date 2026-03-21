@@ -137,7 +137,7 @@ export const GLOSSARY: GlossaryTerm[] = [
   { term: "Gamma", definition: "An AI-powered presentation and document builder. Creates polished slides and pages from a simple text prompt, outline, or pasted content within seconds." },
   { term: "GDPR (General Data Protection Regulation)", definition: "A European Union law governing how personal data must be collected and used. Sets strict requirements for AI companies operating in or affecting EU citizens." },
   { term: "Gemini", definition: "Google's family of multimodal AI models. Available in Nano, Pro, and Ultra tiers and integrated into Google products like Search, Docs, and Gmail." },
-  { term: "Generative AI", definition: "AI that can create new content including text, images, music, video, or code, rather than just analysing existing content. ChatGPT and Midjourney are examples." },
+  { term: "Generative AI", definition: "AI that can create new content including text, images, music, video, or code, rather than just analysing existing content. ChatGPT, Nano Banana, and Suno are examples." },
   { term: "Generative Art", definition: "Art created with the help of AI tools, where the AI generates visual outputs based on artist-defined prompts or parameters." },
   { term: "GitHub Copilot", definition: "An AI coding assistant by GitHub and Microsoft that suggests code completions and entire functions as you type. Powered by OpenAI Codex and GPT-4o." },
   { term: "GPU (Graphics Processing Unit)", definition: "A specialised computer chip originally built for rendering graphics, now essential for training AI models due to its ability to handle many calculations simultaneously." },
