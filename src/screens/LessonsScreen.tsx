@@ -96,6 +96,11 @@ const LessonsScreen = () => {
                     LEVEL {lv.id}
                   </div>
                   <span className="text-[15px] font-black text-foreground flex-1">{lv.title}</span>
+                  {!ReadingCardState.hasReadAll(`m${lv.id}`) && READING_CARDS[`m${lv.id}`] && (
+                    <span className="text-[11px] font-bold rounded-full px-2 py-0.5 mr-1" style={{ background: "#f0f4ff", color: "#6b7280" }}>
+                      Read first
+                    </span>
+                  )}
                   <span className="text-[11px] font-bold text-muted-foreground">{lvCompleted}/{lvLessons.length}</span>
                 </div>
 
