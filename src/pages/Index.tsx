@@ -17,6 +17,7 @@ import DailyChallengeScreen from "@/screens/DailyChallengeScreen";
 import FlashcardScreen from "@/screens/FlashcardScreen";
 import SpeedRoundScreen from "@/screens/SpeedRoundScreen";
 import MatchPairsScreen from "@/screens/MatchPairsScreen";
+import ReadingCardsScreen from "@/screens/ReadingCardsScreen";
 import BottomNav from "@/components/BottomNav";
 import DesktopSidebar from "@/components/DesktopSidebar";
 
@@ -38,6 +39,7 @@ const screens: Record<string, React.FC> = {
   "flashcards": FlashcardScreen,
   "speed-round": SpeedRoundScreen,
   "match-pairs": MatchPairsScreen,
+  "reading-cards": ReadingCardsScreen,
 };
 
 const AppContent = () => {

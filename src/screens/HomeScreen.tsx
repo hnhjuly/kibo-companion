@@ -6,6 +6,7 @@ import { COMING_SOON_MODULES } from "@/data/comingSoon";
 import { getXPForLevel } from "@/lib/progress";
 import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import type { Lesson } from "@/data/curriculum";
+import { ReadingCardState } from "@/data/readingCards";
 import kiboBg from "@/assets/kibo-bg.png";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
@@ -189,9 +190,16 @@ const HomeScreen = () => {
             <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-[13px] font-black text-foreground">LEVEL 1: <span className="text-kibo-green">AI BASICS</span></span>
-                <button onClick={() => setScreen("lessons")} className="text-[13px] font-extrabold text-kibo-green">
-                  {progress.completedLessons.length}/{CURRICULUM.levels.flatMap(l => l.lessons).length} ›
-                </button>
+                <div className="flex items-center gap-2">
+                  {!ReadingCardState.hasReadAll("m1") && (
+                    <span className="text-[11px] font-bold rounded-full px-2 py-0.5" style={{ background: "#f0f4ff", color: "#6b7280" }}>
+                      Read first
+                    </span>
+                  )}
+                  <button onClick={() => setScreen("lessons")} className="text-[13px] font-extrabold text-kibo-green">
+                    {progress.completedLessons.length}/{CURRICULUM.levels.flatMap(l => l.lessons).length} ›
+                  </button>
+                </div>
               </div>
               {(() => {
                 const allLessons = CURRICULUM.levels[0].lessons;

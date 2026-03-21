@@ -1,8 +1,9 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 import { Lesson } from "@/data/curriculum";
+import { ReadingCardState } from "@/data/readingCards";
 import { UserProgress, UserGoal, loadProgress, saveProgress, resetProgress, loseHeart, restoreHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX } from "@/lib/progress";
 
-type Screen = "onboarding" | "home" | "lessons" | "glossary" | "quiz" | "complete" | "train" | "achievements" | "more" | "hearts-depleted" | "feedback" | "all-complete" | "help-faq" | "daily-challenge" | "flashcards" | "speed-round" | "match-pairs";
+type Screen = "onboarding" | "home" | "lessons" | "glossary" | "quiz" | "complete" | "train" | "achievements" | "more" | "hearts-depleted" | "feedback" | "all-complete" | "help-faq" | "daily-challenge" | "flashcards" | "speed-round" | "match-pairs" | "reading-cards";
 
 interface AppState {
   screen: Screen;
@@ -20,6 +21,8 @@ interface AppState {
   onSetGoal: (goal: UserGoal) => void;
   heartsTimeRemaining: number;
   canPlay: boolean;
+  readingModule: string | null;
+  setReadingModule: (m: string | null) => void;
 }
 
 const AppContext = createContext<AppState | null>(null);
@@ -34,6 +37,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [screen, setScreen] = useState<Screen>("onboarding");
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
   const [quizStats, setQuizStats] = useState({ correct: 0, total: 0, time: 0 });
+  const [readingModule, setReadingModule] = useState<string | null>(null);
   const [progress, setProgress] = useState<UserProgress>(loadProgress);
   const [heartsTimeRemaining, setHeartsTimeRemaining] = useState(0);
 
@@ -85,6 +89,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const onResetProgress = useCallback(() => {
     const fresh = resetProgress();
     setProgress(fresh);
+    ReadingCardState.reset();
     setScreen("home");
   }, []);
 
@@ -112,7 +117,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     <AppContext.Provider value={{
       screen, setScreen: safeSetScreen, currentLesson, setCurrentLesson,
       quizStats, setQuizStats, progress, onLoseHeart, onCompleteLesson,
-      onUseFreeze, onResetProgress, onRestoreHeart, onSetGoal, heartsTimeRemaining, canPlay
+      onUseFreeze, onResetProgress, onRestoreHeart, onSetGoal, heartsTimeRemaining, canPlay,
+      readingModule, setReadingModule
     }}>
       {children}
     </AppContext.Provider>

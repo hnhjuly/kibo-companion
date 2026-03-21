@@ -6,11 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
 import { COMING_SOON_MODULES } from "@/data/comingSoon";
+import { ReadingCardState, READING_CARDS, MODULE_COLORS } from "@/data/readingCards";
 
 const ZIGZAG_OFFSETS = [0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0];
 
 const LessonsScreen = () => {
-  const { setScreen, setCurrentLesson, onResetProgress, progress } = useApp();
+  const { setScreen, setCurrentLesson, onResetProgress, progress, setReadingModule } = useApp();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const activeRef = useRef<HTMLButtonElement>(null);
 
@@ -95,6 +96,11 @@ const LessonsScreen = () => {
                     LEVEL {lv.id}
                   </div>
                   <span className="text-[15px] font-black text-foreground flex-1">{lv.title}</span>
+                  {!ReadingCardState.hasReadAll(`m${lv.id}`) && READING_CARDS[`m${lv.id}`] && (
+                    <span className="text-[11px] font-bold rounded-full px-2 py-0.5 mr-1" style={{ background: "#f0f4ff", color: "#6b7280" }}>
+                      Read first
+                    </span>
+                  )}
                   <span className="text-[11px] font-bold text-muted-foreground">{lvCompleted}/{lvLessons.length}</span>
                 </div>
 
@@ -134,7 +140,17 @@ const LessonsScreen = () => {
                         <button
                           ref={isActive ? activeRef : undefined}
                           disabled={isLocked || lesson.questions.length === 0}
-                          onClick={() => { setCurrentLesson(lesson); setScreen("quiz"); }}
+                          onClick={() => {
+                            // Check if reading cards need to be shown for this lesson's module
+                            const moduleId = `m${lvIdx + 1}`;
+                            if (READING_CARDS[moduleId] && !ReadingCardState.hasReadAll(moduleId)) {
+                              setReadingModule(moduleId);
+                              setScreen("reading-cards" as any);
+                              return;
+                            }
+                            setCurrentLesson(lesson);
+                            setScreen("quiz");
+                          }}
                           className={`relative w-full max-w-[320px] rounded-2xl p-4 flex items-center gap-3.5 transition-all text-left
                             ${isDone
                               ? "bg-card border-[2px] border-kibo-green/30 shadow-sm"
