@@ -6,9 +6,9 @@ import PreloadedImg from "@/components/PreloadedImg";
 type Tab = "home" | "train" | "lessons" | "glossary" | "achievements" | "more";
 
 const tabs: { id: Tab; icon: typeof Home; label: string }[] = [
+  { id: "lessons", icon: BookOpen, label: "Courses" },
   { id: "home", icon: Home, label: "Learn" },
   { id: "train", icon: Flame, label: "Train" },
-  { id: "lessons", icon: BookOpen, label: "Lessons" },
   { id: "glossary", icon: Search, label: "Glossary" },
   { id: "achievements", icon: Award, label: "Badges" },
   { id: "more", icon: MoreHorizontal, label: "More" },
