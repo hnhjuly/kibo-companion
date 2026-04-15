@@ -67,7 +67,7 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
         setShowLoginSuccess(true);
         setTimeout(() => {
           setShowLoginSuccess(false);
-          setScreen("dashboard");
+          setScreen("home");
         }, 2000);
       }
     });
@@ -169,10 +169,11 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
       setScreen("hearts-depleted");
       return;
     }
-    if (s === "dashboard" && !user) {
-      setShowAuth(true);
-      return;
-    }
+    // Dashboard hidden for now
+    // if (s === "dashboard" && !user) {
+    //   setShowAuth(true);
+    //   return;
+    // }
     if (s === "home") {
       setProgress(p => markActive(p));
     }
