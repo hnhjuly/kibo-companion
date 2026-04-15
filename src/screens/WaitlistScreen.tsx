@@ -123,15 +123,17 @@ const WaitlistScreen = () => {
           style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
           onClick={(e) => { if (e.target === e.currentTarget) setPetOpen(false); }}
         >
-          <div className="relative animate-scale-in" style={{ transform: "scale(1.1)" }}>
-            {/* Close button positioned on the tamagotchi ear */}
+          <div className="relative animate-scale-in max-h-[90vh] overflow-visible flex items-center justify-center">
+            {/* Close button */}
             <button
               onClick={() => setPetOpen(false)}
               className="absolute -top-2 -right-2 z-[60] w-8 h-8 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-[14px] font-black text-muted-foreground hover:bg-white transition-colors"
             >
               ✕
             </button>
-            <KiboPet embedded />
+            <div style={{ transform: "scale(0.95)" }}>
+              <KiboPet embedded />
+            </div>
           </div>
         </div>
       )}
