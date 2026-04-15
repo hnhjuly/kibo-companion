@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { useUser } from "@clerk/clerk-react";
+import { User } from "lucide-react";
 import { KIBO } from "@/data/curriculum";
 import { UserGoal } from "@/lib/progress";
 
