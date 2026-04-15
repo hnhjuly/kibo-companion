@@ -88,14 +88,15 @@ const GlobalAuthButton = () => {
 
 const AppContent = () => {
   const { screen, showAuth, setShowAuth } = useApp();
-  const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete"].includes(screen);
+  const showNav = screen !== "waitlist" && ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete"].includes(screen);
   const Screen = screens[screen];
+  const isWaitlist = screen === "waitlist";
 
   return (
     <div className="w-full h-dvh flex bg-background overflow-hidden">
       {showNav && <DesktopSidebar />}
       <div className="flex-1 flex flex-col relative overflow-hidden max-w-3xl mx-auto w-full">
-        <GlobalAuthButton />
+        {!isWaitlist && <GlobalAuthButton />}
         <AnimatePresence mode="wait">
           <motion.div
             key={screen}
