@@ -2,6 +2,8 @@ import { createContext, useContext, useState, useEffect, useCallback, ReactNode 
 import { Lesson } from "@/data/curriculum";
 import { ReadingCardState } from "@/data/readingCards";
 import { UserProgress, UserGoal, loadProgress, saveProgress, resetProgress, loseHeart, restoreHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX } from "@/lib/progress";
+import { supabase } from "@/integrations/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 type Screen = "waitlist" | "onboarding" | "home" | "lessons" | "glossary" | "quiz" | "complete" | "train" | "achievements" | "more" | "hearts-depleted" | "feedback" | "all-complete" | "help-faq" | "daily-challenge" | "flashcards" | "speed-round" | "match-pairs" | "reading-cards" | "dashboard";
 
@@ -25,6 +27,7 @@ interface AppState {
   setReadingModule: (m: string | null) => void;
   showAuth: boolean;
   setShowAuth: (v: boolean) => void;
+  user: User | null;
 }
 
 const AppContext = createContext<AppState | null>(null);
@@ -43,7 +46,19 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
   const [quizStats, setQuizStats] = useState({ correct: 0, total: 0, time: 0 });
   const [readingModule, setReadingModule] = useState<string | null>(null);
   const [showAuth, setShowAuth] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const [progress, setProgress] = useState<UserProgress>(loadProgress);
+
+  // Track auth state
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
   const [heartsTimeRemaining, setHeartsTimeRemaining] = useState(0);
 
   // Save progress on change
@@ -105,18 +120,22 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
       setScreen("hearts-depleted");
       return;
     }
+    if (s === "dashboard" && !user) {
+      setShowAuth(true);
+      return;
+    }
     if (s === "home") {
       setProgress(p => markActive(p));
     }
     setScreen(s);
-  }, [canPlay]);
+  }, [canPlay, user]);
 
   return (
     <AppContext.Provider value={{
       screen, setScreen: safeSetScreen, currentLesson, setCurrentLesson,
       quizStats, setQuizStats, progress, onLoseHeart, onCompleteLesson,
       onUseFreeze, onResetProgress, onRestoreHeart, onSetGoal, heartsTimeRemaining, canPlay,
-      readingModule, setReadingModule, showAuth, setShowAuth
+      readingModule, setReadingModule, showAuth, setShowAuth, user
     }}>
       {children}
     </AppContext.Provider>

@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { User, LogOut } from "lucide-react";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { supabase } from "@/integrations/supabase/client";
-import type { User as SupaUser } from "@supabase/supabase-js";
 import HomeScreen from "@/screens/HomeScreen";
 import LessonsScreen from "@/screens/LessonsScreen";
 import GlossaryScreen from "@/screens/GlossaryScreen";
@@ -49,18 +48,7 @@ const screens: Record<string, React.FC> = {
 };
 
 const GlobalAuthButton = () => {
-  const { setShowAuth } = useApp();
-  const [user, setUser] = useState<SupaUser | null>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-    return () => subscription.unsubscribe();
-  }, []);
+  const { setShowAuth, user } = useApp();
 
   const handleSignOut = async () => { await supabase.auth.signOut(); };
 
