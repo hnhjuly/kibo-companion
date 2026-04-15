@@ -2,6 +2,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import NotoEmoji from "@/components/NotoEmoji";
 import kiboHappy from "@/assets/kibo-happy.png";
+
+interface LoginSuccessOverlayProps {
   visible: boolean;
 }
 
