@@ -2,10 +2,18 @@ const STORAGE_KEY = "kibo_progress";
 
 export type UserGoal = "work" | "study" | "build" | "curious" | null;
 
+export interface ActivityEntry {
+  text: string;
+  xp: number;
+  time: string; // ISO timestamp
+  type: "lesson" | "game" | "badge" | "streak" | "daily";
+}
+
 export interface UserProgress {
   xp: number;
   level: number;
   streak: number;
+  bestStreak: number;
   lastActiveDate: string; // YYYY-MM-DD
   hearts: number;
   heartsDepletedAt: number | null; // timestamp when hearts hit 0
@@ -15,6 +23,17 @@ export interface UserProgress {
   dailyTasksDone: number;
   freezesAvailable: number;
   goal: UserGoal;
+  // History tracking for real dashboard
+  dailyXP: Record<string, number>; // { "2026-04-15": 80 }
+  activeDates: string[]; // ["2026-04-14", "2026-04-15"]
+  activityLog: ActivityEntry[];
+  lessonAccuracy: Record<string, { correct: number; total: number }>; // per lessonId
+  gameScores: {
+    speed: { date: string; score: number }[];
+    flash: { date: string; score: number }[];
+    daily: { date: string; score: number }[];
+    pairs: { date: string; score: number }[];
+  };
 }
 
 const HEARTS_MAX = 6;
