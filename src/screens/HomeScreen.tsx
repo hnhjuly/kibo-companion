@@ -12,7 +12,7 @@ import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { GlobalAuthButton } from "@/pages/AppPage";
+
 
 const HomeScreen = () => {
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
