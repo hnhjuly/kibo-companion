@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
-import { ChevronRight, ArrowRight, Check, Lock, X } from "lucide-react";
+import { ChevronRight, ArrowRight, Check, Lock, X, User } from "lucide-react";
 import { COMING_SOON_MODULES } from "@/data/comingSoon";
 import { getXPForLevel } from "@/lib/progress";
 import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
@@ -12,8 +12,10 @@ import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { useUser, UserButton } from "@clerk/clerk-react";
 
 const HomeScreen = () => {
+  const { isSignedIn } = useUser();
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
   const [notified, setNotified] = useState<Set<string>>(() => {
     try {
@@ -86,7 +88,17 @@ const HomeScreen = () => {
           <div className="text-[18px] font-black text-foreground leading-tight mr-auto">
             {goalGreeting ? goalGreeting : <>Hello! <NotoEmoji name="wave" size={20} /></>}
           </div>
-          <div className="flex gap-1.5 shrink-0">
+          <div className="flex gap-1.5 shrink-0 items-center">
+            {isSignedIn ? (
+              <UserButton afterSignOutUrl="/" />
+            ) : (
+              <button
+                onClick={() => setScreen("auth")}
+                className="flex items-center gap-1 bg-primary text-primary-foreground rounded-full px-3 py-1.5 text-[13px] font-extrabold"
+              >
+                <User className="w-3.5 h-3.5" /> Sign in
+              </button>
+            )}
             <div className="flex items-center gap-1.5 bg-background rounded-full px-3 py-1.5 text-[13px] font-extrabold text-kibo-orange">
               <NotoEmoji name="fire" size={15} /> {progress.streak}
             </div>
