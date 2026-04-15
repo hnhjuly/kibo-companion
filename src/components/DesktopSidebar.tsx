@@ -5,8 +5,8 @@ import PreloadedImg from "@/components/PreloadedImg";
 
 type Tab = "home" | "train" | "lessons" | "glossary" | "achievements" | "more" | "dashboard";
 
-const tabs: { id: Tab; icon: typeof Home; label: string }[] = [
-  { id: "dashboard", icon: LayoutDashboard, label: "Dashboard" },
+const baseTabs: { id: Tab; icon: typeof Home; label: string; authOnly?: boolean }[] = [
+  { id: "dashboard", icon: LayoutDashboard, label: "Dashboard", authOnly: true },
   { id: "lessons", icon: BookOpen, label: "Courses" },
   { id: "home", icon: Home, label: "Learn" },
   { id: "train", icon: Flame, label: "Train" },
@@ -16,7 +16,8 @@ const tabs: { id: Tab; icon: typeof Home; label: string }[] = [
 ];
 
 const DesktopSidebar = () => {
-  const { screen, setScreen } = useApp();
+  const { screen, setScreen, user } = useApp();
+  const tabs = baseTabs.filter(t => !t.authOnly || user);
 
   return (
     <aside className="hidden md:flex flex-col w-[240px] bg-card border-r border-border shrink-0 h-full">
