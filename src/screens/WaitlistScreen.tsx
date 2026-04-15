@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import heroImg from "@/assets/waitlist-hero.png";
@@ -55,7 +55,13 @@ const WaitlistScreen = () => {
         </p>
 
         {/* Hero Image */}
-        <img src={heroImg} alt="Kibo and AI companion" className="w-full max-w-[340px] h-auto object-contain mb-8 drop-shadow-lg" />
+        <img
+          src={heroImg}
+          alt="Kibo and AI companion"
+          className="w-full max-w-[340px] h-auto object-contain mb-8 drop-shadow-lg transition-opacity duration-700 ease-out"
+          style={{ opacity: 0 }}
+          onLoad={useCallback((e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.style.opacity = "1"; }, [])}
+        />
 
         {/* Email input + button */}
         {!submitted ? (
