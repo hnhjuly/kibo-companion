@@ -21,6 +21,7 @@ interface AppState {
   onResetProgress: () => void;
   onRestoreHeart: () => void;
   onSetGoal: (goal: UserGoal) => void;
+  onRecordGameScore: (mode: "speed" | "flash" | "daily" | "pairs", score: number, xpEarned: number) => void;
   heartsTimeRemaining: number;
   canPlay: boolean;
   readingModule: string | null;
