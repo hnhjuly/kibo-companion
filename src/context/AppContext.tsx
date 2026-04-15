@@ -74,11 +74,42 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
     return () => subscription.unsubscribe();
   }, [user]);
   const [heartsTimeRemaining, setHeartsTimeRemaining] = useState(0);
+  const cloudSyncRef = useRef(false);
 
-  // Save progress on change
+  // Sync progress with cloud when user signs in
+  useEffect(() => {
+    if (!user) {
+      cloudSyncRef.current = false;
+      return;
+    }
+    if (cloudSyncRef.current) return;
+    cloudSyncRef.current = true;
+
+    (async () => {
+      const cloud = await loadCloudProgress(user.id);
+      if (cloud) {
+        // Merge local + cloud, keeping the richer data
+        const merged = mergeProgress(progress, cloud);
+        setProgress(merged);
+        saveProgress(merged);
+        await saveCloudProgress(user.id, merged);
+      } else {
+        // First sign-in: push local to cloud
+        await saveCloudProgress(user.id, progress);
+      }
+    })();
+  }, [user?.id]);
+
+  // Save progress on change (local + cloud)
   useEffect(() => {
     saveProgress(progress);
-  }, [progress]);
+    // Debounced cloud save when signed in
+    if (!user) return;
+    const timeout = setTimeout(() => {
+      saveCloudProgress(user.id, progress);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, [progress, user]);
 
   // Heart cooldown timer
   useEffect(() => {
