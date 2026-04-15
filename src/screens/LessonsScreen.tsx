@@ -109,6 +109,17 @@ const LessonsScreen = () => {
             const prevLevelDone = !previousLevel || previousLevel.lessons.every(l => completedSet.has(l.id));
             const isAccessible = prevLevelDone;
 
+            const pastelBgColors = [
+              "bg-kibo-teal-light",
+              "bg-kibo-sky-light",
+              "bg-kibo-lavender-light",
+              "bg-kibo-pink-light",
+              "bg-kibo-gold-light",
+              "bg-kibo-coral-light",
+              "bg-kibo-orange-light",
+            ];
+            const moduleBg = pastelBgColors[lvIdx % pastelBgColors.length];
+
             return (
               <motion.div
                 key={lv.id}
@@ -116,15 +127,14 @@ const LessonsScreen = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: lvIdx * 0.06 }}
                 className={`rounded-2xl border-[1.5px] overflow-hidden transition-all ${
-                  isExpanded ? "border-primary/30 shadow-sm" : "border-border"
-                } ${!isAccessible ? "opacity-50" : ""}`}
-                style={{ background: isExpanded ? `${lv.color}06` : undefined }}
+                  isExpanded ? "border-primary/40 shadow-sm" : "border-border hover:border-primary/20"
+                } ${!isAccessible ? "opacity-50" : ""} ${moduleBg}`}
               >
                 {/* Module card header */}
                 <button
                   onClick={() => isAccessible && setExpandedLevel(isExpanded ? null : lv.id)}
                   disabled={!isAccessible}
-                  className="w-full p-4 flex items-center gap-3.5 text-left bg-card hover:bg-muted/30 transition-colors"
+                  className="w-full p-4 flex items-center gap-3.5 text-left bg-white/60 hover:bg-white/80 transition-colors"
                 >
                   {/* Emoji badge */}
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0"
