@@ -23,6 +23,8 @@ interface AppState {
   canPlay: boolean;
   readingModule: string | null;
   setReadingModule: (m: string | null) => void;
+  showAuth: boolean;
+  setShowAuth: (v: boolean) => void;
 }
 
 const AppContext = createContext<AppState | null>(null);
@@ -38,6 +40,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
   const [quizStats, setQuizStats] = useState({ correct: 0, total: 0, time: 0 });
   const [readingModule, setReadingModule] = useState<string | null>(null);
+  const [showAuth, setShowAuth] = useState(false);
   const [progress, setProgress] = useState<UserProgress>(loadProgress);
   const [heartsTimeRemaining, setHeartsTimeRemaining] = useState(0);
 
@@ -118,7 +121,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       screen, setScreen: safeSetScreen, currentLesson, setCurrentLesson,
       quizStats, setQuizStats, progress, onLoseHeart, onCompleteLesson,
       onUseFreeze, onResetProgress, onRestoreHeart, onSetGoal, heartsTimeRemaining, canPlay,
-      readingModule, setReadingModule
+      readingModule, setReadingModule, showAuth, setShowAuth
     }}>
       {children}
     </AppContext.Provider>

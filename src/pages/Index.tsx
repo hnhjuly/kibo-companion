@@ -21,6 +21,7 @@ import ReadingCardsScreen from "@/screens/ReadingCardsScreen";
 import AuthScreen from "@/screens/AuthScreen";
 import BottomNav from "@/components/BottomNav";
 import DesktopSidebar from "@/components/DesktopSidebar";
+import AuthModal from "@/components/AuthModal";
 
 const screens: Record<string, React.FC> = {
   onboarding: OnboardingScreen,
@@ -45,7 +46,7 @@ const screens: Record<string, React.FC> = {
 };
 
 const AppContent = () => {
-  const { screen } = useApp();
+  const { screen, showAuth, setShowAuth } = useApp();
   const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete"].includes(screen);
   const Screen = screens[screen];
 
@@ -77,6 +78,9 @@ const AppContent = () => {
           </div>
         )}
       </div>
+
+      {/* Auth popup modal */}
+      <AuthModal open={showAuth} onClose={() => setShowAuth(false)} />
     </div>
   );
 };
