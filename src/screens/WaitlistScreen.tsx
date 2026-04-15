@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import heroImg from "@/assets/waitlist-hero.png";
-import kLogo from "@/assets/kibo-k-logo.png";
+
 import NotoEmoji from "@/components/NotoEmoji";
 
 const WaitlistScreen = () => {
@@ -42,8 +42,6 @@ const WaitlistScreen = () => {
 
       <div className="w-full max-w-md mx-auto flex flex-col items-center px-6 pt-10 pb-8 relative z-10 flex-1 justify-center">
         
-        {/* K Logo */}
-        <img src={kLogo} alt="Kibo" className="w-16 h-16 object-contain mb-6 drop-shadow-sm" />
 
         {/* Heading */}
         <h1 className="text-[32px] font-black text-foreground leading-tight text-center mb-2">
