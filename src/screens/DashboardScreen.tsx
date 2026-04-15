@@ -380,7 +380,7 @@ const DashboardScreen = () => {
                 <div key={m.id} className="flex items-center gap-[10px] mb-[9px] last:mb-0">
                   <div className="flex items-center gap-[7px] w-[124px] shrink-0">
                     <span className="text-[14px] w-[18px] text-center shrink-0">{m.e}</span>
-                    <span className={`text-[12px] font-bold truncate ${m.locked ? "text-[#9ca3af]" : "text-[#111827]"}`}>{m.n}</span>
+                    <span className="text-[12px] font-bold truncate text-[#111827]">{m.n}</span>
                   </div>
                   <ProgressBar pct={pct} color={m.color} />
                   <span className="text-[11px] font-extrabold w-[30px] text-right shrink-0" style={{ color: pc }}>{pct}%</span>
