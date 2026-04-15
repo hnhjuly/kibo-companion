@@ -51,7 +51,7 @@ const screens: Record<string, React.FC> = {
 const GlobalAuthButton = () => {
   const { setShowAuth } = useApp();
   const [user, setUser] = useState<SupaUser | null>(null);
-  const [showMenu, setShowMenu] = useState(false);
+  const [_, setShowMenu] = useState(false);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
