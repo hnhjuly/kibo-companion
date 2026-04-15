@@ -36,7 +36,7 @@ const NAV_ITEMS = [
   { icon: BarChart3,       label: "Leaderboard",  screen: "home"      as const },
 ] as const;
 
-const MODULES = [
+const MODULES: { e: string; n: string; id: string; color: string; locked?: boolean }[] = [
   { e: "🤖", n: "AI Basics",     id: "m1", color: "#86efac" },
   { e: "💬", n: "Talking to AI", id: "m2", color: "#6ee7b7" },
   { e: "🛠️", n: "AI Tools",     id: "m3", color: "#93c5fd" },
@@ -44,7 +44,7 @@ const MODULES = [
   { e: "💼", n: "AI for Work",   id: "m5", color: "#e5e7eb", locked: true },
   { e: "🎨", n: "Creativity",    id: "m6", color: "#e5e7eb", locked: true },
   { e: "🛡️", n: "AI Safety",    id: "m7", color: "#e5e7eb", locked: true },
-] as const;
+];
 
 const TOPICS = [
   { n: "AI Basics",       p: 92 },
@@ -195,7 +195,7 @@ const DashboardScreen = () => {
     maintainAspectRatio: false,
     plugins: { legend: { display: false }, tooltip: { bodyFont: { family: "Nunito" }, titleFont: { family: "Nunito" } } },
     scales: {
-      x: { ticks: { color: "rgba(0,0,0,.3)", font: { size: 11, family: "Nunito", weight: "700" as const } }, grid: { display: false } },
+      x: { ticks: { color: "rgba(0,0,0,.3)", font: { size: 11, family: "Nunito", weight: "bold" as const } }, grid: { display: false } },
       y: { ticks: { color: "rgba(0,0,0,.3)", font: { size: 10, family: "Nunito" } }, grid: { color: "rgba(0,0,0,.04)" }, beginAtZero: true },
     },
   };
@@ -414,7 +414,7 @@ const DashboardScreen = () => {
                 </span>
               </div>
               <div style={{ position: "relative", width: "100%", height: 170 }}>
-                <Bar data={xpChartData} options={chartOptions} />
+                <Bar data={xpChartData as any} options={chartOptions as any} />
               </div>
             </div>
 
@@ -528,8 +528,8 @@ const DashboardScreen = () => {
             </div>
             <div style={{ position: "relative", width: "100%", height: 190 }}>
               {gd.type === "bar"
-                ? <Bar data={gameChartData} options={chartOptions} />
-                : <Line data={gameChartData} options={chartOptions} />
+                ? <Bar data={gameChartData as any} options={chartOptions as any} />
+                : <Line data={gameChartData as any} options={chartOptions as any} />
               }
             </div>
           </div>
