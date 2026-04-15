@@ -3,7 +3,7 @@ import { Lesson } from "@/data/curriculum";
 import { ReadingCardState } from "@/data/readingCards";
 import { UserProgress, UserGoal, loadProgress, saveProgress, resetProgress, loseHeart, restoreHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX } from "@/lib/progress";
 
-type Screen = "onboarding" | "home" | "lessons" | "glossary" | "quiz" | "complete" | "train" | "achievements" | "more" | "hearts-depleted" | "feedback" | "all-complete" | "help-faq" | "daily-challenge" | "flashcards" | "speed-round" | "match-pairs" | "reading-cards";
+type Screen = "waitlist" | "onboarding" | "home" | "lessons" | "glossary" | "quiz" | "complete" | "train" | "achievements" | "more" | "hearts-depleted" | "feedback" | "all-complete" | "help-faq" | "daily-challenge" | "flashcards" | "speed-round" | "match-pairs" | "reading-cards";
 
 interface AppState {
   screen: Screen;
@@ -36,7 +36,7 @@ export const useApp = () => {
 };
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [screen, setScreen] = useState<Screen>("onboarding");
+  const [screen, setScreen] = useState<Screen>("waitlist");
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
   const [quizStats, setQuizStats] = useState({ correct: 0, total: 0, time: 0 });
   const [readingModule, setReadingModule] = useState<string | null>(null);
@@ -46,9 +46,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   // Check if first time (has completed onboarding)
   useEffect(() => {
-    if (progress.lastActiveDate !== "") {
-      setScreen("home");
-    }
+    // Waitlist mode: always show waitlist first
+    setScreen("waitlist");
   }, []);
 
   // Save progress on change

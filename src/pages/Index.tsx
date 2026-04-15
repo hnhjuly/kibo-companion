@@ -5,6 +5,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User as SupaUser } from "@supabase/supabase-js";
+import WaitlistScreen from "@/screens/WaitlistScreen";
 import OnboardingScreen from "@/screens/OnboardingScreen";
 import HomeScreen from "@/screens/HomeScreen";
 import LessonsScreen from "@/screens/LessonsScreen";
@@ -28,6 +29,7 @@ import DesktopSidebar from "@/components/DesktopSidebar";
 import AuthModal from "@/components/AuthModal";
 
 const screens: Record<string, React.FC> = {
+  waitlist: WaitlistScreen,
   onboarding: OnboardingScreen,
   home: HomeScreen,
   lessons: LessonsScreen,
@@ -86,14 +88,15 @@ const GlobalAuthButton = () => {
 
 const AppContent = () => {
   const { screen, showAuth, setShowAuth } = useApp();
-  const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete"].includes(screen);
+  const showNav = screen !== "waitlist" && ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete"].includes(screen);
   const Screen = screens[screen];
+  const isWaitlist = screen === "waitlist";
 
   return (
     <div className="w-full h-dvh flex bg-background overflow-hidden">
       {showNav && <DesktopSidebar />}
       <div className="flex-1 flex flex-col relative overflow-hidden max-w-3xl mx-auto w-full">
-        <GlobalAuthButton />
+        {!isWaitlist && <GlobalAuthButton />}
         <AnimatePresence mode="wait">
           <motion.div
             key={screen}
