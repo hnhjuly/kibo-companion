@@ -202,15 +202,15 @@ const HomeScreen = () => {
             </div>
             <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border">
               {quizExercises.slice(0, 3).map((ex, i) => {
-                const typeLabels: Record<string, { icon: string; bg: string }> = {
-                  MULTIPLE_CHOICE: { icon: "pencil", bg: "bg-[#ffe8ea]" },
-                  IDENTIFY: { icon: "search", bg: "bg-[#e0faf0]" },
-                  SCENARIO: { icon: "lightbulb", bg: "bg-[#ffe8d6]" },
+                const typeLabels: Record<string, { icon: string; bg: string; border: string }> = {
+                  MULTIPLE_CHOICE: { icon: "pencil", bg: "bg-kibo-pink-light", border: "border-kibo-pink/30" },
+                  IDENTIFY: { icon: "search", bg: "bg-kibo-teal-light", border: "border-kibo-teal/30" },
+                  SCENARIO: { icon: "lightbulb", bg: "bg-kibo-gold-light", border: "border-kibo-gold/30" },
                 };
-                const meta = typeLabels[ex.type] || { icon: "target", bg: "bg-muted" };
+                const meta = typeLabels[ex.type] || { icon: "target", bg: "bg-muted", border: "border-border" };
                 return (
                   <button key={ex.id} onClick={() => setScreen("lessons")}
-                    className="w-full bg-background rounded-xl p-3.5 flex items-center gap-3.5 mb-2 last:mb-0 border-[1.5px] border-transparent hover:border-kibo-green hover:bg-kibo-green/5 hover:translate-x-0.5 transition-all text-left">
+                    className={`w-full bg-background rounded-xl p-3.5 flex items-center gap-3.5 mb-2 last:mb-0 border-[1.5px] ${meta.border} hover:shadow-sm hover:translate-x-0.5 transition-all text-left`}>
                     <div className={`w-[38px] h-[38px] rounded-[11px] flex items-center justify-center shrink-0 ${meta.bg}`}>
                       <NotoEmoji name={meta.icon as any} size={22} />
                     </div>
