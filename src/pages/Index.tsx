@@ -1,5 +1,7 @@
 import { AppProvider, useApp } from "@/context/AppContext";
 import { AnimatePresence, motion } from "framer-motion";
+import { useUser, UserButton } from "@clerk/clerk-react";
+import { User } from "lucide-react";
 import OnboardingScreen from "@/screens/OnboardingScreen";
 import HomeScreen from "@/screens/HomeScreen";
 import LessonsScreen from "@/screens/LessonsScreen";
@@ -57,7 +59,8 @@ const AppContent = () => {
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col relative overflow-hidden max-w-3xl mx-auto w-full">
-        {/* Screen content with animation */}
+        {/* Global sign-in / user button */}
+        <GlobalAuthButton />
         <AnimatePresence mode="wait">
           <motion.div
             key={screen}
