@@ -168,14 +168,33 @@ const HomeScreen = () => {
                 const done = level.lessons.filter(l => progress.completedLessons.includes(l.id)).length;
                 const total = level.lessons.length;
                 const isLocked = idx > 0 && allLevels[idx - 1].lessons.some(l => !progress.completedLessons.includes(l.id)) && done === 0;
+                const pastelBgs = [
+                  "bg-kibo-teal-light",
+                  "bg-kibo-sky-light", 
+                  "bg-kibo-lavender-light",
+                  "bg-kibo-pink-light",
+                  "bg-kibo-gold-light",
+                  "bg-kibo-coral-light",
+                  "bg-kibo-orange-light",
+                ];
+                const pastelBorders = [
+                  "border-kibo-teal/40",
+                  "border-kibo-sky/40",
+                  "border-kibo-lavender/40", 
+                  "border-kibo-pink/40",
+                  "border-kibo-gold/40",
+                  "border-kibo-coral/40",
+                  "border-kibo-orange/40",
+                ];
                 return (
                   <button key={level.id} onClick={() => !isLocked && startQuickQuiz(idx)} disabled={isLocked}
-                    className={`bg-card rounded-[14px] p-3.5 border-[1.5px] min-w-[130px] shrink-0 flex flex-col text-left transition-all ${
-                      isLocked ? "border-border opacity-50" : "border-border hover:border-kibo-green hover:bg-kibo-green/5"
+                    className={`rounded-[16px] p-3.5 border-[1.5px] min-w-[140px] shrink-0 flex flex-col text-left transition-all ${
+                      isLocked 
+                        ? "bg-card border-border opacity-50" 
+                        : `${pastelBgs[idx % pastelBgs.length]} ${pastelBorders[idx % pastelBorders.length]} hover:shadow-md hover:-translate-y-0.5`
                     }`}>
-                    <div className="w-9 h-9 rounded-[10px] flex items-center justify-center text-lg mb-2"
-                      style={{ background: level.color + "20" }}>
-                      <NotoEmoji name={idx === 0 ? "sparkles" : idx === 1 ? "robot" : idx === 2 ? "pencil" : idx === 3 ? "lightbulb" : idx === 4 ? "search" : idx === 5 ? "shield" : "star"} size={20} />
+                    <div className="w-10 h-10 rounded-[12px] flex items-center justify-center text-xl mb-2.5 bg-white/60 shadow-sm">
+                      <NotoEmoji name={idx === 0 ? "sparkles" : idx === 1 ? "robot" : idx === 2 ? "pencil" : idx === 3 ? "lightbulb" : idx === 4 ? "search" : idx === 5 ? "shield" : "star"} size={22} />
                     </div>
                     <div className="text-[12px] font-extrabold text-foreground leading-tight mb-1">{level.title}</div>
                     <div className="text-[10px] text-muted-foreground font-semibold mb-2">
@@ -229,33 +248,23 @@ const HomeScreen = () => {
           </div>
 
           {/* Quick Course Progress */}
-          <div>
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="text-[17px] font-black text-foreground flex items-center gap-2">
-                <NotoEmoji name="graduation" size={20} /> Your Progress
-              </h3>
-              <button onClick={() => setScreen("lessons")} className="text-[13px] font-extrabold text-kibo-green">
-                All Courses ›
-              </button>
-            </div>
-            <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="text-[24px]">🧠</div>
-                <div className="flex-1">
-                  <div className="text-[14px] font-black text-foreground">
-                    {progress.completedLessons.length} / {CURRICULUM.levels.flatMap(l => l.lessons).length} lessons done
-                  </div>
-                  <div className="h-2 bg-muted rounded-full overflow-hidden mt-1.5">
-                    <div className="h-full rounded-full bg-kibo-green transition-all" 
-                      style={{ width: `${(progress.completedLessons.length / CURRICULUM.levels.flatMap(l => l.lessons).length) * 100}%` }} />
-                  </div>
+          <div className="bg-kibo-green-light/50 rounded-[18px] p-4 border-[1.5px] border-kibo-green/20">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-11 h-11 rounded-[12px] bg-white/70 flex items-center justify-center text-2xl shadow-sm">🧠</div>
+              <div className="flex-1">
+                <div className="text-[14px] font-black text-foreground">
+                  {progress.completedLessons.length} / {CURRICULUM.levels.flatMap(l => l.lessons).length} lessons done
+                </div>
+                <div className="h-2.5 bg-white/60 rounded-full overflow-hidden mt-1.5 border border-kibo-green/10">
+                  <div className="h-full rounded-full bg-kibo-green transition-all" 
+                    style={{ width: `${(progress.completedLessons.length / CURRICULUM.levels.flatMap(l => l.lessons).length) * 100}%` }} />
                 </div>
               </div>
-              <button onClick={() => setScreen("lessons")}
-                className="w-full py-3 bg-secondary/15 text-secondary rounded-xl font-black text-sm hover:bg-secondary hover:text-primary-foreground transition-all">
-                CONTINUE LEARNING ›
-              </button>
             </div>
+            <button onClick={() => setScreen("lessons")}
+              className="w-full py-3 bg-white/70 text-kibo-teal-dark rounded-xl font-black text-sm hover:bg-white hover:shadow-sm transition-all border border-kibo-green/20">
+              CONTINUE LEARNING ›
+            </button>
           </div>
 
           {/* Coming Soon Teaser */}
