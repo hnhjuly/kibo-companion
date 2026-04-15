@@ -20,13 +20,16 @@ if (isPreviewHost || isInIframe) {
   const updateSW = registerSW({
     immediate: true,
     onNeedRefresh() {
+      // Force clear all caches then reload with fresh content
+      window.caches?.keys().then((keys) => keys.forEach((key) => window.caches.delete(key)));
       void updateSW(true);
     },
     onRegisteredSW(_swUrl, registration) {
+      // Check for updates immediately and every 30 seconds
       registration?.update();
       window.setInterval(() => {
         void registration?.update();
-      }, 60_000);
+      }, 30_000);
     },
   });
 }
