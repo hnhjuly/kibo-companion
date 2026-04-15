@@ -1,37 +1,29 @@
 import { createRoot } from "react-dom/client";
-import { registerSW } from "virtual:pwa-register";
 import App from "./App.tsx";
 import "./index.css";
 
-// Unregister service workers in iframe/preview contexts to prevent stale caching
-const isInIframe = (() => {
-  try { return window.self !== window.top; } catch { return true; }
-})();
-const isPreviewHost =
-  window.location.hostname.includes("id-preview--") ||
-  window.location.hostname.includes("lovableproject.com");
+const SERVICE_WORKER_CLEANUP_KEY = "kibo-service-worker-cleanup-v2";
 
-if (isPreviewHost || isInIframe) {
-  navigator.serviceWorker?.getRegistrations().then((regs) =>
-    regs.forEach((r) => r.unregister())
-  );
-  window.caches?.keys().then((keys) => keys.forEach((key) => window.caches.delete(key)));
-} else {
-  const updateSW = registerSW({
-    immediate: true,
-    onNeedRefresh() {
-      // Force clear all caches then reload with fresh content
-      window.caches?.keys().then((keys) => keys.forEach((key) => window.caches.delete(key)));
-      void updateSW(true);
-    },
-    onRegisteredSW(_swUrl, registration) {
-      // Check for updates immediately and every 30 seconds
-      registration?.update();
-      window.setInterval(() => {
-        void registration?.update();
-      }, 30_000);
-    },
-  });
+const cleanupOldCaches = async () => {
+  const registrations = await navigator.serviceWorker?.getRegistrations();
+  await Promise.all((registrations ?? []).map((registration) => registration.unregister()));
+
+  const cacheKeys = await window.caches?.keys();
+  await Promise.all((cacheKeys ?? []).map((key) => window.caches.delete(key)));
+
+  return (registrations?.length ?? 0) > 0 || (cacheKeys?.length ?? 0) > 0;
+};
+
+if (window.localStorage.getItem(SERVICE_WORKER_CLEANUP_KEY) !== "done") {
+  void cleanupOldCaches()
+    .catch(() => false)
+    .then((didCleanup) => {
+      window.localStorage.setItem(SERVICE_WORKER_CLEANUP_KEY, "done");
+
+      if (didCleanup) {
+        window.location.reload();
+      }
+    });
 }
 
 // Preload mascot images for instant rendering
