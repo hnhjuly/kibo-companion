@@ -4,7 +4,7 @@ import { Home, Flame, Award, BookOpen, Search, MoreHorizontal, Zap } from "lucid
 type Tab = "home" | "lessons" | "glossary" | "train" | "achievements" | "more" | "quiz-hub";
 
 const tabs: { id: Tab; icon: typeof Home; label: string; badge?: number }[] = [
-  { id: "home", icon: Home, label: "Learn" },
+  { id: "home", icon: Home, label: "Home" },
   { id: "quiz-hub", icon: Zap, label: "Quiz" },
   { id: "train", icon: Flame, label: "Train" },
   { id: "lessons", icon: BookOpen, label: "Courses" },
