@@ -1,20 +1,31 @@
 import { useState, useEffect, useRef } from "react";
 import { useApp } from "@/context/AppContext";
 import { CURRICULUM, KIBO } from "@/data/curriculum";
-import { Check, Lock, ChevronLeft, RotateCcw, Sparkles, Star, X } from "lucide-react";
+import { Check, Lock, ChevronDown, ChevronRight, RotateCcw, Sparkles, Star, X, BookOpen, Play } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
 import { COMING_SOON_MODULES } from "@/data/comingSoon";
 import { ReadingCardState, READING_CARDS, MODULE_COLORS } from "@/data/readingCards";
 
-const ZIGZAG_OFFSETS = [0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0];
+const MODULE_EMOJIS: Record<number, string> = {
+  1: "🧠", 2: "💬", 3: "🔍", 4: "⚡", 5: "🛡️", 6: "🎨", 7: "🚀",
+};
+
+const MODULE_DESCRIPTIONS: Record<number, string> = {
+  1: "Learn what AI is, what it can and cannot do, and how it already touches your daily life.",
+  2: "Master the art of writing prompts. Learn to give AI clear instructions and get great results.",
+  3: "Understand how AI models think, where biases come from, and how to evaluate AI output.",
+  4: "Use AI tools to boost your everyday productivity at work and study.",
+  5: "Learn how to stay safe, spot deepfakes, and protect your privacy in an AI world.",
+  6: "Create images, music, and designs with AI creative tools.",
+  7: "Explore the future of AI: AGI, regulation, jobs, and what comes next.",
+};
 
 const LessonsScreen = () => {
   const { setScreen, setCurrentLesson, onResetProgress, progress, setReadingModule } = useApp();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
-  const [justReadModule, setJustReadModule] = useState<string | null>(null);
-  const activeRef = useRef<HTMLButtonElement>(null);
+  const [expandedLevel, setExpandedLevel] = useState<number | null>(null);
 
   const allLessons = CURRICULUM.levels.flatMap(lv => lv.lessons);
   const completedSet = new Set(progress.completedLessons);
@@ -24,26 +35,19 @@ const LessonsScreen = () => {
     if (allDone) setScreen("all-complete");
   }, [allDone, setScreen]);
 
-  // Scroll to active lesson on mount
+  // Auto-expand the level the user is currently working on
   useEffect(() => {
-    const t = setTimeout(() => {
-      activeRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 400);
-    return () => clearTimeout(t);
-  }, []);
-
-  // Detect if user just came back from reading cards
-  useEffect(() => {
-    const moduleIds = ['m1','m2','m3','m4','m5','m6','m7'];
-    for (const mId of moduleIds) {
-      if (ReadingCardState.hasReadAll(mId) && ReadingCardState.wasJustCompleted(mId)) {
-        setJustReadModule(mId);
-        ReadingCardState.clearJustCompleted(mId);
+    if (expandedLevel !== null) return;
+    for (const lv of CURRICULUM.levels) {
+      const lvDone = lv.lessons.every(l => completedSet.has(l.id));
+      if (!lvDone) {
+        setExpandedLevel(lv.id);
         break;
       }
     }
   }, []);
 
+  // Determine lesson states
   let foundActive = false;
   const lessonStates = new Map<string, "done" | "active" | "locked">();
   for (const lesson of allLessons) {
@@ -57,14 +61,12 @@ const LessonsScreen = () => {
     }
   }
 
-  let globalIdx = 0;
-
   return (
     <>
-      <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center gap-3.5">
-        <button onClick={() => setScreen("home")} className="text-foreground p-1"><ChevronLeft className="w-6 h-6" /></button>
+      {/* Header */}
+      <div className="bg-card px-5 py-3.5 border-b border-border shrink-0 flex items-center gap-3.5 pr-14">
         <span className="text-lg font-black text-foreground flex-1 flex items-center gap-2">
-          <NotoEmoji name="graduation" size={20} /> Learning Path
+          <NotoEmoji name="graduation" size={20} /> Courses
         </span>
         <button onClick={() => setShowResetConfirm(true)}
           className="text-muted-foreground p-1.5 rounded-lg hover:bg-background transition-colors"
@@ -73,212 +75,238 @@ const LessonsScreen = () => {
         </button>
       </div>
 
+      {/* Scrollable body */}
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
-        <div className="p-[18px] pb-[100px] flex flex-col gap-5">
-          {/* Ready to train banner */}
-          <AnimatePresence>
-            {justReadModule && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="rounded-2xl p-4 border-[1.5px] flex items-center gap-3"
-                style={{ background: 'hsl(135 60% 96%)', borderColor: 'hsla(135, 60%, 40%, 0.25)' }}
-              >
-                <PreloadedImg
-                  src={KIBO.celebrate}
-                  alt="Kibo"
-                  className="w-12 h-12 object-contain shrink-0"
-                />
-                <div className="flex-1">
-                  <div className="text-[14px] font-black text-foreground">
-                    Reading done! Ready to train?
-                  </div>
-                  <div className="text-[12px] text-muted-foreground font-semibold mt-0.5">
-                    Tap your first lesson below to test your knowledge.
-                  </div>
-                </div>
-                <button
-                  onClick={() => setJustReadModule(null)}
-                  className="text-muted-foreground p-1"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Kibo studying header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="flex items-center gap-3 rounded-2xl p-4 border-[1.5px] border-border"
-            style={{ background: "linear-gradient(135deg, hsl(var(--card)), hsl(200 80% 97%))" }}
-          >
-            <PreloadedImg src={KIBO.studying} alt="Kibo studying" className="w-14 h-14 object-contain" />
-            <div className="text-[13px] text-muted-foreground leading-relaxed font-semibold">
-              Keep learning! Each lesson brings you closer to AI mastery <NotoEmoji name="book" size={14} />
+        <div className="p-[18px] pb-[100px] flex flex-col gap-3">
+          {/* Overall progress */}
+          <div className="rounded-2xl p-4 border-[1.5px] border-border bg-card flex items-center gap-3.5">
+            <PreloadedImg src={KIBO.studying} alt="Kibo" className="w-14 h-14 object-contain shrink-0" />
+            <div className="flex-1">
+              <div className="text-[14px] font-black text-foreground mb-1">
+                {completedSet.size} / {allLessons.length} lessons completed
+              </div>
+              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                <div className="h-full rounded-full bg-kibo-green transition-all duration-500"
+                  style={{ width: `${(completedSet.size / allLessons.length) * 100}%` }} />
+              </div>
             </div>
-          </motion.div>
+          </div>
 
+          {/* Module cards */}
           {CURRICULUM.levels.map((lv, lvIdx) => {
-            const lvLessons = lv.lessons;
-            const lvCompleted = lvLessons.filter(l => completedSet.has(l.id)).length;
-            const lvProgress = lvCompleted / lvLessons.length;
+            const lvCompleted = lv.lessons.filter(l => completedSet.has(l.id)).length;
+            const lvTotal = lv.lessons.length;
+            const lvProgress = lvCompleted / lvTotal;
+            const isExpanded = expandedLevel === lv.id;
+            const isLevelDone = lvProgress === 1;
+            const hasReadingCards = !!READING_CARDS[`m${lv.id}`];
+            const hasReadAll = ReadingCardState.hasReadAll(`m${lv.id}`);
+            const emoji = MODULE_EMOJIS[lv.id] || "📘";
+            const description = MODULE_DESCRIPTIONS[lv.id] || "";
+
+            // Check if this level is accessible (previous level must be done or it's level 1)
+            const previousLevel = lvIdx > 0 ? CURRICULUM.levels[lvIdx - 1] : null;
+            const prevLevelDone = !previousLevel || previousLevel.lessons.every(l => completedSet.has(l.id));
+            const isAccessible = prevLevelDone;
 
             return (
               <motion.div
                 key={lv.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: lvIdx * 0.1 }}
+                transition={{ duration: 0.3, delay: lvIdx * 0.06 }}
+                className={`rounded-2xl border-[1.5px] overflow-hidden transition-all ${
+                  isExpanded ? "border-primary/30 shadow-sm" : "border-border"
+                } ${!isAccessible ? "opacity-50" : ""}`}
+                style={{ background: isExpanded ? `${lv.color}06` : undefined }}
               >
-                {/* Level header */}
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className="rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-wide flex items-center gap-1.5"
-                    style={{ background: lv.color + "18", color: lv.color, border: `1.5px solid ${lv.color}30` }}>
-                    {lvProgress === 1 && <Check className="w-3 h-3" />}
-                    LEVEL {lv.id}
+                {/* Module card header */}
+                <button
+                  onClick={() => isAccessible && setExpandedLevel(isExpanded ? null : lv.id)}
+                  disabled={!isAccessible}
+                  className="w-full p-4 flex items-center gap-3.5 text-left bg-card hover:bg-muted/30 transition-colors"
+                >
+                  {/* Emoji badge */}
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0"
+                    style={{ background: lv.color + "15", border: `1.5px solid ${lv.color}25` }}>
+                    {isLevelDone ? <Check className="w-5 h-5" style={{ color: lv.color }} /> : emoji}
                   </div>
-                  <span className="text-[15px] font-black text-foreground flex-1">{lv.title}</span>
-                  {!ReadingCardState.hasReadAll(`m${lv.id}`) && READING_CARDS[`m${lv.id}`] && (
-                    <span className="text-[11px] font-bold rounded-full px-2 py-0.5 mr-1" style={{ background: "#f0f4ff", color: "#6b7280" }}>
-                      Read first
-                    </span>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground">
+                        Module {lv.id}
+                      </span>
+                      {isLevelDone && (
+                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full bg-kibo-green/15 text-kibo-green">
+                          COMPLETE
+                        </span>
+                      )}
+                      {!isAccessible && (
+                        <Lock className="w-3 h-3 text-muted-foreground/50" />
+                      )}
+                    </div>
+                    <div className="text-[15px] font-black text-foreground truncate">{lv.title}</div>
+                    <div className="flex items-center gap-2 mt-1">
+                      <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden max-w-[120px]">
+                        <div className="h-full rounded-full transition-all duration-500"
+                          style={{ width: `${lvProgress * 100}%`, background: lv.color }} />
+                      </div>
+                      <span className="text-[11px] font-bold text-muted-foreground">{lvCompleted}/{lvTotal}</span>
+                    </div>
+                  </div>
+
+                  {isAccessible && (
+                    <div className="shrink-0">
+                      {isExpanded
+                        ? <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                        : <ChevronRight className="w-5 h-5 text-muted-foreground" />
+                      }
+                    </div>
                   )}
-                  <span className="text-[11px] font-bold text-muted-foreground">{lvCompleted}/{lvLessons.length}</span>
-                </div>
+                </button>
 
-                {/* Level progress bar */}
-                <div className="h-1.5 bg-muted rounded-full mb-4 overflow-hidden">
-                  <motion.div
-                    className="h-full rounded-full"
-                    style={{ background: `linear-gradient(90deg, ${lv.color}, ${lv.color}88)` }}
-                    initial={{ width: 0 }}
-                    animate={{ width: `${lvProgress * 100}%` }}
-                    transition={{ duration: 0.8, delay: lvIdx * 0.1 + 0.3 }}
-                  />
-                </div>
+                {/* Expanded lesson list */}
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-4 pt-1">
+                        {/* Description */}
+                        <p className="text-[12px] text-muted-foreground font-semibold leading-relaxed mb-3">
+                          {description}
+                        </p>
 
-                {/* Lessons in zigzag path */}
-                <div className="flex flex-col items-center gap-2 relative">
-                  {/* Connecting path line */}
-                  <div className="absolute top-0 bottom-0 left-1/2 w-[2px] bg-border -translate-x-1/2 z-0" />
-
-                  {lvLessons.map((lesson, i) => {
-                    const state = lessonStates.get(lesson.id) || "locked";
-                    const isLocked = state === "locked";
-                    const isDone = state === "done";
-                    const isActive = state === "active";
-                    const offset = ZIGZAG_OFFSETS[globalIdx % ZIGZAG_OFFSETS.length];
-                    globalIdx++;
-
-                    return (
-                      <motion.div
-                        key={lesson.id}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3, delay: i * 0.08 + lvIdx * 0.15 }}
-                        className="relative z-10 w-full flex justify-center"
-                        style={{ transform: `translateX(${offset}px)` }}
-                      >
-                        <button
-                          ref={isActive ? activeRef : undefined}
-                          disabled={isLocked || lesson.questions.length === 0}
-                          onClick={() => {
-                            // Check if reading cards need to be shown for this lesson's module
-                            const moduleId = `m${lvIdx + 1}`;
-                            if (READING_CARDS[moduleId] && !ReadingCardState.hasReadAll(moduleId)) {
-                              setReadingModule(moduleId);
+                        {/* Read first badge */}
+                        {hasReadingCards && !hasReadAll && (
+                          <button
+                            onClick={() => {
+                              setReadingModule(`m${lv.id}`);
                               setScreen("reading-cards" as any);
-                              return;
-                            }
-                            setCurrentLesson(lesson);
-                            setScreen("quiz");
-                          }}
-                          className={`relative w-full max-w-[320px] rounded-2xl p-4 flex items-center gap-3.5 transition-all text-left
-                            ${isDone
-                              ? "bg-card border-[2px] border-kibo-green/30 shadow-sm"
-                              : isActive
-                                ? "bg-card border-[2.5px] border-kibo-gold shadow-[0_4px_20px_rgba(255,184,0,0.2)]"
-                                : "bg-card/60 border-[1.5px] border-border opacity-50 cursor-not-allowed"
-                            }
-                            ${!isLocked ? "hover:shadow-md cursor-pointer active:scale-[0.98]" : ""}
-                          `}
-                        >
-                          {/* Node circle */}
-                          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-base font-black shrink-0 transition-all
-                            ${isDone
-                              ? "bg-kibo-green text-primary-foreground"
-                              : isActive
-                                ? "bg-kibo-gold text-primary-foreground"
-                                : "bg-muted text-muted-foreground/40"
-                            }`}
+                            }}
+                            className="w-full mb-3 p-3 rounded-xl border-[1.5px] border-dashed flex items-center gap-3 text-left hover:bg-muted/30 transition-colors"
+                            style={{ borderColor: lv.color + "40" }}
                           >
-                            {isDone ? <Check className="w-5 h-5" /> : isActive ? <Sparkles className="w-5 h-5" /> : <Lock className="w-4 h-4" />}
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="text-[14px] font-extrabold text-foreground truncate">{lesson.title}</div>
-                            <div className="text-[11px] text-muted-foreground font-semibold mt-0.5 flex items-center gap-2">
-                              <span>{lesson.duration}</span>
-                              <span className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-                              <span>{lesson.questions.length} Q's</span>
+                            <BookOpen className="w-4 h-4 shrink-0" style={{ color: lv.color }} />
+                            <div className="flex-1">
+                              <div className="text-[12px] font-black text-foreground">Read First</div>
+                              <div className="text-[10px] text-muted-foreground font-semibold">
+                                Short intro cards before you start the quizzes
+                              </div>
                             </div>
+                            <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
+                          </button>
+                        )}
+                        {hasReadingCards && hasReadAll && (
+                          <div className="flex items-center gap-2 mb-3 px-1">
+                            <Check className="w-3.5 h-3.5 text-kibo-green" />
+                            <span className="text-[11px] font-bold text-kibo-green">Reading cards completed</span>
                           </div>
+                        )}
 
-                          {/* XP badge */}
-                          <div className={`rounded-xl px-2.5 py-1.5 text-[11px] font-black shrink-0 ${
-                            isDone ? "bg-kibo-green/10 text-kibo-green" : "bg-kibo-gold/10 text-kibo-gold"
-                          }`}>
-                            +{lesson.xp} XP
-                          </div>
+                        {/* Lesson list */}
+                        <div className="flex flex-col gap-2">
+                          {lv.lessons.map((lesson, i) => {
+                            const state = lessonStates.get(lesson.id) || "locked";
+                            const isLocked = state === "locked";
+                            const isDone = state === "done";
+                            const isActive = state === "active";
 
-                          {/* Active pulse ring */}
-                          {isActive && (
-                            <div className="absolute -inset-[3px] rounded-2xl border-2 border-kibo-gold/40 animate-pulse pointer-events-none" />
-                          )}
-                        </button>
-                      </motion.div>
-                    );
-                  })}
-                </div>
+                            return (
+                              <button
+                                key={lesson.id}
+                                disabled={isLocked || lesson.questions.length === 0}
+                                onClick={() => {
+                                  const moduleId = `m${lv.id}`;
+                                  if (READING_CARDS[moduleId] && !ReadingCardState.hasReadAll(moduleId)) {
+                                    setReadingModule(moduleId);
+                                    setScreen("reading-cards" as any);
+                                    return;
+                                  }
+                                  setCurrentLesson(lesson);
+                                  setScreen("quiz");
+                                }}
+                                className={`w-full rounded-xl p-3 flex items-center gap-3 text-left transition-all ${
+                                  isDone
+                                    ? "bg-kibo-green/5 border-[1.5px] border-kibo-green/20"
+                                    : isActive
+                                      ? "bg-kibo-gold/5 border-[2px] border-kibo-gold/40 shadow-sm"
+                                      : "bg-muted/30 border-[1.5px] border-border opacity-60"
+                                } ${!isLocked ? "hover:shadow-sm cursor-pointer active:scale-[0.99]" : "cursor-not-allowed"}`}
+                              >
+                                {/* Number/icon */}
+                                <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-[13px] font-black shrink-0 ${
+                                  isDone ? "bg-kibo-green text-primary-foreground"
+                                    : isActive ? "bg-kibo-gold text-primary-foreground"
+                                    : "bg-muted text-muted-foreground/40"
+                                }`}>
+                                  {isDone ? <Check className="w-4 h-4" />
+                                    : isActive ? <Play className="w-4 h-4" />
+                                    : <Lock className="w-3.5 h-3.5" />}
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                  <div className="text-[13px] font-extrabold text-foreground truncate">
+                                    {i + 1}. {lesson.title}
+                                  </div>
+                                  <div className="text-[10px] text-muted-foreground font-semibold mt-0.5 flex items-center gap-1.5">
+                                    <span>{lesson.duration}</span>
+                                    <span className="w-0.5 h-0.5 rounded-full bg-muted-foreground/30" />
+                                    <span>{lesson.questions.length} questions</span>
+                                  </div>
+                                </div>
+
+                                <span className={`text-[10px] font-black px-2 py-1 rounded-lg shrink-0 ${
+                                  isDone ? "bg-kibo-green/10 text-kibo-green"
+                                    : isActive ? "bg-kibo-gold/10 text-kibo-gold"
+                                    : "bg-muted text-muted-foreground/50"
+                                }`}>
+                                  +{lesson.xp} XP
+                                </span>
+
+                                {isActive && (
+                                  <div className="absolute -inset-[2px] rounded-xl border-2 border-kibo-gold/30 animate-pulse pointer-events-none" />
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}
 
           {/* Coming Soon Modules */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.5 }}
+            transition={{ duration: 0.3, delay: 0.4 }}
           >
-            <div className="flex items-center gap-2.5 mb-3">
-              <span className="rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-wide bg-muted text-muted-foreground border-[1.5px] border-border">
-                <NotoEmoji name="sparkles" size={12} /> COMING SOON
-              </span>
-              <span className="text-[15px] font-black text-muted-foreground">AI Tool Mastery</span>
+            <div className="flex items-center gap-2 mb-2 mt-2">
+              <NotoEmoji name="sparkles" size={14} />
+              <span className="text-[12px] font-black uppercase tracking-wider text-muted-foreground">Coming Soon</span>
             </div>
             {COMING_SOON_MODULES.map((mod, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 0.6, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.6 + i * 0.05 }}
-                className="w-full bg-card rounded-xl p-3.5 flex items-center gap-3.5 mb-2 border-[1.5px] border-dashed border-border/80"
-              >
-                <div className="w-9 h-9 rounded-[10px] flex items-center justify-center text-sm shrink-0"
-                  style={{ background: mod.color + "15" }}>
+              <div key={i} className="rounded-2xl border-[1.5px] border-dashed border-border/60 p-4 mb-2 flex items-center gap-3.5 opacity-50">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0"
+                  style={{ background: mod.color + "10" }}>
                   {mod.icon}
                 </div>
                 <div className="flex-1">
-                  <div className="text-[15px] font-extrabold text-foreground flex items-center gap-1.5">
+                  <div className="text-[14px] font-black text-foreground flex items-center gap-1.5">
                     <Lock className="w-3.5 h-3.5 text-muted-foreground" /> {mod.title}
                   </div>
-                  <div className="text-xs text-muted-foreground font-semibold mt-0.5">{mod.desc}</div>
+                  <div className="text-[11px] text-muted-foreground font-semibold mt-0.5">{mod.desc}</div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </motion.div>
         </div>

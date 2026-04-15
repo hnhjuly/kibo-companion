@@ -181,64 +181,32 @@ const HomeScreen = () => {
             </div>
           </div>
 
-          {/* Learning Path */}
+          {/* Quick Course Progress */}
           <div>
             <div className="flex justify-between items-center mb-3">
               <h3 className="text-[17px] font-black text-foreground flex items-center gap-2">
-                <NotoEmoji name="graduation" size={20} /> Learning Path
+                <NotoEmoji name="graduation" size={20} /> Your Progress
               </h3>
+              <button onClick={() => setScreen("lessons")} className="text-[13px] font-extrabold text-kibo-green">
+                All Courses ›
+              </button>
             </div>
             <div className="bg-card rounded-[18px] p-4 border-[1.5px] border-border">
-              <div className="flex justify-between items-center mb-3">
-                <span className="text-[13px] font-black text-foreground">LEVEL 1: <span className="text-kibo-green">AI BASICS</span></span>
-                <div className="flex items-center gap-2">
-                  {!ReadingCardState.hasReadAll("m1") && (
-                    <span className="text-[11px] font-bold rounded-full px-2 py-0.5" style={{ background: "#f0f4ff", color: "#6b7280" }}>
-                      Read first
-                    </span>
-                  )}
-                  <button onClick={() => setScreen("lessons")} className="text-[13px] font-extrabold text-kibo-green">
-                    {progress.completedLessons.length}/{CURRICULUM.levels.flatMap(l => l.lessons).length} ›
-                  </button>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="text-[24px]">🧠</div>
+                <div className="flex-1">
+                  <div className="text-[14px] font-black text-foreground">
+                    {progress.completedLessons.length} / {CURRICULUM.levels.flatMap(l => l.lessons).length} lessons done
+                  </div>
+                  <div className="h-2 bg-muted rounded-full overflow-hidden mt-1.5">
+                    <div className="h-full rounded-full bg-kibo-green transition-all" 
+                      style={{ width: `${(progress.completedLessons.length / CURRICULUM.levels.flatMap(l => l.lessons).length) * 100}%` }} />
+                  </div>
                 </div>
-              </div>
-              {(() => {
-                const allLessons = CURRICULUM.levels[0].lessons;
-                const completed = allLessons.filter(l => progress.completedLessons.includes(l.id));
-                const recentDone = completed.slice(-3);
-                return recentDone.length > 0 ? (
-                  <div className="flex flex-col gap-1.5 mb-3.5">
-                    {recentDone.map((l, i) => (
-                      <div key={i} className="flex items-center gap-2 text-sm font-bold text-muted-foreground">
-                        <NotoEmoji name="star" size={16} /> {l.title}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-[13px] text-muted-foreground mb-3.5">
-                    Start your first lesson! <NotoEmoji name="rocket" size={14} />
-                  </div>
-                );
-              })()}
-              <div className="flex items-center gap-[7px] mb-3.5">
-                {CURRICULUM.levels[0].lessons.slice(0, 4).map((lesson, i) => {
-                  const isDone = progress.completedLessons.includes(lesson.id);
-                  const isActive = !isDone && !progress.completedLessons.includes(lesson.id) && 
-                    (i === 0 || progress.completedLessons.includes(CURRICULUM.levels[0].lessons[i-1]?.id));
-                  return (
-                    <div key={lesson.id} className="flex items-center gap-[7px]">
-                      {i > 0 && <span className="text-muted-foreground/50 text-sm">→</span>}
-                      <div className={`w-9 h-9 rounded-[10px] flex items-center justify-center text-[13px] font-black
-                        ${isDone ? "bg-secondary/20 text-secondary" : isActive ? "bg-kibo-gold/20 text-kibo-gold border-2 border-kibo-gold" : "bg-background text-muted-foreground/50"}`}>
-                        {isDone ? <Check className="w-4 h-4" /> : isActive ? i + 1 : <Lock className="w-3.5 h-3.5" />}
-                      </div>
-                    </div>
-                  );
-                })}
               </div>
               <button onClick={() => setScreen("lessons")}
                 className="w-full py-3 bg-secondary/15 text-secondary rounded-xl font-black text-sm hover:bg-secondary hover:text-primary-foreground transition-all">
-                VIEW LESSONS ›
+                CONTINUE LEARNING ›
               </button>
             </div>
           </div>
