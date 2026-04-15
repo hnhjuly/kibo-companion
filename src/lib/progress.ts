@@ -177,11 +177,6 @@ export function markActive(progress: UserProgress): UserProgress {
     updated.streak = 1;
   }
   updated.bestStreak = Math.max(updated.bestStreak, updated.streak);
-    updated.streak = progress.streak + 1;
-  } else if (progress.lastActiveDate === "") {
-    // First ever activity — start streak at 1
-    updated.streak = 1;
-  }
   return updated;
 }
 
