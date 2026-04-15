@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO, CURRICULUM } from "@/data/curriculum";
-import { ChevronRight, ArrowRight, Check, Lock, X } from "lucide-react";
+import { ChevronRight, ArrowRight, X } from "lucide-react";
 import { COMING_SOON_MODULES } from "@/data/comingSoon";
 import { getXPForLevel } from "@/lib/progress";
 import { getTodaysTraining, exerciseToQuestion } from "@/data/dailyTraining";
 import type { Lesson } from "@/data/curriculum";
-import { ReadingCardState } from "@/data/readingCards";
 import kiboBg from "@/assets/kibo-bg.png";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
