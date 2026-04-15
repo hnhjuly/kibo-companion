@@ -96,7 +96,7 @@ const GlobalAuthButton = () => {
 const AppContent = () => {
   const { screen, setScreen, showAuth, setShowAuth } = useApp();
 
-  useEffect(() => { setScreen("home"); }, []);
+  useEffect(() => { setTimeout(() => setScreen("home"), 0); }, []);
 
   const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete", "dashboard"].includes(screen);
   const Screen = screens[screen] || HomeScreen;
