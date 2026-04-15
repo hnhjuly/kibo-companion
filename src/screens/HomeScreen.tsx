@@ -88,6 +88,7 @@ const HomeScreen = () => {
           <div className="text-[18px] font-black text-foreground leading-tight mr-auto">
             {goalGreeting ? goalGreeting : <>Hello! <NotoEmoji name="wave" size={20} /></>}
           </div>
+          <div className="flex gap-1.5 shrink-0 items-center">
             <div className="flex items-center gap-1.5 bg-background rounded-full px-3 py-1.5 text-[13px] font-extrabold text-kibo-orange">
               <NotoEmoji name="fire" size={15} /> {progress.streak}
             </div>
