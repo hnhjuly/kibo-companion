@@ -48,6 +48,51 @@ const screens: Record<string, React.FC> = {
   "dashboard": DashboardScreen,
 };
 
+const GlobalAuthButton = () => {
+  const { setShowAuth } = useApp();
+  const [user, setUser] = useState<SupaUser | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => { await supabase.auth.signOut(); };
+
+  return (
+    <div className="absolute top-3 right-3 z-[50]">
+      {user ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="w-8 h-8 rounded-full bg-kibo-green text-primary-foreground flex items-center justify-center font-extrabold text-sm shadow-sm outline-none">
+              {user.email?.[0]?.toUpperCase() || "U"}
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="min-w-[160px]">
+            <DropdownMenuLabel className="text-xs text-muted-foreground truncate max-w-[150px]">{user.email}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+              <LogOut className="w-3.5 h-3.5 mr-2" /> Sign out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <button
+          onClick={() => setShowAuth(true)}
+          className="flex items-center gap-1.5 bg-card text-foreground rounded-full px-3.5 py-2 text-[13px] font-extrabold shadow-sm border border-border hover:shadow-md transition-all"
+        >
+          <User className="w-3.5 h-3.5" /> Sign in
+        </button>
+      )}
+    </div>
+  );
+};
+
 const AppContent = () => {
   const { screen, setScreen, showAuth, setShowAuth } = useApp();
 
@@ -60,6 +105,7 @@ const AppContent = () => {
     <div className="w-full h-dvh flex bg-background overflow-hidden">
       {showNav && <DesktopSidebar />}
       <div className="flex-1 flex flex-col relative overflow-hidden max-w-3xl mx-auto w-full">
+        <GlobalAuthButton />
         <AnimatePresence mode="wait">
           <motion.div
             key={screen}
