@@ -137,18 +137,18 @@ const LessonsScreen = () => {
                   className="w-full p-4 flex items-center gap-3.5 text-left bg-white/60 hover:bg-white/80 transition-colors"
                 >
                   {/* Emoji badge */}
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0"
-                    style={{ background: lv.color + "15", border: `1.5px solid ${lv.color}25` }}>
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0 bg-white shadow-sm"
+                    style={{ border: `2px solid ${lv.color}30` }}>
                     {isLevelDone ? <Check className="w-5 h-5" style={{ color: lv.color }} /> : emoji}
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground/70">
                         Module {lv.id}
                       </span>
                       {isLevelDone && (
-                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full bg-kibo-green/15 text-kibo-green">
+                        <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-kibo-green/20 text-kibo-green">
                           COMPLETE
                         </span>
                       )}
@@ -157,12 +157,12 @@ const LessonsScreen = () => {
                       )}
                     </div>
                     <div className="text-[15px] font-black text-foreground truncate">{lv.title}</div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden max-w-[120px]">
+                    <div className="flex items-center gap-2 mt-1.5">
+                      <div className="flex-1 h-2 bg-white/70 rounded-full overflow-hidden max-w-[140px] border border-black/5">
                         <div className="h-full rounded-full transition-all duration-500"
                           style={{ width: `${lvProgress * 100}%`, background: lv.color }} />
                       </div>
-                      <span className="text-[11px] font-bold text-muted-foreground">{lvCompleted}/{lvTotal}</span>
+                      <span className="text-[11px] font-bold text-muted-foreground/80">{lvCompleted}/{lvTotal}</span>
                     </div>
                   </div>
 
