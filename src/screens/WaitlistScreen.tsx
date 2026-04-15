@@ -34,7 +34,7 @@ const WaitlistScreen = () => {
 
   return (
     <div className="min-h-dvh w-full flex flex-col items-center justify-between relative overflow-hidden"
-      style={{ background: "linear-gradient(180deg, #f0faf2 0%, #e8f5eb 20%, #dff0e8 40%, #eef6f0 60%, #f5f9f6 80%, #fafcfb 100%)" }}>
+      style={{ background: "linear-gradient(180deg, #f0faf2 0%, #e8f5eb 15%, #dff0e8 30%, #eef6f0 50%, #f8fbf9 70%, #ffffff 90%)" }}>
       
       {/* Subtle sparkle overlay */}
       <div className="absolute inset-0 pointer-events-none opacity-30"
