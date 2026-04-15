@@ -91,7 +91,6 @@ const AppContent = () => {
     <div className="w-full h-dvh flex bg-background overflow-hidden">
       <DesktopSidebar />
       <div className="flex-1 flex flex-col relative overflow-hidden max-w-3xl mx-auto w-full">
-        <GlobalAuthButton />
         <AnimatePresence mode="wait">
           <motion.div
             key={screen}
