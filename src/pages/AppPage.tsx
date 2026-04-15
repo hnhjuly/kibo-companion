@@ -53,7 +53,7 @@ const GlobalAuthButton = () => {
   const handleSignOut = async () => { await supabase.auth.signOut(); };
 
   return (
-    <div className="absolute top-3 right-3 z-[50]">
+    <div className="absolute top-2.5 right-2.5 z-[50]">
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
