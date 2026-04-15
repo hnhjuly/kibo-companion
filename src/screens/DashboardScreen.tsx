@@ -180,6 +180,7 @@ const DashboardScreen = () => {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    animation: { duration: 400, easing: "easeOutQuart" as const },
     plugins: { legend: { display: false }, tooltip: { bodyFont: { family: "Nunito" }, titleFont: { family: "Nunito" } } },
     scales: {
       x: { ticks: { color: "rgba(0,0,0,.3)", font: { size: 11, family: "Nunito", weight: "bold" as const } }, grid: { display: false } },
