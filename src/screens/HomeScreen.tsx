@@ -158,6 +158,40 @@ const HomeScreen = () => {
             } alt="Kibo" className="w-[200px] h-[200px] object-contain shrink-0 relative z-10 -mb-1 mr-2 drop-shadow-lg" />
           </div>
 
+          {/* Quick Quiz */}
+          <div>
+            <h3 className="text-[17px] font-black text-foreground mb-3 flex items-center gap-2">
+              <NotoEmoji name="target" size={20} /> Quick Quiz
+            </h3>
+            <div className="flex gap-2.5 overflow-x-auto pb-1" style={{ scrollbarWidth: "none" }}>
+              {allLevels.map((level, idx) => {
+                const done = level.lessons.filter(l => progress.completedLessons.includes(l.id)).length;
+                const total = level.lessons.length;
+                const isLocked = idx > 0 && allLevels[idx - 1].lessons.some(l => !progress.completedLessons.includes(l.id)) && done === 0;
+                return (
+                  <button key={level.id} onClick={() => !isLocked && startQuickQuiz(idx)} disabled={isLocked}
+                    className={`bg-card rounded-[14px] p-3.5 border-[1.5px] min-w-[130px] shrink-0 flex flex-col text-left transition-all ${
+                      isLocked ? "border-border opacity-50" : "border-border hover:border-kibo-green hover:bg-kibo-green/5"
+                    }`}>
+                    <div className="w-9 h-9 rounded-[10px] flex items-center justify-center text-lg mb-2"
+                      style={{ background: level.color + "20" }}>
+                      <NotoEmoji name={idx === 0 ? "sparkles" : idx === 1 ? "robot" : idx === 2 ? "pencil" : idx === 3 ? "lightbulb" : idx === 4 ? "search" : idx === 5 ? "shield" : "star"} size={20} />
+                    </div>
+                    <div className="text-[12px] font-extrabold text-foreground leading-tight mb-1">{level.title}</div>
+                    <div className="text-[10px] text-muted-foreground font-semibold mb-2">
+                      {isLocked ? <><NotoEmoji name="lock" size={10} /> Locked</> : `${done}/${total} done`}
+                    </div>
+                    {!isLocked && (
+                      <div className="h-1.5 bg-muted rounded-full overflow-hidden w-full">
+                        <div className="h-full rounded-full bg-kibo-green transition-all" style={{ width: `${(done / total) * 100}%` }} />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Today's Training */}
           <div>
             <div className="flex justify-between items-center mb-3">
