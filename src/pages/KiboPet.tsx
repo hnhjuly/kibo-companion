@@ -69,6 +69,7 @@ const CDS={feed:8000,play:15000,rest:12000,pet:2500};
 const CSS=`
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 .kp-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#b8d4f0;background-image:radial-gradient(circle at 20% 30%,#c8e4ff 0%,transparent 50%),radial-gradient(circle at 80% 70%,#ffd6e8 0%,transparent 50%);font-family:'Press Start 2P',monospace;overflow:hidden;}
+.kp-wrap.embedded{min-height:unset;background:none;background-image:none;}
 .kp-dev{width:220px;background:linear-gradient(170deg,#ffe8f0 0%,#ffd0e4 40%,#ffb8d4 100%);border-radius:50% 50% 42% 42% / 18% 18% 14% 14%;padding:22px 18px 30px;position:relative;box-shadow:0 0 0 3px #e890b0,0 8px 0 3px #cc7090,0 12px 30px rgba(180,80,120,.4),inset 0 3px 6px rgba(255,255,255,.6),inset 0 -4px 8px rgba(200,80,120,.2);}
 .kp-ear{position:absolute;top:16px;width:22px;height:22px;background:#ffb8d4;border-radius:50%;border:3px solid #e890b0;box-shadow:0 2px 0 #cc7090;}
 .kp-el{left:-8px;}.kp-er{right:-8px;}
