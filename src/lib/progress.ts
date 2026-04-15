@@ -167,7 +167,16 @@ export function markActive(progress: UserProgress): UserProgress {
   const yesterday = getYesterday();
   if (progress.lastActiveDate === today) return progress;
   const updated = { ...progress, lastActiveDate: today };
+  // Track active dates
+  if (!updated.activeDates.includes(today)) {
+    updated.activeDates = [...updated.activeDates, today];
+  }
   if (progress.lastActiveDate === yesterday) {
+    updated.streak = progress.streak + 1;
+  } else if (progress.lastActiveDate === "") {
+    updated.streak = 1;
+  }
+  updated.bestStreak = Math.max(updated.bestStreak, updated.streak);
     updated.streak = progress.streak + 1;
   } else if (progress.lastActiveDate === "") {
     // First ever activity — start streak at 1
