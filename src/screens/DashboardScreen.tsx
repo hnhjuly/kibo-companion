@@ -352,7 +352,7 @@ const DashboardScreen = () => {
           <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-4">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[13px] font-black text-[#111827]">Module progress</span>
-              <span className="text-[11px] font-bold text-[#9ca3af]">4 / 7 unlocked</span>
+              <span className="text-[11px] font-bold text-[#9ca3af]">4 modules</span>
             </div>
             {MODULES.map((m, i) => {
               const pct = moduleProgress[i]?.pct ?? 0;
