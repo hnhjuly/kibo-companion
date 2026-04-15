@@ -53,7 +53,7 @@ const WaitlistScreen = () => {
 
         {/* Subtitle */}
         <p className="text-[16px] text-muted-foreground font-semibold text-center mb-6 leading-relaxed">
-          No coding. No overwhelm. Just simple daily training.
+          No coding. Just bite-sized daily training.
         </p>
 
         {/* Hero Image */}
