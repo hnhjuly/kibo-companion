@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
-import { useUser } from "@clerk/clerk-react";
-import { User } from "lucide-react";
 import { KIBO } from "@/data/curriculum";
 import { UserGoal } from "@/lib/progress";
 
@@ -46,7 +44,7 @@ const slides = [
 ];
 
 const OnboardingScreen = () => {
-  const { setScreen, onSetGoal, showAuth, setShowAuth } = useApp();
+  const { setScreen, onSetGoal } = useApp();
   const [slide, setSlide] = useState(0);
   const [selectedGoal, setSelectedGoal] = useState<number | null>(null);
 
@@ -61,20 +59,10 @@ const OnboardingScreen = () => {
 
   const s = slides[slide];
 
-  const { isSignedIn } = useUser();
 
   return (
     <div className="flex flex-col flex-1 justify-between p-7 pt-12"
       style={{ background: "linear-gradient(160deg, #e0f2ff, #edfcf2 40%, #fef9e7 75%, #fef0f5)" }}>
-      {/* Sign in button */}
-      {!isSignedIn && (
-        <button
-          onClick={() => setShowAuth(true)}
-          className="absolute top-5 right-5 z-10 flex items-center gap-1.5 bg-card text-foreground rounded-full px-4 py-2 text-[13px] font-extrabold shadow-sm border border-border"
-        >
-          <User className="w-4 h-4" /> Sign in
-        </button>
-      )}
       {/* Dots */}
       <div className="flex gap-2 justify-center mb-1">
         {[0, 1, 2, 3].map(i => (
