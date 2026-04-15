@@ -24,6 +24,7 @@ import FlashcardScreen from "@/screens/FlashcardScreen";
 import SpeedRoundScreen from "@/screens/SpeedRoundScreen";
 import MatchPairsScreen from "@/screens/MatchPairsScreen";
 import ReadingCardsScreen from "@/screens/ReadingCardsScreen";
+import DashboardScreen from "@/screens/DashboardScreen";
 import BottomNav from "@/components/BottomNav";
 import DesktopSidebar from "@/components/DesktopSidebar";
 import AuthModal from "@/components/AuthModal";
@@ -48,6 +49,7 @@ const screens: Record<string, React.FC> = {
   "speed-round": SpeedRoundScreen,
   "match-pairs": MatchPairsScreen,
   "reading-cards": ReadingCardsScreen,
+  "dashboard": DashboardScreen,
 };
 
 const GlobalAuthButton = () => {
@@ -88,7 +90,7 @@ const GlobalAuthButton = () => {
 
 const AppContent = () => {
   const { screen, showAuth, setShowAuth } = useApp();
-  const showNav = screen !== "waitlist" && ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete"].includes(screen);
+  const showNav = screen !== "waitlist" && ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete", "dashboard"].includes(screen);
   const Screen = screens[screen];
   const isWaitlist = screen === "waitlist";
 

@@ -1,11 +1,12 @@
 import { useApp } from "@/context/AppContext";
-import { Home, Flame, BookOpen, Search, Award, MoreHorizontal } from "lucide-react";
+import { Home, Flame, BookOpen, Search, Award, MoreHorizontal, LayoutDashboard } from "lucide-react";
 import kiboWave from "@/assets/kibo-wave.png";
 import PreloadedImg from "@/components/PreloadedImg";
 
-type Tab = "home" | "train" | "lessons" | "glossary" | "achievements" | "more";
+type Tab = "home" | "train" | "lessons" | "glossary" | "achievements" | "more" | "dashboard";
 
 const tabs: { id: Tab; icon: typeof Home; label: string }[] = [
+  { id: "dashboard", icon: LayoutDashboard, label: "Dashboard" },
   { id: "lessons", icon: BookOpen, label: "Courses" },
   { id: "home", icon: Home, label: "Learn" },
   { id: "train", icon: Flame, label: "Train" },
