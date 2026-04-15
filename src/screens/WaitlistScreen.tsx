@@ -123,7 +123,7 @@ const WaitlistScreen = () => {
           style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
           onClick={(e) => { if (e.target === e.currentTarget) setPetOpen(false); }}
         >
-          <div className="relative animate-scale-in flex items-center justify-center" style={{ transform: "scale(min(1, calc((100vh - 40px) / 520)))", transformOrigin: "center center" }}>
+          <div className="relative animate-scale-in flex items-center justify-center" style={{ transform: "scale(0.8)", transformOrigin: "center center" }}>
             {/* Close button */}
             <button
               onClick={() => setPetOpen(false)}
