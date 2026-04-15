@@ -1,5 +1,5 @@
 import { AppProvider, useApp } from "@/context/AppContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { User, LogOut } from "lucide-react";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
@@ -94,9 +94,7 @@ const GlobalAuthButton = () => {
 };
 
 const AppContent = () => {
-  const { screen, setScreen, showAuth, setShowAuth } = useApp();
-
-  useEffect(() => { setTimeout(() => setScreen("home"), 0); }, []);
+  const { screen, showAuth, setShowAuth } = useApp();
 
   const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete", "dashboard"].includes(screen);
   const Screen = screens[screen] || HomeScreen;
@@ -130,7 +128,7 @@ const AppContent = () => {
 };
 
 const AppPage = () => (
-  <AppProvider>
+  <AppProvider initialScreen="home">
     <AppContent />
   </AppProvider>
 );
