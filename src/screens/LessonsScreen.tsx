@@ -243,17 +243,17 @@ const LessonsScreen = () => {
                                 }}
                                 className={`w-full rounded-xl p-3 flex items-center gap-3 text-left transition-all ${
                                   isDone
-                                    ? "bg-kibo-green/5 border-[1.5px] border-kibo-green/20"
+                                    ? "bg-white/70 border-[1.5px] border-kibo-green/30 shadow-sm"
                                     : isActive
-                                      ? "bg-kibo-gold/5 border-[2px] border-kibo-gold/40 shadow-sm"
-                                      : "bg-muted/30 border-[1.5px] border-border opacity-60"
-                                } ${!isLocked ? "hover:shadow-sm cursor-pointer active:scale-[0.99]" : "cursor-not-allowed"}`}
+                                      ? "bg-white border-[2px] border-kibo-gold/50 shadow-md"
+                                      : "bg-white/40 border-[1.5px] border-white/50 opacity-70"
+                                } ${!isLocked ? "hover:shadow-md cursor-pointer active:scale-[0.99]" : "cursor-not-allowed"}`}
                               >
                                 {/* Number/icon */}
-                                <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-[13px] font-black shrink-0 ${
+                                <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-[13px] font-black shrink-0 shadow-sm ${
                                   isDone ? "bg-kibo-green text-primary-foreground"
                                     : isActive ? "bg-kibo-gold text-primary-foreground"
-                                    : "bg-muted text-muted-foreground/40"
+                                    : "bg-white/70 text-muted-foreground/50"
                                 }`}>
                                   {isDone ? <Check className="w-4 h-4" />
                                     : isActive ? <Play className="w-4 h-4" />
