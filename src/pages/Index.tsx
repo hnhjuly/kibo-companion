@@ -51,45 +51,27 @@ const screens: Record<string, React.FC> = {
 const GlobalAuthButton = () => {
   const { setShowAuth } = useApp();
   const [user, setUser] = useState<SupaUser | null>(null);
-  const [_, setShowMenu] = useState(false);
-
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-    return () => subscription.unsubscribe();
-  }, []);
-
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    setShowMenu(false);
   };
 
   return (
     <div className="absolute top-3 right-3 z-[50]">
       {user ? (
-        <div className="relative">
-          <button
-            onClick={() => setShowMenu(!showMenu)}
-            className="w-8 h-8 rounded-full bg-kibo-green text-primary-foreground flex items-center justify-center font-extrabold text-sm shadow-sm"
-          >
-            {user.email?.[0]?.toUpperCase() || "U"}
-          </button>
-          {showMenu && (
-            <div className="absolute right-0 top-10 bg-card border border-border rounded-xl shadow-lg p-2 min-w-[140px]">
-              <p className="text-xs text-muted-foreground px-2 py-1 truncate max-w-[130px]">{user.email}</p>
-              <button
-                onClick={handleSignOut}
-                className="flex items-center gap-2 w-full px-2 py-1.5 text-sm text-foreground hover:bg-muted rounded-lg transition-colors"
-              >
-                <LogOut className="w-3.5 h-3.5" /> Sign out
-              </button>
-            </div>
-          )}
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="w-8 h-8 rounded-full bg-kibo-green text-primary-foreground flex items-center justify-center font-extrabold text-sm shadow-sm outline-none">
+              {user.email?.[0]?.toUpperCase() || "U"}
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="min-w-[160px]">
+            <DropdownMenuLabel className="text-xs text-muted-foreground truncate max-w-[150px]">{user.email}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
+              <LogOut className="w-3.5 h-3.5 mr-2" /> Sign out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ) : (
         <button
           onClick={() => setShowAuth(true)}
