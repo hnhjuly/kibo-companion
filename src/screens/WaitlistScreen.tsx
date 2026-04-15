@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import heroImg from "@/assets/waitlist-hero.png";
-import kLogo from "@/assets/kibo-k-logo.png";
+
 import NotoEmoji from "@/components/NotoEmoji";
 
 const WaitlistScreen = () => {
