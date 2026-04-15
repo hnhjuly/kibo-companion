@@ -29,6 +29,7 @@ import DesktopSidebar from "@/components/DesktopSidebar";
 import AuthModal from "@/components/AuthModal";
 
 const screens: Record<string, React.FC> = {
+  waitlist: WaitlistScreen,
   onboarding: OnboardingScreen,
   home: HomeScreen,
   lessons: LessonsScreen,
