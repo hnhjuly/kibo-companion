@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import heroImg from "@/assets/waitlist-hero.png";
+import KiboPet from "@/pages/KiboPet";
 
 import NotoEmoji from "@/components/NotoEmoji";
 
@@ -9,6 +10,7 @@ const WaitlistScreen = () => {
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [petOpen, setPetOpen] = useState(false);
 
   const handleSubmit = async () => {
     const trimmed = email.trim().toLowerCase();
@@ -63,6 +65,15 @@ const WaitlistScreen = () => {
           onLoad={useCallback((e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.style.opacity = "1"; }, [])}
         />
 
+        {/* Play with Kibo button */}
+        <button
+          onClick={() => setPetOpen(true)}
+          className="mb-6 px-5 py-2.5 rounded-full font-black text-[13px] text-white transition-all active:scale-95 hover:scale-105 shadow-md flex items-center gap-2"
+          style={{ background: "linear-gradient(135deg, #ffb8d4, #e890b0)" }}
+        >
+          <span className="text-[16px]">🎮</span> Play with Kibo Pet
+        </button>
+
         {/* Email input + button */}
         {!submitted ? (
           <div className="w-full flex items-center bg-card rounded-full border-[1.5px] border-border shadow-sm overflow-hidden pl-4 pr-1.5 py-1.5">
@@ -104,6 +115,26 @@ const WaitlistScreen = () => {
           Join 1,200+ early learners
         </p>
       </div>
+
+      {/* Kibo Pet Popup */}
+      {petOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center animate-fade-in"
+          style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
+          onClick={(e) => { if (e.target === e.currentTarget) setPetOpen(false); }}
+        >
+          <div className="relative animate-scale-in" style={{ transform: "scale(1.1)" }}>
+            {/* Close button positioned on the tamagotchi ear */}
+            <button
+              onClick={() => setPetOpen(false)}
+              className="absolute -top-2 -right-2 z-[60] w-8 h-8 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-[14px] font-black text-muted-foreground hover:bg-white transition-colors"
+            >
+              ✕
+            </button>
+            <KiboPet embedded />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
