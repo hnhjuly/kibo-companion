@@ -6,8 +6,7 @@ import PreloadedImg from "@/components/PreloadedImg";
 import NotoEmoji from "@/components/NotoEmoji";
 import { motion } from "framer-motion";
 import {
-  LayoutDashboard, BookOpen, Zap, BookMarked, Search,
-  Trophy, BarChart3, UserCircle, Settings, ChevronRight
+  BookOpen, BarChart3, ChevronRight
 } from "lucide-react";
 import {
   Chart as ChartJS,
@@ -26,15 +25,6 @@ type Period = "7d" | "30d" | "all";
 type GameMode = "all" | "speed" | "flash" | "daily" | "pairs";
 
 // ─── Constants ───────────────────────────────────────────
-const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: "Dashboard",   screen: "dashboard" as const },
-  { icon: BookOpen,        label: "Learn",        screen: "home"      as const },
-  { icon: Zap,             label: "Train",        screen: "train"     as const },
-  { icon: BookMarked,      label: "Lessons",      screen: "lessons"   as const },
-  { icon: Search,          label: "Glossary",     screen: "glossary"  as const },
-  { icon: Trophy,          label: "Achievements", screen: "achievements" as const },
-  { icon: BarChart3,       label: "Leaderboard",  screen: "home"      as const },
-] as const;
 
 const MODULES: { e: string; n: string; id: string; color: string; locked?: boolean }[] = [
   { e: "🤖", n: "AI Basics",     id: "m1", color: "#86efac" },
@@ -245,23 +235,37 @@ const DashboardScreen = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#f6f7fa]" style={{ fontFamily: "'Nunito', sans-serif" }}>
+    <div className="flex flex-col h-full overflow-hidden bg-[#f6f7fa]" style={{ fontFamily: "'Nunito', sans-serif" }}>
 
-      {/* ── SIDEBAR ── */}
-      <aside className="w-[228px] bg-white border-r-[1.5px] border-[#f0f2f5] flex flex-col shrink-0 overflow-y-auto">
-
-        {/* Logo */}
-        <div className="px-[18px] py-5 flex items-center gap-[9px] border-b-[1.5px] border-[#f0f2f5]">
-          <PreloadedImg src={KIBO.happy} alt="Kibo" className="w-[30px] h-[30px] object-contain" />
-          <span className="text-[19px] font-black text-[#3db74a] tracking-tight">Kibo</span>
-          <span className="ml-auto text-[9px] font-black tracking-[.07em] uppercase bg-[#fffbeb] text-[#92400e] border border-[#fde68a] px-[7px] py-[2px] rounded-[5px]">
-            Pro
-          </span>
+      {/* Topbar */}
+      <header className="bg-white border-b-[1.5px] border-[#f0f2f5] px-4 sm:px-6 py-3 flex items-center justify-between shrink-0">
+        <div>
+          <div className="text-[15px] font-black text-[#111827]">Dashboard</div>
+          <div className="text-[11px] font-semibold text-[#9ca3af]">
+            {new Date().toLocaleDateString("en-GB", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+          </div>
         </div>
+        <div className="flex bg-[#f6f7fa] border-[1.5px] border-[#e5e7eb] rounded-[9px] p-[3px] gap-[2px]">
+          {(["7d","30d","all"] as Period[]).map(p => (
+            <button
+              key={p}
+              onClick={() => setPeriod(p)}
+              className={`text-[11.5px] font-bold px-[13px] py-[4px] rounded-[7px] transition-all duration-100 ${
+                period === p ? "bg-white text-[#111827] shadow-sm" : "text-[#6b7280]"
+              }`}
+            >
+              {p === "7d" ? "7 days" : p === "30d" ? "30 days" : "All time"}
+            </button>
+          ))}
+        </div>
+      </header>
 
-        {/* Kibo mood panel */}
-        <div className="px-4 py-[14px] flex items-center gap-[11px] border-b-[1.5px] border-[#f0f2f5] bg-[#f0fff4]">
-          <PreloadedImg src={kiboMood} alt="Kibo" className="w-12 h-12 object-contain shrink-0" />
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-5 pb-12" style={{ scrollbarWidth: "none" }}>
+
+        {/* Kibo mood banner (mobile) */}
+        <div className="md:hidden flex items-center gap-3 bg-[#f0fff4] rounded-[12px] p-3 mb-4 border border-[#bbf7d0]/40">
+          <PreloadedImg src={kiboMood} alt="Kibo" className="w-10 h-10 object-contain shrink-0" />
           <div>
             <div className="text-[12px] font-bold text-[#166534] leading-[1.45]">{kiboMsg}</div>
             <div className="text-[10px] font-semibold text-[#4ade80] mt-[2px]">
@@ -270,343 +274,240 @@ const DashboardScreen = () => {
           </div>
         </div>
 
-        {/* Nav */}
-        <div className="px-[10px] pt-3 pb-1">
-          <div className="text-[9.5px] font-black tracking-[.08em] uppercase text-[#9ca3af] px-[10px] pb-[5px]">Navigation</div>
-          {NAV_ITEMS.map(({ icon: Icon, label, screen }) => (
-            <button
-              key={label}
-              onClick={() => setScreen(screen as any)}
-              className={`w-full flex items-center gap-[9px] px-[10px] py-[8px] rounded-[10px] text-[13px] font-bold transition-all duration-100 mb-[1px] ${
-                label === "Dashboard"
-                  ? "bg-[#e8fbe9] text-[#166534]"
-                  : "text-[#6b7280] hover:bg-[#f6f7fa] hover:text-[#111827]"
-              }`}
-            >
-              <Icon size={15} strokeWidth={2} className="shrink-0 opacity-60" />
-              {label}
-            </button>
-          ))}
+        {/* Metrics */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+          <MetricCard
+            iconBg="#f0fdf4" iconColor="#16a34a" icon={NotoEmoji as any}
+            badge="XP" badgeBg="#f0fdf4" badgeColor="#166534"
+            val={pd.xp} label="Total XP earned" delta={pd.dxp}
+          />
+          <MetricCard
+            iconBg="#fff7ed" iconColor="#ea580c" icon={NotoEmoji as any}
+            badge="🔥 Personal best" badgeBg="#fff7ed" badgeColor="#9a3412"
+            val={pd.str} label="Day streak" delta={pd.dstr}
+          />
+          <MetricCard
+            iconBg="#eff6ff" iconColor="#2563eb" icon={BookOpen}
+            badge={`${Math.round((parseInt(pd.les)/21)*100)}%`} badgeBg="#eff6ff" badgeColor="#1d4ed8"
+            val={pd.les} label="Lessons done" delta={pd.dles}
+          />
+          <MetricCard
+            iconBg="#f5f3ff" iconColor="#7c3aed" icon={BarChart3}
+            badge="Accuracy" badgeBg="#f5f3ff" badgeColor="#6d28d9"
+            val={pd.acc} label="Answer accuracy" delta={pd.dacc}
+          />
         </div>
 
-        {/* Streak pill */}
-        <div className="mx-[10px] mt-3 rounded-[12px] p-[13px] flex items-center gap-[10px]" style={{ background: "linear-gradient(135deg,#1a1a2e,#2d2d5e)" }}>
-          <span className="text-[22px] shrink-0">🔥</span>
-          <div className="flex-1">
-            <div className="text-[20px] font-black text-[#ffb800] leading-none">{streak}</div>
-            <div className="text-[10px] font-bold text-white/40 mt-[1px]">Day streak</div>
-          </div>
-          {streak >= 7 && (
-            <span className="text-[10px] font-extrabold text-[#3db74a] bg-[rgba(61,183,74,.15)] px-[7px] py-[2px] rounded-[5px]">
-              Best!
-            </span>
-          )}
-        </div>
+        {/* Row 1: XP chart + calendar */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 mb-3">
 
-        {/* XP level bar */}
-        <div className="mx-[10px] mt-[10px] bg-[#f6f7fa] rounded-[10px] p-3">
-          <div className="flex justify-between text-[11px] font-bold text-[#6b7280] mb-[6px]">
-            <span>Level {progress.level}</span>
-            <span>{progress.xp} / {xpForLevel} XP</span>
-          </div>
-          <div className="h-[6px] bg-white rounded-full overflow-hidden">
-            <motion.div
-              className="h-full rounded-full bg-[#3db74a]"
-              initial={{ width: 0 }}
-              animate={{ width: `${xpPct}%` }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            />
-          </div>
-        </div>
-
-        {/* Unlock card */}
-        <div className="mx-[10px] mt-[10px]">
-          <div className="bg-[#3db74a] rounded-[10px] p-[12px] flex items-center gap-[9px]">
-            <p className="flex-1 text-[11px] font-bold text-white/85 leading-[1.4]">
-              3 modules locked. Finish your AI path.
-            </p>
-            <button className="bg-white/22 border border-white/30 text-white text-[11px] font-extrabold px-[10px] py-[5px] rounded-[7px] whitespace-nowrap hover:bg-white/32 transition-colors">
-              $9.99
-            </button>
-          </div>
-        </div>
-
-        {/* Account section */}
-        <div className="px-[10px] mt-3 pb-4">
-          <div className="text-[9.5px] font-black tracking-[.08em] uppercase text-[#9ca3af] px-[10px] pb-[5px]">Account</div>
-          {[{ icon: UserCircle, label: "Profile" }, { icon: Settings, label: "Settings" }].map(({ icon: Icon, label }) => (
-            <button key={label} className="w-full flex items-center gap-[9px] px-[10px] py-[8px] rounded-[10px] text-[13px] font-bold text-[#6b7280] hover:bg-[#f6f7fa] hover:text-[#111827] transition-all duration-100 mb-[1px]">
-              <Icon size={15} strokeWidth={2} className="shrink-0 opacity-60" />
-              {label}
-            </button>
-          ))}
-        </div>
-      </aside>
-
-      {/* ── MAIN ── */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-
-        {/* Topbar */}
-        <header className="bg-white border-b-[1.5px] border-[#f0f2f5] h-[58px] px-[26px] flex items-center justify-between shrink-0">
-          <div>
-            <div className="text-[15px] font-black text-[#111827]">Dashboard</div>
-            <div className="text-[11px] font-semibold text-[#9ca3af]">
-              {new Date().toLocaleDateString("en-GB", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+          {/* XP chart */}
+          <div className="lg:col-span-3 bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-black text-[#111827]">XP over time</span>
+              <button className="text-[11px] font-extrabold text-[#3db74a]">Export</button>
+            </div>
+            <div className="flex gap-3 mb-[10px]">
+              <span className="flex items-center gap-[4px] text-[11px] font-bold text-[#6b7280]">
+                <span className="w-[9px] h-[9px] rounded-[2px] bg-[#bbf7d0] inline-block"/>XP earned
+              </span>
+              <span className="flex items-center gap-[4px] text-[11px] font-bold text-[#6b7280]">
+                <span className="w-[9px] h-[9px] rounded-[2px] bg-[#e5e7eb] border border-dashed border-[#d1d5db] inline-block"/>Daily goal
+              </span>
+            </div>
+            <div style={{ position: "relative", width: "100%", height: 170 }}>
+              <Bar data={xpChartData as any} options={chartOptions as any} />
             </div>
           </div>
-          <div className="flex bg-[#f6f7fa] border-[1.5px] border-[#e5e7eb] rounded-[9px] p-[3px] gap-[2px]">
-            {(["7d","30d","all"] as Period[]).map(p => (
+
+          {/* Streak calendar */}
+          <div className="lg:col-span-2 bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-4">
+            <div className="text-[13px] font-black text-[#111827] mb-3">Streak calendar</div>
+            <div className="grid grid-cols-7 gap-1 mb-[5px] text-center">
+              {["M","T","W","T","F","S","S"].map((d,i) => (
+                <span key={i} className="text-[10px] font-bold text-[#9ca3af]">{d}</span>
+              ))}
+            </div>
+            <div className="grid grid-cols-7 gap-1 mb-[11px]">
+              {CAL_PATTERN.map((v,i) => (
+                <div
+                  key={i}
+                  className={`h-[28px] rounded-[6px] transition-transform hover:scale-110 ${
+                    i === CAL_PATTERN.length - 1
+                      ? "bg-[#3db74a] outline outline-2 outline-[#86efac] outline-offset-1"
+                      : v === 1 ? "bg-[#bbf7d0]"
+                      : v === 0 ? "bg-[#fee2e2]"
+                      : "bg-[#f6f7fa]"
+                  }`}
+                />
+              ))}
+            </div>
+            <div className="flex gap-[14px] text-[11px] font-bold text-[#6b7280]">
+              <span>Current <strong className="text-[#111827]">{streak} days</strong></span>
+              <span>Best <strong className="text-[#111827]">{streak} days</strong></span>
+            </div>
+          </div>
+        </div>
+
+        {/* Upsell banner */}
+        <div className="rounded-[14px] p-4 flex flex-col sm:flex-row items-center gap-4 mb-3 relative overflow-hidden" style={{ background: "#0c111d" }}>
+          <div className="absolute top-[-40px] right-[-40px] w-[160px] h-[160px] pointer-events-none" style={{ background: "radial-gradient(circle,rgba(61,183,74,.18) 0%,transparent 70%)" }} />
+          <PreloadedImg src={KIBO.thinking} alt="Kibo" className="w-[54px] h-[54px] object-contain shrink-0 relative z-10" />
+          <div className="flex-1 relative z-10 text-center sm:text-left">
+            <h3 className="text-[14px] font-black text-white mb-[3px]">3 modules still locked</h3>
+            <p className="text-[11.5px] font-semibold leading-relaxed" style={{ color: "rgba(255,255,255,.45)" }}>
+              Unlock AI for Work, AI for Creativity and AI Safety to complete your path.
+            </p>
+            <div className="flex gap-[5px] mt-[7px] flex-wrap justify-center sm:justify-start">
+              {[{l:"💼 AI for Work",c:"rgba(74,158,255,.15)",tc:"#93c5fd"},{l:"🎨 AI Creativity",c:"rgba(255,140,66,.15)",tc:"#fdba74"},{l:"🛡️ AI Safety",c:"rgba(155,109,255,.15)",tc:"#c4b5fd"}].map(m=>(
+                <span key={m.l} className="text-[10px] font-extrabold px-[8px] py-[2px] rounded-[5px]" style={{ background: m.c, color: m.tc }}>{m.l}</span>
+              ))}
+            </div>
+          </div>
+          <button className="relative z-10 px-5 py-[10px] rounded-[10px] bg-[#3db74a] text-white text-[13px] font-black border-none shrink-0 hover:-translate-y-[1px] transition-transform" style={{ boxShadow: "0 4px 0 #2ea33d" }}>
+            Unlock All - $9.99
+          </button>
+        </div>
+
+        {/* Row 2: Module progress + accuracy */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+          <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-black text-[#111827]">Module progress</span>
+              <span className="text-[11px] font-bold text-[#9ca3af]">4 / 7 unlocked</span>
+            </div>
+            {MODULES.map((m, i) => {
+              const pct = moduleProgress[i]?.pct ?? 0;
+              const pc = pct === 100 ? "#16a34a" : pct > 60 ? "#d97706" : pct > 0 ? "#6b7280" : "#9ca3af";
+              return (
+                <div key={m.id} className="flex items-center gap-[10px] mb-[9px] last:mb-0">
+                  <div className="flex items-center gap-[7px] w-[124px] shrink-0">
+                    <span className="text-[14px] w-[18px] text-center shrink-0">{m.e}</span>
+                    <span className={`text-[12px] font-bold truncate ${m.locked ? "text-[#9ca3af]" : "text-[#111827]"}`}>{m.n}</span>
+                  </div>
+                  <ProgressBar pct={pct} color={m.color} />
+                  <span className="text-[11px] font-extrabold w-[30px] text-right shrink-0" style={{ color: pc }}>{pct}%</span>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-4">
+            <div className="text-[13px] font-black text-[#111827] mb-3">Accuracy by topic</div>
+            {TOPICS.map(t => {
+              const c  = t.p >= 80 ? "#86efac" : t.p >= 65 ? "#fde68a" : "#fca5a5";
+              const tc = t.p >= 80 ? "#166534" : t.p >= 65 ? "#92400e" : "#991b1b";
+              return (
+                <div key={t.n} className="flex items-center gap-[10px] mb-[9px] last:mb-0">
+                  <div className="w-[108px] shrink-0">
+                    <span className="text-[12px] font-bold text-[#111827]">{t.n}</span>
+                  </div>
+                  <ProgressBar pct={t.p} color={c} />
+                  <span className="text-[11px] font-extrabold w-[30px] text-right shrink-0" style={{ color: tc }}>{t.p}%</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Row 3: Game chart */}
+        <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-4 mb-3">
+          <div className="text-[13px] font-black text-[#111827] mb-3">Game mode performance</div>
+          <div className="flex gap-[5px] mb-3 flex-wrap">
+            {(["all","speed","flash","daily","pairs"] as GameMode[]).map(m => (
               <button
-                key={p}
-                onClick={() => setPeriod(p)}
-                className={`text-[11.5px] font-bold px-[13px] py-[4px] rounded-[7px] transition-all duration-100 ${
-                  period === p ? "bg-white text-[#111827] shadow-sm" : "text-[#6b7280]"
+                key={m}
+                onClick={() => setGameMode(m)}
+                className={`text-[12px] font-bold px-[13px] py-[5px] rounded-[8px] border-[1.5px] transition-all duration-100 ${
+                  gameMode === m
+                    ? "bg-[#e8fbe9] border-[rgba(61,183,74,.4)] text-[#166534] font-extrabold"
+                    : "border-[#e5e7eb] text-[#6b7280] hover:border-[#86efac] hover:text-[#166534]"
                 }`}
               >
-                {p === "7d" ? "7 days" : p === "30d" ? "30 days" : "All time"}
+                {{ all: "All modes", speed: "Speed round", flash: "Flashcards", daily: "Daily challenge", pairs: "Match pairs" }[m]}
               </button>
             ))}
           </div>
-        </header>
-
-        {/* Scrollable content */}
-        <div className="flex-1 overflow-y-auto px-[26px] py-[22px] pb-12" style={{ scrollbarWidth: "none" }}>
-
-          {/* Metrics */}
-          <div className="grid grid-cols-4 gap-[12px] mb-[18px]">
-            <MetricCard
-              iconBg="#f0fdf4" iconColor="#16a34a" icon={NotoEmoji as any}
-              badge="XP" badgeBg="#f0fdf4" badgeColor="#166534"
-              val={pd.xp} label="Total XP earned" delta={pd.dxp}
-            />
-            <MetricCard
-              iconBg="#fff7ed" iconColor="#ea580c" icon={NotoEmoji as any}
-              badge="🔥 Personal best" badgeBg="#fff7ed" badgeColor="#9a3412"
-              val={pd.str} label="Day streak" delta={pd.dstr}
-            />
-            <MetricCard
-              iconBg="#eff6ff" iconColor="#2563eb" icon={BookOpen}
-              badge={`${Math.round((parseInt(pd.les)/21)*100)}%`} badgeBg="#eff6ff" badgeColor="#1d4ed8"
-              val={pd.les} label="Lessons done" delta={pd.dles}
-            />
-            <MetricCard
-              iconBg="#f5f3ff" iconColor="#7c3aed" icon={BarChart3}
-              badge="Accuracy" badgeBg="#f5f3ff" badgeColor="#6d28d9"
-              val={pd.acc} label="Answer accuracy" delta={pd.dacc}
-            />
+          <div style={{ position: "relative", width: "100%", height: 190 }}>
+            {gd.type === "bar"
+              ? <Bar data={gameChartData as any} options={chartOptions as any} />
+              : <Line data={gameChartData as any} options={chartOptions as any} />
+            }
           </div>
+        </div>
 
-          {/* Row 1: XP chart + calendar */}
-          <div className="grid gap-[14px] mb-[14px]" style={{ gridTemplateColumns: "3fr 2fr" }}>
+        {/* Row 4: Activity + badges + leaderboard */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
 
-            {/* XP chart */}
-            <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-[18px]">
-              <div className="flex items-center justify-between mb-[14px]">
-                <span className="text-[13px] font-black text-[#111827]">XP over time</span>
-                <button className="text-[11px] font-extrabold text-[#3db74a]">Export</button>
-              </div>
-              <div className="flex gap-3 mb-[10px]">
-                <span className="flex items-center gap-[4px] text-[11px] font-bold text-[#6b7280]">
-                  <span className="w-[9px] h-[9px] rounded-[2px] bg-[#bbf7d0] inline-block"/>XP earned
-                </span>
-                <span className="flex items-center gap-[4px] text-[11px] font-bold text-[#6b7280]">
-                  <span className="w-[9px] h-[9px] rounded-[2px] bg-[#e5e7eb] border border-dashed border-[#d1d5db] inline-block"/>Daily goal
+          {/* Activity */}
+          <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-black text-[#111827]">Recent activity</span>
+              <button className="text-[11px] font-extrabold text-[#3db74a]">View all</button>
+            </div>
+            {ACTIVITY.map((a, i) => (
+              <div key={i} className="flex items-start gap-[10px] py-[9px] border-b-[1.5px] border-[#f0f2f5] last:border-none">
+                <div className="w-[7px] h-[7px] rounded-full shrink-0 mt-[5px]" style={{ background: a.color }} />
+                <div className="flex-1 min-w-0">
+                  <div className="text-[12px] font-bold text-[#111827] leading-[1.4]">{a.text}</div>
+                  <div className="text-[10.5px] font-semibold text-[#9ca3af] mt-[1px]">{a.time}</div>
+                </div>
+                <span className="text-[11px] font-extrabold text-[#166534] bg-[#f0fff4] border border-[rgba(61,183,74,.2)] px-[8px] py-[2px] rounded-[6px] whitespace-nowrap shrink-0">
+                  {a.xp}
                 </span>
               </div>
-              <div style={{ position: "relative", width: "100%", height: 170 }}>
-                <Bar data={xpChartData as any} options={chartOptions as any} />
-              </div>
-            </div>
-
-            {/* Streak calendar */}
-            <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-[18px]">
-              <div className="text-[13px] font-black text-[#111827] mb-[14px]">Streak calendar</div>
-              <div className="grid grid-cols-7 gap-1 mb-[5px] text-center">
-                {["M","T","W","T","F","S","S"].map((d,i) => (
-                  <span key={i} className="text-[10px] font-bold text-[#9ca3af]">{d}</span>
-                ))}
-              </div>
-              <div className="grid grid-cols-7 gap-1 mb-[11px]">
-                {CAL_PATTERN.map((v,i) => (
-                  <div
-                    key={i}
-                    className={`h-[28px] rounded-[6px] transition-transform hover:scale-110 ${
-                      i === CAL_PATTERN.length - 1
-                        ? "bg-[#3db74a] outline outline-2 outline-[#86efac] outline-offset-1"
-                        : v === 1 ? "bg-[#bbf7d0]"
-                        : v === 0 ? "bg-[#fee2e2]"
-                        : "bg-[#f6f7fa]"
-                    }`}
-                  />
-                ))}
-              </div>
-              <div className="flex gap-[14px] text-[11px] font-bold text-[#6b7280]">
-                <span>Current <strong className="text-[#111827]">{streak} days</strong></span>
-                <span>Best <strong className="text-[#111827]">{streak} days</strong></span>
-              </div>
-            </div>
+            ))}
           </div>
 
-          {/* Upsell banner */}
-          <div className="rounded-[14px] p-[18px] flex items-center gap-[15px] mb-[14px] relative overflow-hidden" style={{ background: "#0c111d" }}>
-            <div className="absolute top-[-40px] right-[-40px] w-[160px] h-[160px] pointer-events-none" style={{ background: "radial-gradient(circle,rgba(61,183,74,.18) 0%,transparent 70%)" }} />
-            <PreloadedImg src={KIBO.thinking} alt="Kibo" className="w-[54px] h-[54px] object-contain shrink-0 relative z-10" />
-            <div className="flex-1 relative z-10">
-              <h3 className="text-[14px] font-black text-white mb-[3px]">3 modules still locked</h3>
-              <p className="text-[11.5px] font-semibold leading-relaxed" style={{ color: "rgba(255,255,255,.45)" }}>
-                Unlock AI for Work, AI for Creativity and AI Safety to complete your path.
-              </p>
-              <div className="flex gap-[5px] mt-[7px] flex-wrap">
-                {[{l:"💼 AI for Work",c:"rgba(74,158,255,.15)",tc:"#93c5fd"},{l:"🎨 AI Creativity",c:"rgba(255,140,66,.15)",tc:"#fdba74"},{l:"🛡️ AI Safety",c:"rgba(155,109,255,.15)",tc:"#c4b5fd"}].map(m=>(
-                  <span key={m.l} className="text-[10px] font-extrabold px-[8px] py-[2px] rounded-[5px]" style={{ background: m.c, color: m.tc }}>{m.l}</span>
-                ))}
-              </div>
+          {/* Badges */}
+          <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-black text-[#111827]">Badges</span>
+              <span className="text-[11px] font-bold text-[#9ca3af]">4 / 10</span>
             </div>
-            <button className="relative z-10 px-5 py-[10px] rounded-[10px] bg-[#3db74a] text-white text-[13px] font-black border-none shrink-0 hover:-translate-y-[1px] transition-transform" style={{ boxShadow: "0 4px 0 #2ea33d" }}>
-              Unlock All — $9.99
-            </button>
-          </div>
-
-          {/* Row 2: Module progress + accuracy */}
-          <div className="grid grid-cols-2 gap-[14px] mb-[14px]">
-            <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-[18px]">
-              <div className="flex items-center justify-between mb-[14px]">
-                <span className="text-[13px] font-black text-[#111827]">Module progress</span>
-                <span className="text-[11px] font-bold text-[#9ca3af]">4 / 7 unlocked</span>
-              </div>
-              {MODULES.map((m, i) => {
-                const pct = moduleProgress[i]?.pct ?? 0;
-                const pc = pct === 100 ? "#16a34a" : pct > 60 ? "#d97706" : pct > 0 ? "#6b7280" : "#9ca3af";
-                return (
-                  <div key={m.id} className="flex items-center gap-[10px] mb-[9px] last:mb-0">
-                    <div className="flex items-center gap-[7px] w-[124px] shrink-0">
-                      <span className="text-[14px] w-[18px] text-center shrink-0">{m.e}</span>
-                      <span className={`text-[12px] font-bold truncate ${m.locked ? "text-[#9ca3af]" : "text-[#111827]"}`}>{m.n}</span>
-                    </div>
-                    <ProgressBar pct={pct} color={m.color} />
-                    <span className="text-[11px] font-extrabold w-[30px] text-right shrink-0" style={{ color: pc }}>{pct}%</span>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-[18px]">
-              <div className="text-[13px] font-black text-[#111827] mb-[14px]">Accuracy by topic</div>
-              {TOPICS.map(t => {
-                const c  = t.p >= 80 ? "#86efac" : t.p >= 65 ? "#fde68a" : "#fca5a5";
-                const tc = t.p >= 80 ? "#166534" : t.p >= 65 ? "#92400e" : "#991b1b";
-                return (
-                  <div key={t.n} className="flex items-center gap-[10px] mb-[9px] last:mb-0">
-                    <div className="w-[108px] shrink-0">
-                      <span className="text-[12px] font-bold text-[#111827]">{t.n}</span>
-                    </div>
-                    <ProgressBar pct={t.p} color={c} />
-                    <span className="text-[11px] font-extrabold w-[30px] text-right shrink-0" style={{ color: tc }}>{t.p}%</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Row 3: Game chart */}
-          <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-[18px] mb-[14px]">
-            <div className="text-[13px] font-black text-[#111827] mb-[14px]">Game mode performance</div>
-            <div className="flex gap-[5px] mb-[14px] flex-wrap">
-              {(["all","speed","flash","daily","pairs"] as GameMode[]).map(m => (
-                <button
-                  key={m}
-                  onClick={() => setGameMode(m)}
-                  className={`text-[12px] font-bold px-[13px] py-[5px] rounded-[8px] border-[1.5px] transition-all duration-100 ${
-                    gameMode === m
-                      ? "bg-[#e8fbe9] border-[rgba(61,183,74,.4)] text-[#166534] font-extrabold"
-                      : "border-[#e5e7eb] text-[#6b7280] hover:border-[#86efac] hover:text-[#166534]"
-                  }`}
+            <div className="grid grid-cols-3 gap-2">
+              {BADGES.map((b, i) => (
+                <div
+                  key={i}
+                  className={`border-[1.5px] border-[#f0f2f5] rounded-[11px] p-3 text-center transition-all duration-100 hover:border-[#86efac] hover:-translate-y-[1px] ${!b.on ? "opacity-40" : ""}`}
                 >
-                  {{ all: "All modes", speed: "Speed round", flash: "Flashcards", daily: "Daily challenge", pairs: "Match pairs" }[m]}
-                </button>
-              ))}
-            </div>
-            <div style={{ position: "relative", width: "100%", height: 190 }}>
-              {gd.type === "bar"
-                ? <Bar data={gameChartData as any} options={chartOptions as any} />
-                : <Line data={gameChartData as any} options={chartOptions as any} />
-              }
-            </div>
-          </div>
-
-          {/* Row 4: Activity + badges + leaderboard */}
-          <div className="grid gap-[14px]" style={{ gridTemplateColumns: "2fr 1.3fr 1.3fr" }}>
-
-            {/* Activity */}
-            <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-[18px]">
-              <div className="flex items-center justify-between mb-[14px]">
-                <span className="text-[13px] font-black text-[#111827]">Recent activity</span>
-                <button className="text-[11px] font-extrabold text-[#3db74a]">View all</button>
-              </div>
-              {ACTIVITY.map((a, i) => (
-                <div key={i} className="flex items-start gap-[10px] py-[9px] border-b-[1.5px] border-[#f0f2f5] last:border-none">
-                  <div className="w-[7px] h-[7px] rounded-full shrink-0 mt-[5px]" style={{ background: a.color }} />
-                  <div className="flex-1">
-                    <div className="text-[12px] font-bold text-[#111827] leading-[1.4]">{a.text}</div>
-                    <div className="text-[10.5px] font-semibold text-[#9ca3af] mt-[1px]">{a.time}</div>
-                  </div>
-                  <span className="text-[11px] font-extrabold text-[#166534] bg-[#f0fff4] border border-[rgba(61,183,74,.2)] px-[8px] py-[2px] rounded-[6px] whitespace-nowrap shrink-0">
-                    {a.xp}
-                  </span>
+                  <span className="text-[22px] block mb-1">{b.e}</span>
+                  <span className="text-[10px] font-extrabold text-[#111827] block leading-[1.3]">{b.n}</span>
+                  <span className={`text-[10px] font-bold block mt-[2px] ${b.on ? "text-[#166534]" : "text-[#9ca3af]"}`}>{b.s}</span>
                 </div>
               ))}
             </div>
-
-            {/* Badges */}
-            <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-[18px]">
-              <div className="flex items-center justify-between mb-[14px]">
-                <span className="text-[13px] font-black text-[#111827]">Badges</span>
-                <span className="text-[11px] font-bold text-[#9ca3af]">4 / 10</span>
-              </div>
-              <div className="grid grid-cols-3 gap-2">
-                {BADGES.map((b, i) => (
-                  <div
-                    key={i}
-                    className={`border-[1.5px] border-[#f0f2f5] rounded-[11px] p-3 text-center transition-all duration-100 hover:border-[#86efac] hover:-translate-y-[1px] ${!b.on ? "opacity-40" : ""}`}
-                  >
-                    <span className="text-[22px] block mb-1">{b.e}</span>
-                    <span className="text-[10px] font-extrabold text-[#111827] block leading-[1.3]">{b.n}</span>
-                    <span className={`text-[10px] font-bold block mt-[2px] ${b.on ? "text-[#166534]" : "text-[#9ca3af]"}`}>{b.s}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Leaderboard */}
-            <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-[18px]">
-              <div className="flex items-center justify-between mb-[14px]">
-                <span className="text-[13px] font-black text-[#111827]">Leaderboard</span>
-                <span className="text-[11px] font-bold text-[#9ca3af]">This week</span>
-              </div>
-              {LEADERBOARD.map((l, i) => {
-                const ini = l.n.split(" ").map(w => w[0]).join("");
-                const posC = l.r==="1"?"#d97706":l.r==="2"?"#6b7280":l.r==="3"?"#9a3412":l.you?"#16a34a":"#9ca3af";
-                return (
-                  <div key={i} className="flex items-center gap-[9px] py-[8px] border-b-[1.5px] border-[#f0f2f5] last:border-none">
-                    <span className="text-[12px] font-black w-[18px] text-center shrink-0" style={{ color: posC }}>{l.r}</span>
-                    <div className="w-[28px] h-[28px] rounded-[7px] flex items-center justify-center text-[10px] font-black shrink-0" style={{ background: l.bg, color: l.tc }}>{ini}</div>
-                    <span className="flex-1 text-[12px] font-bold text-[#111827]">{l.n}</span>
-                    {l.you && <span className="text-[9px] font-black uppercase tracking-[.04em] bg-[#f0fff4] text-[#166534] px-[5px] py-[2px] rounded-[4px]">You</span>}
-                    <span className="text-[11px] font-extrabold text-[#6b7280]">{l.xp}</span>
-                  </div>
-                );
-              })}
-              <div className="grid grid-cols-2 gap-2 mt-3">
-                {[{v:"87",l:"Questions answered"},{v:"5",l:"Lessons this week"},{v:"3",l:"Daily challenges"},{v:"2",l:"Freezes left"}].map((s,i) => (
-                  <div key={i} className="bg-[#f6f7fa] rounded-[9px] p-[10px] text-center">
-                    <span className="text-[18px] font-black text-[#111827] block">{s.v}</span>
-                    <span className="text-[10px] font-bold text-[#9ca3af] mt-[1px] block">{s.l}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
           </div>
+
+          {/* Leaderboard */}
+          <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-black text-[#111827]">Leaderboard</span>
+              <span className="text-[11px] font-bold text-[#9ca3af]">This week</span>
+            </div>
+            {LEADERBOARD.map((l, i) => {
+              const ini = l.n.split(" ").map(w => w[0]).join("");
+              const posC = l.r==="1"?"#d97706":l.r==="2"?"#6b7280":l.r==="3"?"#9a3412":l.you?"#16a34a":"#9ca3af";
+              return (
+                <div key={i} className="flex items-center gap-[9px] py-[8px] border-b-[1.5px] border-[#f0f2f5] last:border-none">
+                  <span className="text-[12px] font-black w-[18px] text-center shrink-0" style={{ color: posC }}>{l.r}</span>
+                  <div className="w-[28px] h-[28px] rounded-[7px] flex items-center justify-center text-[10px] font-black shrink-0" style={{ background: l.bg, color: l.tc }}>{ini}</div>
+                  <span className="flex-1 text-[12px] font-bold text-[#111827]">{l.n}</span>
+                  {l.you && <span className="text-[9px] font-black uppercase tracking-[.04em] bg-[#f0fff4] text-[#166534] px-[5px] py-[2px] rounded-[4px]">You</span>}
+                  <span className="text-[11px] font-extrabold text-[#6b7280]">{l.xp}</span>
+                </div>
+              );
+            })}
+            <div className="grid grid-cols-2 gap-2 mt-3">
+              {[{v:"87",l:"Questions answered"},{v:"5",l:"Lessons this week"},{v:"3",l:"Daily challenges"},{v:"2",l:"Freezes left"}].map((s,i) => (
+                <div key={i} className="bg-[#f6f7fa] rounded-[9px] p-[10px] text-center">
+                  <span className="text-[18px] font-black text-[#111827] block">{s.v}</span>
+                  <span className="text-[10px] font-bold text-[#9ca3af] mt-[1px] block">{s.l}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
