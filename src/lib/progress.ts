@@ -55,6 +55,7 @@ function defaultProgress(): UserProgress {
     xp: 0,
     level: 1,
     streak: 0,
+    bestStreak: 0,
     lastActiveDate: "",
     hearts: HEARTS_MAX,
     heartsDepletedAt: null,
@@ -64,6 +65,11 @@ function defaultProgress(): UserProgress {
     totalAnswered: 0,
     dailyTasksDone: 0,
     freezesAvailable: 1,
+    dailyXP: {},
+    activeDates: [],
+    activityLog: [],
+    lessonAccuracy: {},
+    gameScores: { speed: [], flash: [], daily: [], pairs: [] },
   };
 }
 
