@@ -156,7 +156,7 @@ const CSS=`
 .kp-lb2{margin-top:20px;background:#0f380f;color:#9bbc0f;border:none;border-radius:4px;padding:10px 20px;font-family:'Press Start 2P',monospace;font-size:8px;cursor:pointer;box-shadow:0 3px 0 #000;}
 `;
 
-export default function KiboPet() {
+export default function KiboPet({ embedded = false }: { embedded?: boolean } = {}) {
   const [pet,setPet]=useState<PS>(loadPS);
   const [toast,setToast]=useState("");
   const [toastOn,setToastOn]=useState(false);
@@ -440,7 +440,7 @@ export default function KiboPet() {
   return(
     <>
       <style>{CSS}</style>
-      <div className="kp-wrap">
+      <div className={"kp-wrap" + (embedded ? " embedded" : "")}>
         <div className="kp-dev">
           <div className="kp-ear kp-el"><div className="kp-eh"/></div>
           <div className="kp-ear kp-er"><div className="kp-eh"/></div>
