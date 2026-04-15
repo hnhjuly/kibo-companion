@@ -1,8 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import NotoEmoji from "@/components/NotoEmoji";
-
-interface LoginSuccessOverlayProps {
+import kiboHappy from "@/assets/kibo-happy.png";
   visible: boolean;
 }
 
@@ -25,12 +24,9 @@ const LoginSuccessOverlay = ({ visible }: LoginSuccessOverlayProps) => {
           >
             <div className="flex items-center justify-center gap-3 mb-3">
               <img
-                src="https://ik.imagekit.io/kibolearn/kibo-mascot-happy.png"
+                src={kiboHappy}
                 alt="Kibo celebrating"
                 className="w-16 h-16 object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
               />
               <div className="text-left">
                 <h2 className="text-xl font-black text-foreground flex items-center gap-2">
