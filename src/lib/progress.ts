@@ -2,10 +2,18 @@ const STORAGE_KEY = "kibo_progress";
 
 export type UserGoal = "work" | "study" | "build" | "curious" | null;
 
+export interface ActivityEntry {
+  text: string;
+  xp: number;
+  time: string; // ISO timestamp
+  type: "lesson" | "game" | "badge" | "streak" | "daily";
+}
+
 export interface UserProgress {
   xp: number;
   level: number;
   streak: number;
+  bestStreak: number;
   lastActiveDate: string; // YYYY-MM-DD
   hearts: number;
   heartsDepletedAt: number | null; // timestamp when hearts hit 0
@@ -15,6 +23,17 @@ export interface UserProgress {
   dailyTasksDone: number;
   freezesAvailable: number;
   goal: UserGoal;
+  // History tracking for real dashboard
+  dailyXP: Record<string, number>; // { "2026-04-15": 80 }
+  activeDates: string[]; // ["2026-04-14", "2026-04-15"]
+  activityLog: ActivityEntry[];
+  lessonAccuracy: Record<string, { correct: number; total: number }>; // per lessonId
+  gameScores: {
+    speed: { date: string; score: number }[];
+    flash: { date: string; score: number }[];
+    daily: { date: string; score: number }[];
+    pairs: { date: string; score: number }[];
+  };
 }
 
 const HEARTS_MAX = 6;
@@ -36,6 +55,7 @@ function defaultProgress(): UserProgress {
     xp: 0,
     level: 1,
     streak: 0,
+    bestStreak: 0,
     lastActiveDate: "",
     hearts: HEARTS_MAX,
     heartsDepletedAt: null,
@@ -45,6 +65,11 @@ function defaultProgress(): UserProgress {
     totalAnswered: 0,
     dailyTasksDone: 0,
     freezesAvailable: 1,
+    dailyXP: {},
+    activeDates: [],
+    activityLog: [],
+    lessonAccuracy: {},
+    gameScores: { speed: [], flash: [], daily: [], pairs: [] },
   };
 }
 
@@ -142,12 +167,16 @@ export function markActive(progress: UserProgress): UserProgress {
   const yesterday = getYesterday();
   if (progress.lastActiveDate === today) return progress;
   const updated = { ...progress, lastActiveDate: today };
+  // Track active dates
+  if (!updated.activeDates.includes(today)) {
+    updated.activeDates = [...updated.activeDates, today];
+  }
   if (progress.lastActiveDate === yesterday) {
     updated.streak = progress.streak + 1;
   } else if (progress.lastActiveDate === "") {
-    // First ever activity — start streak at 1
     updated.streak = 1;
   }
+  updated.bestStreak = Math.max(updated.bestStreak, updated.streak);
   return updated;
 }
 
@@ -172,6 +201,7 @@ export function restoreHeart(progress: UserProgress): UserProgress {
 }
 
 export function completeLesson(progress: UserProgress, lessonId: string, xpEarned: number, correctCount: number, totalCount: number): UserProgress {
+  const today = getToday();
   let updated = { ...progress };
   if (!updated.completedLessons.includes(lessonId)) {
     updated.completedLessons = [...updated.completedLessons, lessonId];
@@ -179,6 +209,57 @@ export function completeLesson(progress: UserProgress, lessonId: string, xpEarne
   updated.totalCorrect += correctCount;
   updated.totalAnswered += totalCount;
   updated.dailyTasksDone += 1;
+
+  // Track daily XP
+  updated.dailyXP = { ...updated.dailyXP, [today]: (updated.dailyXP[today] || 0) + xpEarned };
+
+  // Track per-lesson accuracy
+  updated.lessonAccuracy = {
+    ...updated.lessonAccuracy,
+    [lessonId]: { correct: correctCount, total: totalCount },
+  };
+
+  // Activity log (keep last 50)
+  const entry: ActivityEntry = {
+    text: `Completed lesson: ${lessonId}`,
+    xp: xpEarned,
+    time: new Date().toISOString(),
+    type: "lesson",
+  };
+  updated.activityLog = [entry, ...(updated.activityLog || [])].slice(0, 50);
+
+  updated = addXP(updated, xpEarned);
+  updated = markActive(updated);
+  return updated;
+}
+
+export function recordGameScore(
+  progress: UserProgress,
+  mode: "speed" | "flash" | "daily" | "pairs",
+  score: number,
+  xpEarned: number
+): UserProgress {
+  const today = getToday();
+  let updated = { ...progress };
+
+  // Track game score
+  const scores = { ...updated.gameScores };
+  scores[mode] = [...(scores[mode] || []), { date: today, score }];
+  updated.gameScores = scores;
+
+  // Track daily XP
+  updated.dailyXP = { ...updated.dailyXP, [today]: (updated.dailyXP[today] || 0) + xpEarned };
+
+  // Activity log
+  const modeNames = { speed: "Speed Round", flash: "Flashcards", daily: "Daily Challenge", pairs: "Match Pairs" };
+  const entry: ActivityEntry = {
+    text: `${modeNames[mode]}: ${score} pts`,
+    xp: xpEarned,
+    time: new Date().toISOString(),
+    type: "game",
+  };
+  updated.activityLog = [entry, ...(updated.activityLog || [])].slice(0, 50);
+
   updated = addXP(updated, xpEarned);
   updated = markActive(updated);
   return updated;

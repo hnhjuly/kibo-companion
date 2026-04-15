@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
 import { Lesson } from "@/data/curriculum";
 import { ReadingCardState } from "@/data/readingCards";
-import { UserProgress, UserGoal, loadProgress, saveProgress, resetProgress, loseHeart, restoreHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX } from "@/lib/progress";
+import { UserProgress, UserGoal, loadProgress, saveProgress, resetProgress, loseHeart, restoreHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX, recordGameScore } from "@/lib/progress";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
@@ -21,6 +21,7 @@ interface AppState {
   onResetProgress: () => void;
   onRestoreHeart: () => void;
   onSetGoal: (goal: UserGoal) => void;
+  onRecordGameScore: (mode: "speed" | "flash" | "daily" | "pairs", score: number, xpEarned: number) => void;
   heartsTimeRemaining: number;
   canPlay: boolean;
   readingModule: string | null;
@@ -126,6 +127,10 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
     setProgress(p => ({ ...p, goal }));
   }, []);
 
+  const onRecordGameScore = useCallback((mode: "speed" | "flash" | "daily" | "pairs", score: number, xpEarned: number) => {
+    setProgress(p => recordGameScore(p, mode, score, xpEarned));
+  }, []);
+
   // Override setScreen to check hearts
   const safeSetScreen = useCallback((s: Screen) => {
     if ((s === "quiz") && !canPlay) {
@@ -146,7 +151,8 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
     <AppContext.Provider value={{
       screen, setScreen: safeSetScreen, currentLesson, setCurrentLesson,
       quizStats, setQuizStats, progress, onLoseHeart, onCompleteLesson,
-      onUseFreeze, onResetProgress, onRestoreHeart, onSetGoal, heartsTimeRemaining, canPlay,
+      onUseFreeze, onResetProgress, onRestoreHeart, onSetGoal, onRecordGameScore,
+      heartsTimeRemaining, canPlay,
       readingModule, setReadingModule, showAuth, setShowAuth, user, showLoginSuccess
     }}>
       {children}
