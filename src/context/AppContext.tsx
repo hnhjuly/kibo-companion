@@ -1,7 +1,8 @@
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useRef, ReactNode } from "react";
 import { Lesson } from "@/data/curriculum";
 import { ReadingCardState } from "@/data/readingCards";
 import { UserProgress, UserGoal, loadProgress, saveProgress, resetProgress, loseHeart, restoreHeart, completeLesson, markActive, useFreeze, getHeartsTimeRemaining, HEARTS_MAX, recordGameScore } from "@/lib/progress";
+import { loadCloudProgress, saveCloudProgress, mergeProgress } from "@/lib/progressSync";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
