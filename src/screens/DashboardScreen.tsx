@@ -183,7 +183,9 @@ const DashboardScreen = () => {
     const scoresByDay = (arr: { date: string; score: number }[]) =>
       last7.map(d => arr.filter(s => s.date === d).reduce((sum, s) => sum + s.score, 0));
 
-    const allModeData = {
+    type ModeData = { labels: string[]; data: number[]; colors: string[]; type: "bar" | "line" };
+
+    const allModeData: ModeData = {
       labels: ["Speed Round", "Flashcards", "Daily Challenge", "Match Pairs"],
       data: [
         gs.speed.reduce((s, e) => s + e.score, 0),
@@ -192,15 +194,15 @@ const DashboardScreen = () => {
         gs.pairs.reduce((s, e) => s + e.score, 0),
       ],
       colors: ["#bbf7d0", "#93c5fd", "#fde68a", "#c4b5fd"],
-      type: "bar" as const,
+      type: "bar",
     };
 
-    const modeMap: Record<GameMode, typeof allModeData> = {
+    const modeMap: Record<GameMode, ModeData> = {
       all: allModeData,
-      speed: { labels: last7.map(dayLabel), data: scoresByDay(gs.speed), colors: ["#bbf7d0"], type: "line" as const },
-      flash: { labels: last7.map(dayLabel), data: scoresByDay(gs.flash), colors: ["#93c5fd"], type: "line" as const },
-      daily: { labels: last7.map(dayLabel), data: scoresByDay(gs.daily), colors: ["#fde68a"], type: "bar" as const },
-      pairs: { labels: last7.map(dayLabel), data: scoresByDay(gs.pairs), colors: ["#c4b5fd"], type: "line" as const },
+      speed: { labels: last7.map(dayLabel), data: scoresByDay(gs.speed), colors: ["#bbf7d0"], type: "line" },
+      flash: { labels: last7.map(dayLabel), data: scoresByDay(gs.flash), colors: ["#93c5fd"], type: "line" },
+      daily: { labels: last7.map(dayLabel), data: scoresByDay(gs.daily), colors: ["#fde68a"], type: "bar" },
+      pairs: { labels: last7.map(dayLabel), data: scoresByDay(gs.pairs), colors: ["#c4b5fd"], type: "line" },
     };
     return modeMap;
   }, [gs]);
