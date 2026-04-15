@@ -127,6 +127,10 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
     setProgress(p => ({ ...p, goal }));
   }, []);
 
+  const onRecordGameScore = useCallback((mode: "speed" | "flash" | "daily" | "pairs", score: number, xpEarned: number) => {
+    setProgress(p => recordGameScore(p, mode, score, xpEarned));
+  }, []);
+
   // Override setScreen to check hearts
   const safeSetScreen = useCallback((s: Screen) => {
     if ((s === "quiz") && !canPlay) {
@@ -147,7 +151,8 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
     <AppContext.Provider value={{
       screen, setScreen: safeSetScreen, currentLesson, setCurrentLesson,
       quizStats, setQuizStats, progress, onLoseHeart, onCompleteLesson,
-      onUseFreeze, onResetProgress, onRestoreHeart, onSetGoal, heartsTimeRemaining, canPlay,
+      onUseFreeze, onResetProgress, onRestoreHeart, onSetGoal, onRecordGameScore,
+      heartsTimeRemaining, canPlay,
       readingModule, setReadingModule, showAuth, setShowAuth, user, showLoginSuccess
     }}>
       {children}
