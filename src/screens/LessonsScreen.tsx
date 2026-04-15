@@ -213,10 +213,20 @@ const LessonsScreen = () => {
                           </button>
                         )}
                         {hasReadingCards && hasReadAll && (
-                          <div className="flex items-center gap-2 mb-3 px-1">
-                            <Check className="w-3.5 h-3.5 text-kibo-green" />
-                            <span className="text-[11px] font-bold text-kibo-green">Reading cards completed</span>
-                          </div>
+                          <button
+                            onClick={() => {
+                              setReadingModule(`m${lv.id}`);
+                              setScreen("reading-cards" as any);
+                            }}
+                            className="w-full mb-3 p-3 rounded-xl border-[1.5px] border-kibo-green/30 bg-kibo-green-light/40 flex items-center gap-3 text-left hover:bg-kibo-green-light/70 transition-colors"
+                          >
+                            <Check className="w-4 h-4 text-kibo-green shrink-0" />
+                            <div className="flex-1">
+                              <div className="text-[12px] font-black text-kibo-green">Reading cards completed</div>
+                              <div className="text-[10px] text-muted-foreground font-semibold">Tap to review again</div>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-kibo-green/50" />
+                          </button>
                         )}
 
                         {/* Lesson list */}

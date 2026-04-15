@@ -22,6 +22,7 @@ import SpeedRoundScreen from "@/screens/SpeedRoundScreen";
 import MatchPairsScreen from "@/screens/MatchPairsScreen";
 import ReadingCardsScreen from "@/screens/ReadingCardsScreen";
 import DashboardScreen from "@/screens/DashboardScreen";
+import QuizHubScreen from "@/screens/QuizHubScreen";
 import BottomNav from "@/components/BottomNav";
 import DesktopSidebar from "@/components/DesktopSidebar";
 import AuthModal from "@/components/AuthModal";
@@ -46,6 +47,7 @@ const screens: Record<string, React.FC> = {
   "match-pairs": MatchPairsScreen,
   "reading-cards": ReadingCardsScreen,
   "dashboard": DashboardScreen,
+  "quiz-hub": QuizHubScreen,
 };
 
 export const GlobalAuthButton = () => {
@@ -85,7 +87,7 @@ export const GlobalAuthButton = () => {
 const AppContent = () => {
   const { screen, showAuth, setShowAuth, showLoginSuccess } = useApp();
 
-  const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete", "dashboard"].includes(screen);
+  const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete", "dashboard", "quiz-hub"].includes(screen);
   const Screen = screens[screen] || HomeScreen;
 
   return (

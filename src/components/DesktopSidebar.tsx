@@ -1,14 +1,15 @@
 import { useApp } from "@/context/AppContext";
-import { Home, Flame, BookOpen, Search, Award, MoreHorizontal, LayoutDashboard } from "lucide-react";
+import { Home, Flame, BookOpen, Search, Award, MoreHorizontal, LayoutDashboard, Zap } from "lucide-react";
 import kiboWave from "@/assets/kibo-wave.png";
 import PreloadedImg from "@/components/PreloadedImg";
 
-type Tab = "home" | "train" | "lessons" | "glossary" | "achievements" | "more" | "dashboard";
+type Tab = "home" | "train" | "lessons" | "glossary" | "achievements" | "more" | "dashboard" | "quiz-hub";
 
 const baseTabs: { id: Tab; icon: typeof Home; label: string; authOnly?: boolean }[] = [
   { id: "dashboard", icon: LayoutDashboard, label: "Dashboard", authOnly: true },
-  { id: "lessons", icon: BookOpen, label: "Courses" },
   { id: "home", icon: Home, label: "Learn" },
+  { id: "quiz-hub", icon: Zap, label: "Quiz" },
+  { id: "lessons", icon: BookOpen, label: "Courses" },
   { id: "train", icon: Flame, label: "Train" },
   { id: "glossary", icon: Search, label: "Glossary" },
   { id: "achievements", icon: Award, label: "Badges" },

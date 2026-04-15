@@ -6,7 +6,7 @@ import { loadCloudProgress, saveCloudProgress, mergeProgress } from "@/lib/progr
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
-type Screen = "waitlist" | "onboarding" | "home" | "lessons" | "glossary" | "quiz" | "complete" | "train" | "achievements" | "more" | "hearts-depleted" | "feedback" | "all-complete" | "help-faq" | "daily-challenge" | "flashcards" | "speed-round" | "match-pairs" | "reading-cards" | "dashboard";
+type Screen = "waitlist" | "onboarding" | "home" | "lessons" | "glossary" | "quiz" | "complete" | "train" | "achievements" | "more" | "hearts-depleted" | "feedback" | "all-complete" | "help-faq" | "daily-challenge" | "flashcards" | "speed-round" | "match-pairs" | "reading-cards" | "dashboard" | "quiz-hub";
 
 interface AppState {
   screen: Screen;
