@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { KIBO } from "@/data/curriculum";
-import { KIBO } from "@/data/curriculum";
 import { UserGoal } from "@/lib/progress";
 
 import NotoEmoji from "@/components/NotoEmoji";
