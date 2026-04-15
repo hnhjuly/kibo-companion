@@ -26,14 +26,11 @@ type GameMode = "all" | "speed" | "flash" | "daily" | "pairs";
 
 // ─── Constants ───────────────────────────────────────────
 
-const MODULES: { e: string; n: string; id: string; color: string; locked?: boolean }[] = [
+const MODULES: { e: string; n: string; id: string; color: string }[] = [
   { e: "🤖", n: "AI Basics",     id: "m1", color: "#86efac" },
   { e: "💬", n: "Talking to AI", id: "m2", color: "#6ee7b7" },
   { e: "🛠️", n: "AI Tools",     id: "m3", color: "#93c5fd" },
   { e: "🌍", n: "AI Daily Life", id: "m4", color: "#fde68a" },
-  { e: "💼", n: "AI for Work",   id: "m5", color: "#e5e7eb", locked: true },
-  { e: "🎨", n: "Creativity",    id: "m6", color: "#e5e7eb", locked: true },
-  { e: "🛡️", n: "AI Safety",    id: "m7", color: "#e5e7eb", locked: true },
 ];
 
 const TOPICS = [
@@ -349,32 +346,13 @@ const DashboardScreen = () => {
           </div>
         </div>
 
-        {/* Upsell banner */}
-        <div className="rounded-[14px] p-4 flex flex-col sm:flex-row items-center gap-4 mb-3 relative overflow-hidden" style={{ background: "#0c111d" }}>
-          <div className="absolute top-[-40px] right-[-40px] w-[160px] h-[160px] pointer-events-none" style={{ background: "radial-gradient(circle,rgba(61,183,74,.18) 0%,transparent 70%)" }} />
-          <PreloadedImg src={KIBO.thinking} alt="Kibo" className="w-[54px] h-[54px] object-contain shrink-0 relative z-10" />
-          <div className="flex-1 relative z-10 text-center sm:text-left">
-            <h3 className="text-[14px] font-black text-white mb-[3px]">3 modules still locked</h3>
-            <p className="text-[11.5px] font-semibold leading-relaxed" style={{ color: "rgba(255,255,255,.45)" }}>
-              Unlock AI for Work, AI for Creativity and AI Safety to complete your path.
-            </p>
-            <div className="flex gap-[5px] mt-[7px] flex-wrap justify-center sm:justify-start">
-              {[{l:"💼 AI for Work",c:"rgba(74,158,255,.15)",tc:"#93c5fd"},{l:"🎨 AI Creativity",c:"rgba(255,140,66,.15)",tc:"#fdba74"},{l:"🛡️ AI Safety",c:"rgba(155,109,255,.15)",tc:"#c4b5fd"}].map(m=>(
-                <span key={m.l} className="text-[10px] font-extrabold px-[8px] py-[2px] rounded-[5px]" style={{ background: m.c, color: m.tc }}>{m.l}</span>
-              ))}
-            </div>
-          </div>
-          <button className="relative z-10 px-5 py-[10px] rounded-[10px] bg-[#3db74a] text-white text-[13px] font-black border-none shrink-0 hover:-translate-y-[1px] transition-transform" style={{ boxShadow: "0 4px 0 #2ea33d" }}>
-            Unlock All - $9.99
-          </button>
-        </div>
 
         {/* Row 2: Module progress + accuracy */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
           <div className="bg-white border-[1.5px] border-[#f0f2f5] rounded-[14px] p-4">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[13px] font-black text-[#111827]">Module progress</span>
-              <span className="text-[11px] font-bold text-[#9ca3af]">4 / 7 unlocked</span>
+              <span className="text-[11px] font-bold text-[#9ca3af]">4 modules</span>
             </div>
             {MODULES.map((m, i) => {
               const pct = moduleProgress[i]?.pct ?? 0;
@@ -383,7 +361,7 @@ const DashboardScreen = () => {
                 <div key={m.id} className="flex items-center gap-[10px] mb-[9px] last:mb-0">
                   <div className="flex items-center gap-[7px] w-[124px] shrink-0">
                     <span className="text-[14px] w-[18px] text-center shrink-0">{m.e}</span>
-                    <span className={`text-[12px] font-bold truncate ${m.locked ? "text-[#9ca3af]" : "text-[#111827]"}`}>{m.n}</span>
+                    <span className="text-[12px] font-bold truncate text-[#111827]">{m.n}</span>
                   </div>
                   <ProgressBar pct={pct} color={m.color} />
                   <span className="text-[11px] font-extrabold w-[30px] text-right shrink-0" style={{ color: pc }}>{pct}%</span>
