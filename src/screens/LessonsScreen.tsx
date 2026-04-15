@@ -79,13 +79,13 @@ const LessonsScreen = () => {
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="p-[18px] pb-[100px] flex flex-col gap-3">
           {/* Overall progress */}
-          <div className="rounded-2xl p-4 border-[1.5px] border-border bg-card flex items-center gap-3.5">
+          <div className="rounded-2xl p-4 border-[1.5px] border-kibo-teal/20 bg-kibo-teal-light/40 flex items-center gap-3.5">
             <PreloadedImg src={KIBO.studying} alt="Kibo" className="w-14 h-14 object-contain shrink-0" />
             <div className="flex-1">
               <div className="text-[14px] font-black text-foreground mb-1">
                 {completedSet.size} / {allLessons.length} lessons completed
               </div>
-              <div className="h-2 bg-muted rounded-full overflow-hidden">
+              <div className="h-2.5 bg-white/60 rounded-full overflow-hidden border border-kibo-teal/10">
                 <div className="h-full rounded-full bg-kibo-green transition-all duration-500"
                   style={{ width: `${(completedSet.size / allLessons.length) * 100}%` }} />
               </div>
