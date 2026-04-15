@@ -46,7 +46,7 @@ const slides = [
 ];
 
 const OnboardingScreen = () => {
-  const { setScreen, onSetGoal } = useApp();
+  const { setScreen, onSetGoal, showAuth, setShowAuth } = useApp();
   const [slide, setSlide] = useState(0);
   const [selectedGoal, setSelectedGoal] = useState<number | null>(null);
 
@@ -69,7 +69,7 @@ const OnboardingScreen = () => {
       {/* Sign in button */}
       {!isSignedIn && (
         <button
-          onClick={() => setScreen("auth")}
+          onClick={() => setShowAuth(true)}
           className="absolute top-5 right-5 z-10 flex items-center gap-1.5 bg-card text-foreground rounded-full px-4 py-2 text-[13px] font-extrabold shadow-sm border border-border"
         >
           <User className="w-4 h-4" /> Sign in

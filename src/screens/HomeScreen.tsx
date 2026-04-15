@@ -16,7 +16,7 @@ import { useUser, UserButton } from "@clerk/clerk-react";
 
 const HomeScreen = () => {
   const { isSignedIn } = useUser();
-  const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
+  const { setScreen, setCurrentLesson, progress, canPlay, setShowAuth } = useApp();
   const [notified, setNotified] = useState<Set<string>>(() => {
     try {
       const saved = localStorage.getItem("kibo_waitlist");
@@ -93,7 +93,7 @@ const HomeScreen = () => {
               <UserButton afterSignOutUrl="/" />
             ) : (
               <button
-                onClick={() => setScreen("auth")}
+                onClick={() => setShowAuth(true)}
                 className="flex items-center gap-1 bg-primary text-primary-foreground rounded-full px-3 py-1.5 text-[13px] font-extrabold"
               >
                 <User className="w-3.5 h-3.5" /> Sign in
