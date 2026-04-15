@@ -132,7 +132,6 @@ const WaitlistScreen = () => {
               ✕
             </button>
             <KiboPet embedded />
-            </div>
           </div>
         </div>
       )}
