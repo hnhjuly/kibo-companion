@@ -5,6 +5,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User as SupaUser } from "@supabase/supabase-js";
+import WaitlistScreen from "@/screens/WaitlistScreen";
 import OnboardingScreen from "@/screens/OnboardingScreen";
 import HomeScreen from "@/screens/HomeScreen";
 import LessonsScreen from "@/screens/LessonsScreen";
