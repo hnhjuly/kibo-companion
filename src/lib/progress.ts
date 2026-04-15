@@ -201,6 +201,7 @@ export function restoreHeart(progress: UserProgress): UserProgress {
 }
 
 export function completeLesson(progress: UserProgress, lessonId: string, xpEarned: number, correctCount: number, totalCount: number): UserProgress {
+  const today = getToday();
   let updated = { ...progress };
   if (!updated.completedLessons.includes(lessonId)) {
     updated.completedLessons = [...updated.completedLessons, lessonId];
@@ -208,6 +209,57 @@ export function completeLesson(progress: UserProgress, lessonId: string, xpEarne
   updated.totalCorrect += correctCount;
   updated.totalAnswered += totalCount;
   updated.dailyTasksDone += 1;
+
+  // Track daily XP
+  updated.dailyXP = { ...updated.dailyXP, [today]: (updated.dailyXP[today] || 0) + xpEarned };
+
+  // Track per-lesson accuracy
+  updated.lessonAccuracy = {
+    ...updated.lessonAccuracy,
+    [lessonId]: { correct: correctCount, total: totalCount },
+  };
+
+  // Activity log (keep last 50)
+  const entry: ActivityEntry = {
+    text: `Completed lesson: ${lessonId}`,
+    xp: xpEarned,
+    time: new Date().toISOString(),
+    type: "lesson",
+  };
+  updated.activityLog = [entry, ...(updated.activityLog || [])].slice(0, 50);
+
+  updated = addXP(updated, xpEarned);
+  updated = markActive(updated);
+  return updated;
+}
+
+export function recordGameScore(
+  progress: UserProgress,
+  mode: "speed" | "flash" | "daily" | "pairs",
+  score: number,
+  xpEarned: number
+): UserProgress {
+  const today = getToday();
+  let updated = { ...progress };
+
+  // Track game score
+  const scores = { ...updated.gameScores };
+  scores[mode] = [...(scores[mode] || []), { date: today, score }];
+  updated.gameScores = scores;
+
+  // Track daily XP
+  updated.dailyXP = { ...updated.dailyXP, [today]: (updated.dailyXP[today] || 0) + xpEarned };
+
+  // Activity log
+  const modeNames = { speed: "Speed Round", flash: "Flashcards", daily: "Daily Challenge", pairs: "Match Pairs" };
+  const entry: ActivityEntry = {
+    text: `${modeNames[mode]}: ${score} pts`,
+    xp: xpEarned,
+    time: new Date().toISOString(),
+    type: "game",
+  };
+  updated.activityLog = [entry, ...(updated.activityLog || [])].slice(0, 50);
+
   updated = addXP(updated, xpEarned);
   updated = markActive(updated);
   return updated;
