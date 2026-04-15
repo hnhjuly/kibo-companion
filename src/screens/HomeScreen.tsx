@@ -102,7 +102,6 @@ const HomeScreen = () => {
                 <NotoEmoji key={`e${i}`} name="heartEmpty" size={14} />
               ))}
             </div>
-            <GlobalAuthButton />
           </div>
         </div>
         <div className="text-[12px] text-muted-foreground font-semibold mb-2">Learn AI with Kibo</div>
