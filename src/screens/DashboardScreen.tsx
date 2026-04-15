@@ -26,14 +26,11 @@ type GameMode = "all" | "speed" | "flash" | "daily" | "pairs";
 
 // ─── Constants ───────────────────────────────────────────
 
-const MODULES: { e: string; n: string; id: string; color: string; locked?: boolean }[] = [
+const MODULES: { e: string; n: string; id: string; color: string }[] = [
   { e: "🤖", n: "AI Basics",     id: "m1", color: "#86efac" },
   { e: "💬", n: "Talking to AI", id: "m2", color: "#6ee7b7" },
   { e: "🛠️", n: "AI Tools",     id: "m3", color: "#93c5fd" },
   { e: "🌍", n: "AI Daily Life", id: "m4", color: "#fde68a" },
-  { e: "💼", n: "AI for Work",   id: "m5", color: "#e5e7eb", locked: true },
-  { e: "🎨", n: "Creativity",    id: "m6", color: "#e5e7eb", locked: true },
-  { e: "🛡️", n: "AI Safety",    id: "m7", color: "#e5e7eb", locked: true },
 ];
 
 const TOPICS = [
