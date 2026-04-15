@@ -6,7 +6,7 @@ type Tab = "home" | "lessons" | "glossary" | "train" | "achievements" | "more";
 const tabs: { id: Tab; icon: typeof Home; label: string; badge?: number }[] = [
   { id: "home", icon: Home, label: "Learn" },
   { id: "train", icon: Flame, label: "Train", badge: 3 },
-  { id: "lessons", icon: BookOpen, label: "Lessons" },
+  { id: "lessons", icon: BookOpen, label: "Courses" },
   { id: "glossary", icon: Search, label: "Glossary" },
   { id: "achievements", icon: Award, label: "Badges" },
   { id: "more", icon: MoreHorizontal, label: "More" },
