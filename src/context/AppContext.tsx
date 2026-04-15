@@ -28,6 +28,7 @@ interface AppState {
   showAuth: boolean;
   setShowAuth: (v: boolean) => void;
   user: User | null;
+  showLoginSuccess: boolean;
 }
 
 const AppContext = createContext<AppState | null>(null);
@@ -47,6 +48,7 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
   const [readingModule, setReadingModule] = useState<string | null>(null);
   const [showAuth, setShowAuth] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [showLoginSuccess, setShowLoginSuccess] = useState(false);
   const [progress, setProgress] = useState<UserProgress>(loadProgress);
 
   // Track auth state
@@ -54,11 +56,21 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const wasLoggedOut = !user;
+      const nowLoggedIn = !!session?.user;
       setUser(session?.user ?? null);
+      if (event === 'SIGNED_IN' && wasLoggedOut && nowLoggedIn) {
+        setShowAuth(false);
+        setShowLoginSuccess(true);
+        setTimeout(() => {
+          setShowLoginSuccess(false);
+          setScreen("dashboard");
+        }, 2000);
+      }
     });
     return () => subscription.unsubscribe();
-  }, []);
+  }, [user]);
   const [heartsTimeRemaining, setHeartsTimeRemaining] = useState(0);
 
   // Save progress on change
@@ -135,7 +147,7 @@ export const AppProvider = ({ children, initialScreen = "waitlist" }: { children
       screen, setScreen: safeSetScreen, currentLesson, setCurrentLesson,
       quizStats, setQuizStats, progress, onLoseHeart, onCompleteLesson,
       onUseFreeze, onResetProgress, onRestoreHeart, onSetGoal, heartsTimeRemaining, canPlay,
-      readingModule, setReadingModule, showAuth, setShowAuth, user
+      readingModule, setReadingModule, showAuth, setShowAuth, user, showLoginSuccess
     }}>
       {children}
     </AppContext.Provider>

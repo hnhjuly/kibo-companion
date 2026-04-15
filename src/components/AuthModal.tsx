@@ -31,8 +31,7 @@ const AuthModal = ({ open, onClose }: AuthModalProps) => {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        toast({ title: "Welcome back!", description: "You're now signed in to Kibo." });
-        onClose();
+        // Login success overlay handles the rest
       }
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
@@ -140,8 +139,7 @@ const AuthModal = ({ open, onClose }: AuthModalProps) => {
                     toast({ title: "Error", description: String(result.error), variant: "destructive" });
                   }
                   if (result.redirected) return;
-                  toast({ title: "Welcome!", description: "You're now signed in to Kibo." });
-                  onClose();
+                  // Login success overlay handles the rest
                 } catch (err: any) {
                   toast({ title: "Error", description: err.message, variant: "destructive" });
                 } finally {
