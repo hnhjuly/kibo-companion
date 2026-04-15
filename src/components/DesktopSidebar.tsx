@@ -6,7 +6,7 @@ import PreloadedImg from "@/components/PreloadedImg";
 type Tab = "home" | "train" | "lessons" | "glossary" | "achievements" | "more" | "dashboard" | "quiz-hub";
 
 const baseTabs: { id: Tab; icon: typeof Home; label: string; authOnly?: boolean }[] = [
-  { id: "dashboard", icon: LayoutDashboard, label: "Dashboard", authOnly: true },
+  // { id: "dashboard", icon: LayoutDashboard, label: "Dashboard", authOnly: true }, // Hidden for now
   { id: "home", icon: Home, label: "Home" },
   { id: "quiz-hub", icon: Zap, label: "Quiz" },
   { id: "lessons", icon: BookOpen, label: "Courses" },

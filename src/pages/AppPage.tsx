@@ -87,7 +87,7 @@ export const GlobalAuthButton = () => {
 const AppContent = () => {
   const { screen, showAuth, setShowAuth, showLoginSuccess } = useApp();
 
-  const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete", "dashboard", "quiz-hub"].includes(screen);
+  const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete", "quiz-hub"].includes(screen);
   const Screen = screens[screen] || HomeScreen;
 
   return (
