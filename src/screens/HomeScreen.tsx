@@ -161,7 +161,7 @@ const HomeScreen = () => {
                 };
                 const meta = typeLabels[ex.type] || { icon: "target", bg: "bg-muted" };
                 return (
-                  <button key={ex.id} onClick={startDailyTraining}
+                  <button key={ex.id} onClick={() => setScreen("lessons")}
                     className="w-full bg-background rounded-xl p-3.5 flex items-center gap-3.5 mb-2 last:mb-0 border-[1.5px] border-transparent hover:border-kibo-green hover:bg-kibo-green/5 hover:translate-x-0.5 transition-all text-left">
                     <div className={`w-[38px] h-[38px] rounded-[11px] flex items-center justify-center shrink-0 ${meta.bg}`}>
                       <NotoEmoji name={meta.icon as any} size={22} />
