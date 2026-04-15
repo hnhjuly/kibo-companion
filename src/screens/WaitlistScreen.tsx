@@ -53,7 +53,7 @@ const WaitlistScreen = () => {
 
         {/* Subtitle */}
         <p className="text-[16px] text-muted-foreground font-semibold text-center mb-6 leading-relaxed">
-          No coding. No overwhelm. Just simple daily training.
+          No coding. Just bite-sized daily training.
         </p>
 
         {/* Hero Image */}
@@ -90,7 +90,7 @@ const WaitlistScreen = () => {
         {/* Early perks note */}
         <p className="text-[13px] text-muted-foreground/70 font-semibold mt-4 flex items-center gap-1">
           <NotoEmoji name="sparkles" size={12} />
-          <em>Early users get lifetime perks</em>
+          <em>Join the first wave of AI learners</em>
         </p>
       </div>
 
