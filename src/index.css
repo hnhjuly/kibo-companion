@@ -38,11 +38,21 @@
 
     --kibo-teal: 160 55% 48%;
     --kibo-teal-dark: 160 60% 38%;
+    --kibo-teal-light: 160 50% 92%;
     --kibo-sky: 200 80% 88%;
+    --kibo-sky-light: 200 75% 95%;
     --kibo-orange: 30 95% 58%;
+    --kibo-orange-light: 30 90% 92%;
     --kibo-gold: 45 95% 55%;
-    --kibo-pink: 340 80% 70%;
-    --kibo-green: 140 60% 50%;
+    --kibo-gold-light: 45 90% 92%;
+    --kibo-pink: 340 80% 75%;
+    --kibo-pink-light: 340 70% 95%;
+    --kibo-green: 140 55% 55%;
+    --kibo-green-light: 140 50% 93%;
+    --kibo-lavender: 260 60% 75%;
+    --kibo-lavender-light: 260 50% 95%;
+    --kibo-coral: 15 85% 65%;
+    --kibo-coral-light: 15 80% 94%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
