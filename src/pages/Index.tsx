@@ -47,6 +47,26 @@ const screens: Record<string, React.FC> = {
   "auth": AuthScreen,
 };
 
+const GlobalAuthButton = () => {
+  const { isSignedIn } = useUser();
+  const { setShowAuth } = useApp();
+
+  return (
+    <div className="absolute top-3 right-3 z-[50]">
+      {isSignedIn ? (
+        <UserButton afterSignOutUrl="/" />
+      ) : (
+        <button
+          onClick={() => setShowAuth(true)}
+          className="flex items-center gap-1.5 bg-card text-foreground rounded-full px-3.5 py-2 text-[13px] font-extrabold shadow-sm border border-border hover:shadow-md transition-all"
+        >
+          <User className="w-3.5 h-3.5" /> Sign in
+        </button>
+      )}
+    </div>
+  );
+};
+
 const AppContent = () => {
   const { screen, showAuth, setShowAuth } = useApp();
   const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete"].includes(screen);
