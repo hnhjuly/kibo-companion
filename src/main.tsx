@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import { ClerkProvider } from "@clerk/clerk-react";
 import App from "./App.tsx";
 import "./index.css";
 
@@ -45,11 +44,4 @@ import streakBg4 from "@/assets/streak-bg-4.png";
   img.src = src;
 });
 
-createRoot(document.getElementById("root")!).render(
-  <ClerkProvider
-    publishableKey="pk_test_ZnVsbC1zaHJldy00NC5jbGVyay5hY2NvdW50cy5kZXYk"
-    afterSignOutUrl="/"
-  >
-    <App />
-  </ClerkProvider>
-);
+createRoot(document.getElementById("root")!).render(<App />);

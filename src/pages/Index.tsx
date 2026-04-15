@@ -1,7 +1,9 @@
 import { AppProvider, useApp } from "@/context/AppContext";
 import { AnimatePresence, motion } from "framer-motion";
-import { useUser, UserButton } from "@clerk/clerk-react";
-import { User } from "lucide-react";
+import { User, LogOut } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import type { User as SupaUser } from "@supabase/supabase-js";
 import OnboardingScreen from "@/screens/OnboardingScreen";
 import HomeScreen from "@/screens/HomeScreen";
 import LessonsScreen from "@/screens/LessonsScreen";
@@ -20,7 +22,6 @@ import FlashcardScreen from "@/screens/FlashcardScreen";
 import SpeedRoundScreen from "@/screens/SpeedRoundScreen";
 import MatchPairsScreen from "@/screens/MatchPairsScreen";
 import ReadingCardsScreen from "@/screens/ReadingCardsScreen";
-import AuthScreen from "@/screens/AuthScreen";
 import BottomNav from "@/components/BottomNav";
 import DesktopSidebar from "@/components/DesktopSidebar";
 import AuthModal from "@/components/AuthModal";
@@ -44,17 +45,50 @@ const screens: Record<string, React.FC> = {
   "speed-round": SpeedRoundScreen,
   "match-pairs": MatchPairsScreen,
   "reading-cards": ReadingCardsScreen,
-  "auth": AuthScreen,
 };
 
 const GlobalAuthButton = () => {
-  const { isSignedIn } = useUser();
   const { setShowAuth } = useApp();
+  const [user, setUser] = useState<SupaUser | null>(null);
+  const [showMenu, setShowMenu] = useState(false);
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    setShowMenu(false);
+  };
 
   return (
     <div className="absolute top-3 right-3 z-[50]">
-      {isSignedIn ? (
-        <UserButton afterSignOutUrl="/" />
+      {user ? (
+        <div className="relative">
+          <button
+            onClick={() => setShowMenu(!showMenu)}
+            className="w-8 h-8 rounded-full bg-kibo-green text-primary-foreground flex items-center justify-center font-extrabold text-sm shadow-sm"
+          >
+            {user.email?.[0]?.toUpperCase() || "U"}
+          </button>
+          {showMenu && (
+            <div className="absolute right-0 top-10 bg-card border border-border rounded-xl shadow-lg p-2 min-w-[140px]">
+              <p className="text-xs text-muted-foreground px-2 py-1 truncate max-w-[130px]">{user.email}</p>
+              <button
+                onClick={handleSignOut}
+                className="flex items-center gap-2 w-full px-2 py-1.5 text-sm text-foreground hover:bg-muted rounded-lg transition-colors"
+              >
+                <LogOut className="w-3.5 h-3.5" /> Sign out
+              </button>
+            </div>
+          )}
+        </div>
       ) : (
         <button
           onClick={() => setShowAuth(true)}
@@ -74,12 +108,8 @@ const AppContent = () => {
 
   return (
     <div className="w-full h-dvh flex bg-background overflow-hidden">
-      {/* Desktop sidebar — hidden on mobile */}
       {showNav && <DesktopSidebar />}
-
-      {/* Main content area */}
       <div className="flex-1 flex flex-col relative overflow-hidden max-w-3xl mx-auto w-full">
-        {/* Global sign-in / user button */}
         <GlobalAuthButton />
         <AnimatePresence mode="wait">
           <motion.div
@@ -93,27 +123,21 @@ const AppContent = () => {
             {Screen && <Screen />}
           </motion.div>
         </AnimatePresence>
-
-        {/* Mobile bottom nav — hidden on desktop */}
         {showNav && (
           <div className="md:hidden">
             <BottomNav />
           </div>
         )}
       </div>
-
-      {/* Auth popup modal */}
       <AuthModal open={showAuth} onClose={() => setShowAuth(false)} />
     </div>
   );
 };
 
-const Index = () => {
-  return (
-    <AppProvider>
-      <AppContent />
-    </AppProvider>
-  );
-};
+const Index = () => (
+  <AppProvider>
+    <AppContent />
+  </AppProvider>
+);
 
 export default Index;
