@@ -25,6 +25,7 @@ import DashboardScreen from "@/screens/DashboardScreen";
 import BottomNav from "@/components/BottomNav";
 import DesktopSidebar from "@/components/DesktopSidebar";
 import AuthModal from "@/components/AuthModal";
+import LoginSuccessOverlay from "@/components/LoginSuccessOverlay";
 
 const screens: Record<string, React.FC> = {
   home: HomeScreen,
@@ -82,7 +83,7 @@ export const GlobalAuthButton = () => {
 };
 
 const AppContent = () => {
-  const { screen, showAuth, setShowAuth } = useApp();
+  const { screen, showAuth, setShowAuth, showLoginSuccess } = useApp();
 
   const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete", "dashboard"].includes(screen);
   const Screen = screens[screen] || HomeScreen;
@@ -111,6 +112,7 @@ const AppContent = () => {
         )}
       </div>
       <AuthModal open={showAuth} onClose={() => setShowAuth(false)} />
+      <LoginSuccessOverlay visible={showLoginSuccess} />
     </div>
   );
 };
