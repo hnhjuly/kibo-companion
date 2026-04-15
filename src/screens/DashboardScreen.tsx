@@ -6,8 +6,7 @@ import PreloadedImg from "@/components/PreloadedImg";
 import NotoEmoji from "@/components/NotoEmoji";
 import { motion } from "framer-motion";
 import {
-  LayoutDashboard, BookOpen, Zap, BookMarked, Search,
-  Trophy, BarChart3, UserCircle, Settings, ChevronRight
+  BookOpen, BarChart3, ChevronRight
 } from "lucide-react";
 import {
   Chart as ChartJS,
@@ -26,15 +25,6 @@ type Period = "7d" | "30d" | "all";
 type GameMode = "all" | "speed" | "flash" | "daily" | "pairs";
 
 // ─── Constants ───────────────────────────────────────────
-const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: "Dashboard",   screen: "dashboard" as const },
-  { icon: BookOpen,        label: "Learn",        screen: "home"      as const },
-  { icon: Zap,             label: "Train",        screen: "train"     as const },
-  { icon: BookMarked,      label: "Lessons",      screen: "lessons"   as const },
-  { icon: Search,          label: "Glossary",     screen: "glossary"  as const },
-  { icon: Trophy,          label: "Achievements", screen: "achievements" as const },
-  { icon: BarChart3,       label: "Leaderboard",  screen: "home"      as const },
-] as const;
 
 const MODULES: { e: string; n: string; id: string; color: string; locked?: boolean }[] = [
   { e: "🤖", n: "AI Basics",     id: "m1", color: "#86efac" },
