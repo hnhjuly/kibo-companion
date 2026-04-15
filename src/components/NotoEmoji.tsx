@@ -36,7 +36,7 @@ const EMOJI_MAP: Record<string, string> = {
   lock: "noto-v1:locked",
   hourglass: "noto-v1:hourglass-not-done",
   // Game mode icons
-  puzzle: "noto-v1:puzzle-piece",
+  puzzle: "noto:puzzle-piece",
   joker: "noto-v1:flower-playing-cards",
   grimacing: "noto-v1:grimacing-face",
   neutral: "noto-v1:neutral-face",
