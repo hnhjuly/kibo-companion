@@ -1,6 +1,7 @@
 import { AppProvider, useApp } from "@/context/AppContext";
 import { AnimatePresence, motion } from "framer-motion";
 import { User, LogOut } from "lucide-react";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User as SupaUser } from "@supabase/supabase-js";
