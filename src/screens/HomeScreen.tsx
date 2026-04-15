@@ -78,6 +78,20 @@ const HomeScreen = () => {
     setScreen("quiz");
   };
 
+  // Quick Quiz: pick a random lesson from a level and jump in
+  const allLevels = CURRICULUM.levels;
+  const startQuickQuiz = (levelIdx: number) => {
+    const level = allLevels[levelIdx];
+    const availableLessons = level.lessons.filter(
+      l => !progress.completedLessons.includes(l.id)
+    );
+    const lesson = availableLessons.length > 0
+      ? availableLessons[0]
+      : level.lessons[level.lessons.length - 1];
+    setCurrentLesson({ ...lesson, state: "active" });
+    setScreen("quiz");
+  };
+
   return (
     <>
       {/* Header */}
