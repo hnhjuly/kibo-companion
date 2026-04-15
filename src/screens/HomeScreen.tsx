@@ -13,6 +13,7 @@ import PreloadedImg from "@/components/PreloadedImg";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
+
 const HomeScreen = () => {
   const { setScreen, setCurrentLesson, progress, canPlay } = useApp();
   const [notified, setNotified] = useState<Set<string>>(() => {
@@ -81,7 +82,7 @@ const HomeScreen = () => {
   return (
     <>
       {/* Header */}
-      <div className="bg-card px-5 pt-4 pb-3.5 border-b border-border shrink-0 pr-28">
+      <div className="bg-card px-5 pt-4 pb-3.5 border-b border-border shrink-0 pr-14">
         <div className="flex items-center gap-2 mb-2.5 flex-wrap">
           <div className="text-[18px] font-black text-foreground leading-tight mr-auto">
             {goalGreeting ? goalGreeting : <>Hello! <NotoEmoji name="wave" size={20} /></>}
