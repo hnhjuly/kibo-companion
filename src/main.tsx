@@ -1,29 +1,43 @@
 import { createRoot } from "react-dom/client";
+import { registerSW } from "virtual:pwa-register";
 import App from "./App.tsx";
 import "./index.css";
 
-const SERVICE_WORKER_CLEANUP_KEY = "kibo-service-worker-cleanup-v2";
+const isInIframe = (() => {
+  try {
+    return window.self !== window.top;
+  } catch {
+    return true;
+  }
+})();
 
-const cleanupOldCaches = async () => {
-  const registrations = await navigator.serviceWorker?.getRegistrations();
-  await Promise.all((registrations ?? []).map((registration) => registration.unregister()));
+const isPreviewHost =
+  window.location.hostname.includes("id-preview--") ||
+  window.location.hostname.includes("lovableproject.com");
 
-  const cacheKeys = await window.caches?.keys();
-  await Promise.all((cacheKeys ?? []).map((key) => window.caches.delete(key)));
+if (!isPreviewHost && !isInIframe) {
+  const updateSW = registerSW({
+    immediate: true,
+    onNeedRefresh() {
+      void updateSW();
+      window.location.reload();
+    },
+    onRegisteredSW(_swUrl, registration) {
+      if (!registration) return;
 
-  return (registrations?.length ?? 0) > 0 || (cacheKeys?.length ?? 0) > 0;
-};
+      const intervalId = window.setInterval(() => {
+        void registration.update();
+      }, 30_000);
 
-if (window.localStorage.getItem(SERVICE_WORKER_CLEANUP_KEY) !== "done") {
-  void cleanupOldCaches()
-    .catch(() => false)
-    .then((didCleanup) => {
-      window.localStorage.setItem(SERVICE_WORKER_CLEANUP_KEY, "done");
-
-      if (didCleanup) {
-        window.location.reload();
-      }
-    });
+      window.addEventListener(
+        "beforeunload",
+        () => {
+          window.clearInterval(intervalId);
+        },
+        { once: true }
+      );
+    },
+  });
 }
 
 // Preload mascot images for instant rendering
