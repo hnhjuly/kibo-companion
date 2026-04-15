@@ -79,13 +79,13 @@ const LessonsScreen = () => {
       <div className="flex-1 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
         <div className="p-[18px] pb-[100px] flex flex-col gap-3">
           {/* Overall progress */}
-          <div className="rounded-2xl p-4 border-[1.5px] border-border bg-card flex items-center gap-3.5">
+          <div className="rounded-2xl p-4 border-[1.5px] border-kibo-teal/20 bg-kibo-teal-light/40 flex items-center gap-3.5">
             <PreloadedImg src={KIBO.studying} alt="Kibo" className="w-14 h-14 object-contain shrink-0" />
             <div className="flex-1">
               <div className="text-[14px] font-black text-foreground mb-1">
                 {completedSet.size} / {allLessons.length} lessons completed
               </div>
-              <div className="h-2 bg-muted rounded-full overflow-hidden">
+              <div className="h-2.5 bg-white/60 rounded-full overflow-hidden border border-kibo-teal/10">
                 <div className="h-full rounded-full bg-kibo-green transition-all duration-500"
                   style={{ width: `${(completedSet.size / allLessons.length) * 100}%` }} />
               </div>
@@ -109,6 +109,17 @@ const LessonsScreen = () => {
             const prevLevelDone = !previousLevel || previousLevel.lessons.every(l => completedSet.has(l.id));
             const isAccessible = prevLevelDone;
 
+            const pastelBgColors = [
+              "bg-kibo-teal-light",
+              "bg-kibo-sky-light",
+              "bg-kibo-lavender-light",
+              "bg-kibo-pink-light",
+              "bg-kibo-gold-light",
+              "bg-kibo-coral-light",
+              "bg-kibo-orange-light",
+            ];
+            const moduleBg = pastelBgColors[lvIdx % pastelBgColors.length];
+
             return (
               <motion.div
                 key={lv.id}
@@ -116,29 +127,28 @@ const LessonsScreen = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: lvIdx * 0.06 }}
                 className={`rounded-2xl border-[1.5px] overflow-hidden transition-all ${
-                  isExpanded ? "border-primary/30 shadow-sm" : "border-border"
-                } ${!isAccessible ? "opacity-50" : ""}`}
-                style={{ background: isExpanded ? `${lv.color}06` : undefined }}
+                  isExpanded ? "border-primary/40 shadow-sm" : "border-border hover:border-primary/20"
+                } ${!isAccessible ? "opacity-50" : ""} ${moduleBg}`}
               >
                 {/* Module card header */}
                 <button
                   onClick={() => isAccessible && setExpandedLevel(isExpanded ? null : lv.id)}
                   disabled={!isAccessible}
-                  className="w-full p-4 flex items-center gap-3.5 text-left bg-card hover:bg-muted/30 transition-colors"
+                  className="w-full p-4 flex items-center gap-3.5 text-left bg-white/60 hover:bg-white/80 transition-colors"
                 >
                   {/* Emoji badge */}
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0"
-                    style={{ background: lv.color + "15", border: `1.5px solid ${lv.color}25` }}>
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0 bg-white shadow-sm"
+                    style={{ border: `2px solid ${lv.color}30` }}>
                     {isLevelDone ? <Check className="w-5 h-5" style={{ color: lv.color }} /> : emoji}
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground/70">
                         Module {lv.id}
                       </span>
                       {isLevelDone && (
-                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full bg-kibo-green/15 text-kibo-green">
+                        <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-kibo-green/20 text-kibo-green">
                           COMPLETE
                         </span>
                       )}
@@ -147,12 +157,12 @@ const LessonsScreen = () => {
                       )}
                     </div>
                     <div className="text-[15px] font-black text-foreground truncate">{lv.title}</div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden max-w-[120px]">
+                    <div className="flex items-center gap-2 mt-1.5">
+                      <div className="flex-1 h-2 bg-white/70 rounded-full overflow-hidden max-w-[140px] border border-black/5">
                         <div className="h-full rounded-full transition-all duration-500"
                           style={{ width: `${lvProgress * 100}%`, background: lv.color }} />
                       </div>
-                      <span className="text-[11px] font-bold text-muted-foreground">{lvCompleted}/{lvTotal}</span>
+                      <span className="text-[11px] font-bold text-muted-foreground/80">{lvCompleted}/{lvTotal}</span>
                     </div>
                   </div>
 
@@ -233,17 +243,17 @@ const LessonsScreen = () => {
                                 }}
                                 className={`w-full rounded-xl p-3 flex items-center gap-3 text-left transition-all ${
                                   isDone
-                                    ? "bg-kibo-green/5 border-[1.5px] border-kibo-green/20"
+                                    ? "bg-white/70 border-[1.5px] border-kibo-green/30 shadow-sm"
                                     : isActive
-                                      ? "bg-kibo-gold/5 border-[2px] border-kibo-gold/40 shadow-sm"
-                                      : "bg-muted/30 border-[1.5px] border-border opacity-60"
-                                } ${!isLocked ? "hover:shadow-sm cursor-pointer active:scale-[0.99]" : "cursor-not-allowed"}`}
+                                      ? "bg-white border-[2px] border-kibo-gold/50 shadow-md"
+                                      : "bg-white/40 border-[1.5px] border-white/50 opacity-70"
+                                } ${!isLocked ? "hover:shadow-md cursor-pointer active:scale-[0.99]" : "cursor-not-allowed"}`}
                               >
                                 {/* Number/icon */}
-                                <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-[13px] font-black shrink-0 ${
+                                <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-[13px] font-black shrink-0 shadow-sm ${
                                   isDone ? "bg-kibo-green text-primary-foreground"
                                     : isActive ? "bg-kibo-gold text-primary-foreground"
-                                    : "bg-muted text-muted-foreground/40"
+                                    : "bg-white/70 text-muted-foreground/50"
                                 }`}>
                                   {isDone ? <Check className="w-4 h-4" />
                                     : isActive ? <Play className="w-4 h-4" />
