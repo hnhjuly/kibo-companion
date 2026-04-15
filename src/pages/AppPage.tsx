@@ -94,9 +94,7 @@ const GlobalAuthButton = () => {
 };
 
 const AppContent = () => {
-  const { screen, setScreen, showAuth, setShowAuth } = useApp();
-
-  useEffect(() => { setTimeout(() => setScreen("home"), 0); }, []);
+  const { screen, showAuth, setShowAuth } = useApp();
 
   const showNav = ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete", "dashboard"].includes(screen);
   const Screen = screens[screen] || HomeScreen;
@@ -130,7 +128,7 @@ const AppContent = () => {
 };
 
 const AppPage = () => (
-  <AppProvider>
+  <AppProvider initialScreen="home">
     <AppContent />
   </AppProvider>
 );

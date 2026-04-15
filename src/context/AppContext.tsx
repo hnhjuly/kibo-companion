@@ -35,20 +35,14 @@ export const useApp = () => {
   return ctx;
 };
 
-export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [screen, setScreen] = useState<Screen>("waitlist");
+export const AppProvider = ({ children, initialScreen = "waitlist" }: { children: ReactNode; initialScreen?: Screen }) => {
+  const [screen, setScreen] = useState<Screen>(initialScreen);
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
   const [quizStats, setQuizStats] = useState({ correct: 0, total: 0, time: 0 });
   const [readingModule, setReadingModule] = useState<string | null>(null);
   const [showAuth, setShowAuth] = useState(false);
   const [progress, setProgress] = useState<UserProgress>(loadProgress);
   const [heartsTimeRemaining, setHeartsTimeRemaining] = useState(0);
-
-  // Check if first time (has completed onboarding)
-  useEffect(() => {
-    // Waitlist mode: always show waitlist first
-    setScreen("waitlist");
-  }, []);
 
   // Save progress on change
   useEffect(() => {
