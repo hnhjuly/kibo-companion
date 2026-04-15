@@ -101,7 +101,7 @@ const AppContent = () => {
 
   return (
     <div className="w-full h-dvh flex bg-background overflow-hidden">
-      {showNav && <DesktopSidebar />}
+      <DesktopSidebar />
       <div className="flex-1 flex flex-col relative overflow-hidden max-w-3xl mx-auto w-full">
         <GlobalAuthButton />
         <AnimatePresence mode="wait">
