@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import { registerSW } from "virtual:pwa-register";
 import App from "./App.tsx";
 import "./index.css";
 
@@ -9,10 +10,25 @@ const isInIframe = (() => {
 const isPreviewHost =
   window.location.hostname.includes("id-preview--") ||
   window.location.hostname.includes("lovableproject.com");
+
 if (isPreviewHost || isInIframe) {
   navigator.serviceWorker?.getRegistrations().then((regs) =>
     regs.forEach((r) => r.unregister())
   );
+  window.caches?.keys().then((keys) => keys.forEach((key) => window.caches.delete(key)));
+} else {
+  const updateSW = registerSW({
+    immediate: true,
+    onNeedRefresh() {
+      void updateSW(true);
+    },
+    onRegisteredSW(_swUrl, registration) {
+      registration?.update();
+      window.setInterval(() => {
+        void registration?.update();
+      }, 60_000);
+    },
+  });
 }
 
 // Preload mascot images for instant rendering

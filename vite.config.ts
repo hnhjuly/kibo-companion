@@ -17,12 +17,16 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === "development" && componentTagger(),
     VitePWA({
+      injectRegister: null,
       registerType: "autoUpdate",
       includeAssets: ["favicon.png"],
       workbox: {
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
         navigateFallbackDenylist: [/^\/~oauth/],
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        skipWaiting: true,
       },
       manifest: {
         name: "Kibo - Learn AI Skills",
