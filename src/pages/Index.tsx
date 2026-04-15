@@ -90,7 +90,7 @@ const GlobalAuthButton = () => {
 
 const AppContent = () => {
   const { screen, showAuth, setShowAuth } = useApp();
-  const showNav = screen !== "waitlist" && ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete", "dashboard"].includes(screen);
+  const showNav = screen !== "waitlist" && ["home", "train", "achievements", "lessons", "glossary", "more", "all-complete"].includes(screen);
   const Screen = screens[screen];
   const isWaitlist = screen === "waitlist";
 
