@@ -2,14 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <script>navigator.serviceWorker&&navigator.serviceWorker.getRegistrations().then(r=>r.forEach(s=>s.unregister()));caches&&caches.keys().then(k=>k.forEach(c=>caches.delete(c)))</script>
+    <script>
+      navigator.serviceWorker&&navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(s){s.unregister();})});caches&&caches.keys().then(function(k){k.forEach(function(c){caches.delete(c)})})
+    </script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <script src="/sw-nuke.js"></script>
+    <script src="/sw-cleanup.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Kibo - Learn AI Skills</title>
-    <meta name="description" content="Train your AI Skills with Kibo, your friendly AI learning companion.">
+    <meta name="description" content="Train your AI Skills with Kibo, your friendly AI learning companion." />
     <meta name="author" content="Kibo" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
@@ -18,14 +20,20 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Kibo" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fc63d7af-39bd-4e07-bc2b-6bd303c9328e/id-preview-9633dfff--3cd726df-7efe-475c-af89-98401bd424d5.lovable.app-1772962495403.png">
+    <meta
+      property="og:image"
+      content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fc63d7af-39bd-4e07-bc2b-6bd303c9328e/id-preview-9633dfff--3cd726df-7efe-475c-af89-98401bd424d5.lovable.app-1772962495403.png"
+    />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fc63d7af-39bd-4e07-bc2b-6bd303c9328e/id-preview-9633dfff--3cd726df-7efe-475c-af89-98401bd424d5.lovable.app-1772962495403.png">
-    <meta property="og:title" content="Kibo - Learn AI Skills">
-    <meta name="twitter:title" content="Kibo - Learn AI Skills">
-    <meta property="og:description" content="Train your AI Skills with Kibo, your friendly AI learning companion.">
-    <meta name="twitter:description" content="Train your AI Skills with Kibo, your friendly AI learning companion.">
+    <meta
+      name="twitter:image"
+      content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fc63d7af-39bd-4e07-bc2b-6bd303c9328e/id-preview-9633dfff--3cd726df-7efe-475c-af89-98401bd424d5.lovable.app-1772962495403.png"
+    />
+    <meta property="og:title" content="Kibo - Learn AI Skills" />
+    <meta name="twitter:title" content="Kibo - Learn AI Skills" />
+    <meta property="og:description" content="Train your AI Skills with Kibo, your friendly AI learning companion." />
+    <meta name="twitter:description" content="Train your AI Skills with Kibo, your friendly AI learning companion." />
   </head>
 
   <body>
