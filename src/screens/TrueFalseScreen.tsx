@@ -210,15 +210,15 @@ const TrueFalseScreen = () => {
 
         {/* TRUE / FALSE mascot buttons */}
         {phase === "playing" && (
-          <div className="flex gap-4 mt-auto pb-4 items-end justify-center">
+          <div className="flex gap-6 pt-2 pb-4 items-center justify-center">
             <button onClick={() => handleAnswer(true)}
-              className="flex-1 flex flex-col items-center gap-2 active:scale-95 transition-transform">
-              <PreloadedImg src={trueImg} alt="True" className="w-[40vw] max-w-[180px] h-auto object-contain drop-shadow-md" />
+              className="flex flex-col items-center gap-2 active:scale-95 transition-transform">
+              <PreloadedImg src={trueImg} alt="True" className="w-36 h-36 sm:w-44 sm:h-44 object-contain drop-shadow-md" />
               <span className="text-[15px] font-black text-kibo-green">TRUE</span>
             </button>
             <button onClick={() => handleAnswer(false)}
-              className="flex-1 flex flex-col items-center gap-2 active:scale-95 transition-transform">
-              <PreloadedImg src={falseImg} alt="False" className="w-[40vw] max-w-[180px] h-auto object-contain drop-shadow-md" />
+              className="flex flex-col items-center gap-2 active:scale-95 transition-transform">
+              <PreloadedImg src={falseImg} alt="False" className="w-36 h-36 sm:w-44 sm:h-44 object-contain drop-shadow-md" />
               <span className="text-[15px] font-black text-destructive">FALSE</span>
             </button>
           </div>
