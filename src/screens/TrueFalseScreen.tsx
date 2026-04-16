@@ -94,7 +94,7 @@ const TrueFalseScreen = () => {
           </span>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6">
-          <PreloadedImg src={KIBO.happy} alt="Kibo" className="w-40 h-40 object-contain drop-shadow-lg" />
+          <PreloadedImg src={KIBO.happy} alt="Kibo" className="w-36 h-36 object-contain drop-shadow-lg" />
           <h2 className="text-2xl font-black text-foreground text-center">True or False</h2>
           <p className="text-sm text-muted-foreground font-semibold text-center max-w-[280px]">
             Read the statement and tap TRUE or FALSE. Each correct answer earns you +{XP_PER_CORRECT} XP.
@@ -169,7 +169,7 @@ const TrueFalseScreen = () => {
               {MODULE_LABELS[currentQ.moduleId] || currentQ.moduleId}
             </span>
             {/* Kibo thinking */}
-            <PreloadedImg src={KIBO.thinking} alt="Kibo" className="absolute top-4 right-4 w-10 h-10 object-contain opacity-60" />
+            <PreloadedImg src={KIBO.thinking} alt="Kibo" className="absolute top-4 right-4 w-14 h-14 object-contain" />
             {/* Statement */}
             <p className="text-[17px] font-bold text-foreground leading-relaxed mt-1 pr-10">
               {currentQ.statement}
@@ -187,7 +187,7 @@ const TrueFalseScreen = () => {
         {phase === "result" && (
           <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center gap-3">
             <PreloadedImg src={isCorrect ? kiboCorrect : kiboWrong} alt={isCorrect ? "Correct" : "Wrong"}
-              className="w-28 h-28 object-contain drop-shadow-lg" />
+              className="w-36 h-36 object-contain drop-shadow-lg" />
             {isCorrect && (
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
                 className="bg-kibo-gold/15 text-kibo-gold rounded-full px-3 py-1 font-extrabold text-sm">
@@ -213,12 +213,12 @@ const TrueFalseScreen = () => {
           <div className="flex gap-4 pt-2 pb-4 items-center justify-center flex-1">
             <button onClick={() => handleAnswer(true)}
               className="flex-1 flex flex-col items-center gap-2 active:scale-95 transition-transform">
-              <PreloadedImg src={trueImg} alt="True" className="w-[42vw] max-w-[220px] aspect-square object-contain drop-shadow-md" />
+              <PreloadedImg src={trueImg} alt="True" className="w-28 h-28 object-contain drop-shadow-md" />
               <span className="text-base font-black text-kibo-green">TRUE</span>
             </button>
             <button onClick={() => handleAnswer(false)}
               className="flex-1 flex flex-col items-center gap-2 active:scale-95 transition-transform">
-              <PreloadedImg src={falseImg} alt="False" className="w-[42vw] max-w-[220px] aspect-square object-contain drop-shadow-md" />
+              <PreloadedImg src={falseImg} alt="False" className="w-28 h-28 object-contain drop-shadow-md" />
               <span className="text-base font-black text-destructive">FALSE</span>
             </button>
           </div>
