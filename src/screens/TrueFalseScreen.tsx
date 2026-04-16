@@ -208,20 +208,18 @@ const TrueFalseScreen = () => {
           </motion.div>
         )}
 
-        {/* TRUE / FALSE buttons */}
+        {/* TRUE / FALSE mascot buttons */}
         {phase === "playing" && (
-          <div className="flex gap-3 mt-auto pb-4">
+          <div className="flex gap-4 mt-auto pb-4 items-end justify-center">
             <button onClick={() => handleAnswer(true)}
-              className="flex-1 min-h-[72px] rounded-2xl border-[2px] border-[#3db74a] flex items-center justify-center gap-2 font-black text-[16px] text-[#3db74a] kibo-shadow active:translate-y-[2px] active:shadow-none transition-all"
-              style={{ backgroundColor: "#e8fbe9" }}>
-              <PreloadedImg src={trueImg} alt="True" className="w-9 h-9 object-contain" />
-              TRUE
+              className="flex-1 flex flex-col items-center gap-2 active:scale-95 transition-transform">
+              <PreloadedImg src={trueImg} alt="True" className="w-[40vw] max-w-[180px] h-auto object-contain drop-shadow-md" />
+              <span className="text-[15px] font-black text-kibo-green">TRUE</span>
             </button>
             <button onClick={() => handleAnswer(false)}
-              className="flex-1 min-h-[72px] rounded-2xl border-[2px] border-[#ff4f4f] flex items-center justify-center gap-2 font-black text-[16px] text-[#ff4f4f] kibo-shadow active:translate-y-[2px] active:shadow-none transition-all"
-              style={{ backgroundColor: "#fff0f0" }}>
-              <PreloadedImg src={falseImg} alt="False" className="w-9 h-9 object-contain" />
-              FALSE
+              className="flex-1 flex flex-col items-center gap-2 active:scale-95 transition-transform">
+              <PreloadedImg src={falseImg} alt="False" className="w-[40vw] max-w-[180px] h-auto object-contain drop-shadow-md" />
+              <span className="text-[15px] font-black text-destructive">FALSE</span>
             </button>
           </div>
         )}
