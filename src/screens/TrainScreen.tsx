@@ -130,7 +130,7 @@ const TrainScreen = () => {
                 stat={pairsBest ? `Best: ${Math.floor(parseInt(pairsBest) / 60)}:${String(parseInt(pairsBest) % 60).padStart(2, "0")}` : "Best: --:--"}
                 onClick={() => setScreen("match-pairs" as any)}
               />
-              <ModeCard
+              {/* <ModeCard
                 emojiName="checkmark"
                 color="hsl(135 60% 75%)"
                 backgroundColor="hsl(135 60% 92%)"
@@ -139,7 +139,7 @@ const TrainScreen = () => {
                 stat={`${TRUE_FALSE_QUESTIONS.length} facts`}
                 statColor="text-kibo-green"
                 onClick={() => setScreen("true-false" as any)}
-              />
+              /> */}
             </div>
 
           {/* Quick Fire divider */}
