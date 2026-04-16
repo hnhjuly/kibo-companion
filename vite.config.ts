@@ -18,20 +18,20 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     VitePWA({
       injectRegister: null,
-      registerType: "autoUpdate",
+      registerType: "prompt",
       includeAssets: ["favicon.png"],
       workbox: {
+        navigateFallbackDenylist: [/^\/~oauth/],
         globPatterns: ["**/*.{ico,png,svg,woff2}"],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        skipWaiting: true,
+        clientsClaim: true,
         runtimeCaching: [
           {
-            urlPattern: ({ request }) =>
-              request.destination === "document" ||
-              request.destination === "script" ||
-              request.destination === "style",
+            urlPattern: /\.(?:js|css)$/i,
             handler: "NetworkFirst",
             options: {
-              cacheName: "kibo-app-shell",
-              networkTimeoutSeconds: 10,
+              cacheName: "kibo-js-css",
               expiration: {
                 maxEntries: 50,
                 maxAgeSeconds: 60 * 60 * 24,
@@ -39,7 +39,7 @@ export default defineConfig(({ mode }) => ({
             },
           },
           {
-            urlPattern: ({ request }) => request.destination === "image",
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|ico)$/i,
             handler: "CacheFirst",
             options: {
               cacheName: "kibo-images",
@@ -49,22 +49,7 @@ export default defineConfig(({ mode }) => ({
               },
             },
           },
-          {
-            urlPattern: ({ request }) => request.destination === "font",
-            handler: "CacheFirst",
-            options: {
-              cacheName: "kibo-fonts",
-              expiration: {
-                maxEntries: 20,
-                maxAgeSeconds: 60 * 60 * 24 * 30,
-              },
-            },
-          },
         ],
-        navigateFallbackDenylist: [/^\/~oauth/],
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-        skipWaiting: true,
-        clientsClaim: true,
       },
       manifest: {
         name: "Kibo - Learn AI Skills",

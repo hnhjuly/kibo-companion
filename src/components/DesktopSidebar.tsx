@@ -21,7 +21,7 @@ const DesktopSidebar = () => {
   const tabs = baseTabs.filter(t => !t.authOnly || user);
 
   return (
-    <aside className="hidden md:flex flex-col w-[240px] bg-card border-r border-border shrink-0 h-full">
+    <aside className="md:flex hidden flex-col w-[240px] bg-card border-r border-border shrink-0 h-full">
       {/* Logo */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
         <PreloadedImg src={kiboWave} alt="Kibo" className="w-10 h-10 object-contain" />
