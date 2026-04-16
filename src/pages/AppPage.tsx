@@ -23,6 +23,7 @@ import MatchPairsScreen from "@/screens/MatchPairsScreen";
 import ReadingCardsScreen from "@/screens/ReadingCardsScreen";
 import DashboardScreen from "@/screens/DashboardScreen";
 import QuizHubScreen from "@/screens/QuizHubScreen";
+import TrueFalseScreen from "@/screens/TrueFalseScreen";
 import BottomNav from "@/components/BottomNav";
 import DesktopSidebar from "@/components/DesktopSidebar";
 import AuthModal from "@/components/AuthModal";
@@ -48,6 +49,7 @@ const screens: Record<string, React.FC> = {
   "reading-cards": ReadingCardsScreen,
   "dashboard": DashboardScreen,
   "quiz-hub": QuizHubScreen,
+  "true-false": TrueFalseScreen,
 };
 
 export const GlobalAuthButton = () => {

@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { KIBO, type Lesson } from "@/data/curriculum";
 import NotoEmoji from "@/components/NotoEmoji";
 import PreloadedImg from "@/components/PreloadedImg";
+import { TRUE_FALSE_QUESTIONS } from "@/data/kibo-true-false";
 
 import streakBg1 from "@/assets/streak-bg-1.png";
 import streakBg2 from "@/assets/streak-bg-2.png";
@@ -123,13 +124,23 @@ const TrainScreen = () => {
                stat={speedBest > 0 ? `Best: ${speedBest}` : "Best: --"}
                onClick={() => setScreen("speed-round" as any)}
              />
-             <ModeCard
-               emojiName="puzzle" color="hsl(260 60% 65%)" backgroundColor="hsl(var(--kibo-lavender-light))"
-               title="Match the Pairs" subtitle="Tap terms and definitions to match them"
-               stat={pairsBest ? `Best: ${Math.floor(parseInt(pairsBest) / 60)}:${String(parseInt(pairsBest) % 60).padStart(2, "0")}` : "Best: --:--"}
-               onClick={() => setScreen("match-pairs" as any)}
-             />
-           </div>
+              <ModeCard
+                emojiName="puzzle" color="hsl(260 60% 65%)" backgroundColor="hsl(var(--kibo-lavender-light))"
+                title="Match the Pairs" subtitle="Tap terms and definitions to match them"
+                stat={pairsBest ? `Best: ${Math.floor(parseInt(pairsBest) / 60)}:${String(parseInt(pairsBest) % 60).padStart(2, "0")}` : "Best: --:--"}
+                onClick={() => setScreen("match-pairs" as any)}
+              />
+              <ModeCard
+                emojiName="checkmark"
+                color="hsl(135 60% 75%)"
+                backgroundColor="hsl(135 60% 92%)"
+                title="True or False"
+                subtitle="Read the statement - true or false?"
+                stat={`${TRUE_FALSE_QUESTIONS.length} facts`}
+                statColor="text-kibo-green"
+                onClick={() => setScreen("true-false" as any)}
+              />
+            </div>
 
           {/* Quick Fire divider */}
           <div className="flex items-center gap-3 mt-2">
