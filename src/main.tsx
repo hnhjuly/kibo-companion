@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import { registerSW } from "virtual:pwa-register";
 import App from "./App.tsx";
 import "./index.css";
 
@@ -14,31 +13,6 @@ const isInIframe = (() => {
 const isPreviewHost =
   window.location.hostname.includes("id-preview--") ||
   window.location.hostname.includes("lovableproject.com");
-
-if (!isPreviewHost && !isInIframe) {
-  const updateSW = registerSW({
-    immediate: true,
-    onNeedRefresh() {
-      void updateSW();
-      window.location.reload();
-    },
-    onRegisteredSW(_swUrl, registration) {
-      if (!registration) return;
-
-      const intervalId = window.setInterval(() => {
-        void registration.update();
-      }, 30_000);
-
-      window.addEventListener(
-        "beforeunload",
-        () => {
-          window.clearInterval(intervalId);
-        },
-        { once: true }
-      );
-    },
-  });
-}
 
 // Preload mascot images for instant rendering
 import kiboHappy from "@/assets/kibo-happy.png";
