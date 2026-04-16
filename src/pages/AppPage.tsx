@@ -123,6 +123,11 @@ const AppContent = () => {
   );
 };
 
+// Force full HMR boundary to prevent stale context errors
+if (import.meta.hot) {
+  import.meta.hot.accept();
+}
+
 const AppPage = () => (
   <AppProvider initialScreen="home">
     <AppContent />
